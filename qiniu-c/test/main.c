@@ -43,8 +43,11 @@ int main(void) {
     RUN_TEST(test_qiniu_ng_make_upload_token);
     RUN_TEST(test_qiniu_ng_upload_file_path_failed_by_mime);
     RUN_TEST(test_qiniu_ng_upload_file_path_failed_by_non_existed_path);
+printf("*&* 1: %lld\n", (long long) time(NULL));
     RUN_TEST(test_qiniu_ng_upload_files);
+printf("*&* 2: %lld\n", (long long) time(NULL));
     RUN_TEST(test_qiniu_ng_upload_huge_number_of_files);
+printf("*&* 3: %lld\n", (long long) time(NULL));
     return UNITY_END();
 }
 
