@@ -12,7 +12,7 @@ void test_qiniu_ng_etag_from_file_path(void) {
     qiniu_ng_char_t* path = (qiniu_ng_char_t *) malloc((PATH_LEN + 1) * sizeof(qiniu_ng_char_t));
     memset(path, 0, (PATH_LEN + 1) * sizeof(qiniu_ng_char_t));
 
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
     swprintf(path, PATH_LEN, L"%s/1024字节", _wgetenv(L"TMP"));
 #else
     strncpy(path, "/tmp/1024字节", PATH_LEN);

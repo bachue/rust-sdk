@@ -587,7 +587,8 @@ pub extern "C" fn qiniu_ng_err_fputs(err: qiniu_ng_err_t, stream: *mut FILE) -> 
 /// @param[in] stream 输出流
 /// @param[in] format 输出格式，采用 `fprintf` 语法，本函数向该格式输出一个字符串类型的参数作为错误信息，因此，如果该参数设置为 `"%s"` 将会直接输出错误信息，而 `"%s\n"` 将会输出错误信息并换行
 /// @param[in] err SDK 错误实例
-#[cfg(not(windows))]
+/// @warning Windows MSVC 版本不包含该函数
+#[cfg(not(all(windows, target_env = "msvc")))]
 #[no_mangle]
 pub extern "C" fn qiniu_ng_err_fprintf(stream: *mut FILE, format: *const c_char, err: qiniu_ng_err_t) -> c_int {
     if let Some(err_kind) = Option::<HTTPErrorKind>::from(&err.0) {

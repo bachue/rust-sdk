@@ -3,17 +3,20 @@ use crate::{
     string::{qiniu_ng_char_t, ucstr, UCString},
     utils::{qiniu_ng_readable_t, qiniu_ng_str_list_t, qiniu_ng_str_map_t, qiniu_ng_str_t},
 };
+use cfg_if::cfg_if;
 use libc::{c_char, c_void, size_t};
 
-#[cfg(windows)]
-use winapi::shared::{
-    in6addr::in6_addr,
-    inaddr::in_addr,
-    ws2def::{AF_INET, AF_INET6},
-};
-
-#[cfg(not(windows))]
-use libc::{in6_addr, in_addr, AF_INET, AF_INET6};
+cfg_if! {
+    if #[cfg(all(windows, target_env = "msvc"))] {
+        use winapi::shared::{
+            in6addr::in6_addr,
+            inaddr::in_addr,
+            ws2def::{AF_INET, AF_INET6},
+        };
+    } else {
+        use libc::{in6_addr, in_addr, AF_INET, AF_INET6};
+    }
+}
 
 use qiniu_http::{HeaderName, Method, Request, Response, ResponseBody};
 use std::{
@@ -1055,65 +1058,63 @@ pub extern "C" fn qiniu_ng_http_response_set_server_port(response: qiniu_ng_http
     let _ = qiniu_ng_http_response_t::from(response);
 }
 
-#[cfg(not(windows))]
-mod unix {
-    use super::*;
-    use std::net::{Ipv4Addr, Ipv6Addr};
-    #[inline]
-    pub(crate) fn from_ipv4_addr_to_in_addr(addr: Ipv4Addr) -> in_addr {
-        in_addr {
-            s_addr: u32::from_be_bytes(addr.octets()).to_be(),
+cfg_if! {
+    if #[cfg(all(windows, target_env = "msvc"))] {
+        mod windows {
+            use super::*
+            use std::net::{Ipv4Addr, Ipv6Addr};
+
+            #[inline]
+            pub(crate) fn from_ipv4_addr_to_in_addr(addr: Ipv4Addr) -> in_addr {
+                let mut ia = in_addr::default();
+                unsafe { *ia.S_un.S_addr_mut() = u32::from_be_bytes(addr.octets()).to_be() };
+                ia
+            }
+
+            #[inline]
+            pub(crate) fn from_ipv6_addr_to_in6_addr(addr: Ipv6Addr) -> in6_addr {
+                let mut i6a = in6_addr::default();
+                unsafe { *i6a.u.Byte_mut() = addr.octets() };
+                i6a
+            }
+
+            #[inline]
+            pub(crate) fn from_in_addr_to_ipv4_addr(addr: in_addr) -> Ipv4Addr {
+                unsafe { addr.S_un.S_addr() }.to_owned().into()
+            }
+
+            #[inline]
+            pub(crate) fn from_in6_addr_to_ipv6_addr(addr: in6_addr) -> Ipv6Addr {
+                unsafe { addr.u.Byte() }.to_owned().into()
+            }
         }
-    }
+        use windows::*;
+    } else {
+        mod unix {
+            use super::*;
+            use std::net::{Ipv4Addr, Ipv6Addr};
+            #[inline]
+            pub(crate) fn from_ipv4_addr_to_in_addr(addr: Ipv4Addr) -> in_addr {
+                in_addr {
+                    s_addr: u32::from_be_bytes(addr.octets()).to_be(),
+                }
+            }
 
-    #[inline]
-    pub(crate) fn from_ipv6_addr_to_in6_addr(addr: Ipv6Addr) -> in6_addr {
-        in6_addr { s6_addr: addr.octets() }
-    }
+            #[inline]
+            pub(crate) fn from_ipv6_addr_to_in6_addr(addr: Ipv6Addr) -> in6_addr {
+                in6_addr { s6_addr: addr.octets() }
+            }
 
-    #[inline]
-    pub(crate) fn from_in_addr_to_ipv4_addr(addr: in_addr) -> Ipv4Addr {
-        addr.s_addr.into()
-    }
+            #[inline]
+            pub(crate) fn from_in_addr_to_ipv4_addr(addr: in_addr) -> Ipv4Addr {
+                addr.s_addr.into()
+            }
 
-    #[inline]
-    pub(crate) fn from_in6_addr_to_ipv6_addr(addr: in6_addr) -> Ipv6Addr {
-        addr.s6_addr.into()
-    }
-}
-
-#[cfg(windows)]
-mod windows {
-    use super::*;
-    use std::net::{Ipv4Addr, Ipv6Addr};
-
-    #[inline]
-    pub(crate) fn from_ipv4_addr_to_in_addr(addr: Ipv4Addr) -> in_addr {
-        let mut ia = in_addr::default();
-        unsafe { *ia.S_un.S_addr_mut() = u32::from_be_bytes(addr.octets()).to_be() };
-        ia
-    }
-
-    #[inline]
-    pub(crate) fn from_ipv6_addr_to_in6_addr(addr: Ipv6Addr) -> in6_addr {
-        let mut i6a = in6_addr::default();
-        unsafe { *i6a.u.Byte_mut() = addr.octets() };
-        i6a
-    }
-
-    #[inline]
-    pub(crate) fn from_in_addr_to_ipv4_addr(addr: in_addr) -> Ipv4Addr {
-        unsafe { addr.S_un.S_addr() }.to_owned().into()
-    }
-
-    #[inline]
-    pub(crate) fn from_in6_addr_to_ipv6_addr(addr: in6_addr) -> Ipv6Addr {
-        unsafe { addr.u.Byte() }.to_owned().into()
+            #[inline]
+            pub(crate) fn from_in6_addr_to_ipv6_addr(addr: in6_addr) -> Ipv6Addr {
+                addr.s6_addr.into()
+            }
+        }
+        use unix::*;
     }
 }
-
-#[cfg(not(windows))]
-use unix::*;
-
-#[cfg(windows)]
-use windows::*;

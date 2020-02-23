@@ -1,3 +1,4 @@
+use cfg_if::cfg_if;
 use std::{
     borrow::{Borrow, Cow, ToOwned},
     error::Error,
@@ -97,18 +98,20 @@ mod unix {
             Self::from_vec_unchecked(s.into())
         }
 
-        #[cfg(not(windows))]
-        #[inline]
-        pub fn from_os_str(s: impl AsRef<OsStr>) -> Result<Self, NulError> {
-            use std::os::unix::ffi::OsStrExt;
-            Self::new(s.as_ref().as_bytes())
-        }
+        cfg_if! {
+            if #[cfg(not(all(windows, target_env = "msvc")))] {
+                #[inline]
+                pub fn from_os_str(s: impl AsRef<OsStr>) -> Result<Self, NulError> {
+                    use std::os::unix::ffi::OsStrExt;
+                    Self::new(s.as_ref().as_bytes())
+                }
 
-        #[cfg(not(windows))]
-        #[inline]
-        pub unsafe fn from_os_str_unchecked(s: impl AsRef<OsStr>) -> Self {
-            use std::os::unix::ffi::OsStrExt;
-            Self::from_vec_unchecked(s.as_ref().as_bytes())
+                #[inline]
+                pub unsafe fn from_os_str_unchecked(s: impl AsRef<OsStr>) -> Self {
+                    use std::os::unix::ffi::OsStrExt;
+                    Self::from_vec_unchecked(s.as_ref().as_bytes())
+                }
+            }
         }
 
         #[inline]
@@ -208,7 +211,7 @@ mod unix {
         }
     }
 
-    #[cfg(not(windows))]
+    #[cfg(not(all(windows, target_env = "msvc")))]
     impl From<&ucstr> for OsString {
         #[inline]
         fn from(s: &ucstr) -> Self {
@@ -238,21 +241,23 @@ mod unix {
         }
     }
 
-    #[cfg(not(windows))]
-    impl From<OsString> for UCString {
-        #[inline]
-        fn from(s: OsString) -> Self {
-            use std::os::unix::ffi::OsStringExt;
-            unsafe { Self::from_vec_unchecked(s.into_vec()) }
-        }
-    }
+    cfg_if! {
+        if #[cfg(not(all(windows, target_env = "msvc")))] {
+            impl From<OsString> for UCString {
+                #[inline]
+                fn from(s: OsString) -> Self {
+                    use std::os::unix::ffi::OsStringExt;
+                    unsafe { Self::from_vec_unchecked(s.into_vec()) }
+                }
+            }
 
-    #[cfg(not(windows))]
-    impl From<UCString> for OsString {
-        #[inline]
-        fn from(s: UCString) -> Self {
-            use std::os::unix::ffi::OsStringExt;
-            Self::from_vec(s.into_vec())
+            impl From<UCString> for OsString {
+                #[inline]
+                fn from(s: UCString) -> Self {
+                    use std::os::unix::ffi::OsStringExt;
+                    Self::from_vec(s.into_vec())
+                }
+            }
         }
     }
 
@@ -434,18 +439,19 @@ mod windows {
             Self::from_str_unchecked(s.into())
         }
 
-        #[cfg(windows)]
-        #[inline]
-        pub fn from_os_str(s: impl AsRef<OsStr>) -> Result<Self, NulError> {
-            WideCString::from_os_str(s.as_ref())
-                .map(|s| s.into())
-                .map_err(|e| e.into())
-        }
+        cfg_if! {
+            if #[cfg(all(windows, target_env = "msvc"))] {
+                pub fn from_os_str(s: impl AsRef<OsStr>) -> Result<Self, NulError> {
+                    WideCString::from_os_str(s.as_ref())
+                        .map(|s| s.into())
+                        .map_err(|e| e.into())
+                }
 
-        #[cfg(windows)]
-        #[inline]
-        pub unsafe fn from_os_str_unchecked(s: impl AsRef<OsStr>) -> Self {
-            WideCString::from_os_str_unchecked(s.as_ref()).into()
+                #[inline]
+                pub unsafe fn from_os_str_unchecked(s: impl AsRef<OsStr>) -> Self {
+                    WideCString::from_os_str_unchecked(s.as_ref()).into()
+                }
+            }
         }
 
         #[inline]
@@ -545,7 +551,7 @@ mod windows {
         }
     }
 
-    #[cfg(windows)]
+    #[cfg(all(windows, target_env = "msvc"))]
     impl From<&ucstr> for OsString {
         #[inline]
         fn from(s: &ucstr) -> Self {
@@ -574,7 +580,7 @@ mod windows {
         }
     }
 
-    #[cfg(windows)]
+    #[cfg(all(windows, target_env = "msvc"))]
     impl From<OsString> for UCString {
         fn from(s: OsString) -> Self {
             use std::os::windows::ffi::OsStrExt;
@@ -681,10 +687,13 @@ mod windows {
     }
 }
 
-#[cfg(not(windows))]
-pub use unix::*;
-#[cfg(windows)]
-pub use windows::*;
+cfg_if! {
+    if #[cfg(all(windows, target_env = "msvc"))] {
+        pub use windows::*;
+    } else {
+        pub use unix::*;
+    }
+}
 
 impl ucstr {
     #[inline]

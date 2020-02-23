@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "test.h"
 
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
 #include <windows.h>
 long long last_print_time;
 HANDLE mutex;
@@ -44,7 +44,7 @@ void test_qiniu_ng_upload_files(void) {
         upload_manager, QINIU_NG_CHARS("z0-bucket"), GETENV(QINIU_NG_CHARS("access_key")), 5);
 
     const qiniu_ng_char_t file_key[256];
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
     swprintf((wchar_t *) file_key, 256, L"测试-513m-%lld", (long long) time(NULL));
 #else
     snprintf((char *) file_key, 256, "测试-513m-%lld", (long long) time(NULL));
@@ -62,7 +62,7 @@ void test_qiniu_ng_upload_files(void) {
     qiniu_ng_upload_token_t token = qiniu_ng_upload_token_new_from_policy_builder(policy_builder, GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
 
     last_print_time = (long long) time(NULL);
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
     mutex = CreateMutex(NULL, FALSE, NULL);
 #endif
 
@@ -101,7 +101,7 @@ void test_qiniu_ng_upload_files(void) {
     // TODO: Clean uploaded file
     last_print_time = (long long) time(NULL);
 
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
     swprintf((wchar_t *) file_key, 256, L"测试-513m-%lld", (long long) time(NULL));
 #else
     snprintf((char *) file_key, 256, "测试-513m-%lld", (long long) time(NULL));
@@ -155,7 +155,7 @@ struct upload_file_thread_context {
     qiniu_ng_upload_token_t token;
 };
 
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
 void *thread_of_upload_file(void* data);
 DWORD WINAPI ThreadOfUploadFile(LPVOID data) {
     thread_of_upload_file((void*) data);
@@ -219,7 +219,7 @@ void test_qiniu_ng_upload_huge_number_of_files(void) {
     qiniu_ng_upload_token_t token = qiniu_ng_upload_token_new_from_policy_builder(policy_builder, GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
 
     last_print_time = (long long) time(NULL);
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
     mutex = CreateMutex(NULL, FALSE, NULL);
 #endif
 
@@ -228,7 +228,7 @@ void test_qiniu_ng_upload_huge_number_of_files(void) {
     char *keys[THREAD_COUNT];
     for (int i = 0; i < THREAD_COUNT; i++) {
         keys[i] = malloc(256 * sizeof(qiniu_ng_char_t));
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
         swprintf((wchar_t *) keys[i], 256, L"测试-4m-%d-%lld", i, (long long) time(NULL));
 #else
         snprintf((char *) keys[i], 256, "测试-4m-%d-%lld", i, (long long) time(NULL));
@@ -241,7 +241,7 @@ void test_qiniu_ng_upload_huge_number_of_files(void) {
             .token = token,
         };
     }
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
     DWORD thread_ids[THREAD_COUNT];
     HANDLE threads[THREAD_COUNT];
     for (int i = 0; i < THREAD_COUNT; i++) {

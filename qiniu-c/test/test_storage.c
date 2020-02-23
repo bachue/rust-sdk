@@ -31,7 +31,7 @@ void test_qiniu_ng_storage_bucket_create_and_drop(void) {
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
 
     const qiniu_ng_char_t new_bucket_name[40];
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
     swprintf((qiniu_ng_char_t *) new_bucket_name, 40, L"test-qiniu-c-%lld", (long long) time(NULL));
 #else
     snprintf((qiniu_ng_char_t *) new_bucket_name, 40, "test-qiniu-c-%lld", (long long) time(NULL));

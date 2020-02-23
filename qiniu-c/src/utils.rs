@@ -16,7 +16,7 @@ use tap::TapOps;
 ///   * 当 SDK 的 API 返回字符串实例后，调用 `qiniu_ng_str_get_ptr()` 获取内部的 C 字符串。
 ///   * 当 `qiniu_ng_str_t` 使用完毕后，请务必调用 `qiniu_ng_str_free()` 方法释放内存。
 /// @note 该结构体内部状态不可变，因此可以跨线程使用
-/// @note 目前在 UNIX 平台上编码为 UTF-8 而 Windows 编码为 UTF-16，但不同编译条件下字符串的编码可能有所不同
+/// @note 目前在 UNIX 平台或 Windows MinGW 版本上编码为 UTF-8 而 Windows MSVC 版本编码为 UTF-16，但不同编译条件下字符串的编码可能有所不同
 /// @warning `qiniu_ng_str_t` 中的字符串有可能是 `NULL`，这种情况下，可以通过 `qiniu_ng_str_is_null()` 判定
 /// @warning `qiniu_ng_str_get_ptr()` 将会返回存储的 C 字符串内存地址，请勿修改其存储的字符串内容
 #[repr(C)]

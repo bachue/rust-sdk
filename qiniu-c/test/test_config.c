@@ -96,7 +96,7 @@ void test_qiniu_ng_config_new2(void) {
     qiniu_ng_config_builder_disable_uplog(builder);
     qiniu_ng_config_builder_upload_recorder_upload_block_lifetime(builder, 60 * 60 * 24 * 5);
     qiniu_ng_config_builder_upload_recorder_always_flush_records(builder, true);
-#if defined(_WIN32) || defined(WIN32)
+#ifdef WIN_MSVC
     const qiniu_ng_char_t *home_directory = GETENV(QINIU_NG_CHARS("USERPROFILE"));
 #else
     const qiniu_ng_char_t *home_directory = GETENV(QINIU_NG_CHARS("HOME"));

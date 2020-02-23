@@ -11,11 +11,19 @@ LDFLAGS =
 SYMBOLS =
 UNAME_S =
 
-ifeq ($(OS),Windows_NT)
+ifeq ($(OS)$(findstring msvc,$(shell rustup show active-toolchain)),Windows_NT)
+	CC := gcc
+	TARGET := build/test.exe
+	INC_DIRS := -I$(CURDIR) -I$(UNITY_HOME)
+	DYNAMIC_LIBRARY := $(CURDIR)/../target/debug
+	LDFLAGS := -lm -lpthread -ldl -lcurl
+	SYMBOLS := -DTEST -DUNITY_USE_FLUSH_STDOUT -D WIN_MINGW
+	CFLAGS := -O0 -Wall -Wextra
+else ifeq ($(OS),WindowsNT)
 	CC := cl.exe
 	TARGET := test.exe
 	INC_DIRS := /I . /I $(UNITY_HOME)
-	SYMBOLS := /D TEST /D UNITY_USE_FLUSH_STDOUT
+	SYMBOLS := /D TEST /D UNITY_USE_FLUSH_STDOUT /D WIN_MSVC
 	CFLAGS := /MD /W4 /utf-8
 else
 	CC := gcc
@@ -46,7 +54,10 @@ ifneq ($(OS),Windows_NT)
 	$(CC) $(CFLAGS) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES) $(STATIC_LIBRARY) -o $(TARGET) $(LDFLAGS)
 endif
 build_test_via_dynamic_link: build
-ifeq ($(OS),Windows_NT)
+ifeq ($(OS)$(CC),Windows_NTgcc)
+	mkdir -p build
+	$(CC) $(CFLAGS) $(INC_DIRS) -L$(DYNAMIC_LIBRARY) $(SYMBOLS) $(SRC_FILES) -o $(TARGET) -lqiniu_ng_c $(LDFLAGS)
+else ifeq ($(OS),Windows_NT)
 	$(CC) $(CFLAGS) $(SRC_FILES) $(INC_DIRS) $(SYMBOLS) /link /out:$(TARGET)
 else
 	mkdir -p build
@@ -68,7 +79,7 @@ doc: libqiniu_ng.h
 test:
 ifeq ($(OS),Windows_NT)
 	$(MAKE) build_test_via_dynamic_link
-	.\$(TARGET)
+	./$(TARGET)
 	rm $(TARGET)
 else
 	$(MAKE) build_test_via_static_link
