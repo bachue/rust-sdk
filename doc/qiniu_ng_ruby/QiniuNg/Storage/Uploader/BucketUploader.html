@@ -292,7 +292,7 @@
       
         &mdash;
         <div class='inline'>
-<p>自定义变量 <a href="https://developer.qiniu.com/kodo/manual/1235/vars#xvar" target="_parent" title="https://developer.qiniu.com/kodo/manual/1235/vars#xvar">https://developer.qiniu.com/kodo/manual/1235/vars#xvar</a></p>
+<p><a href="https://developer.qiniu.com/kodo/manual/1235/vars#xvar">自定义变量</a></p>
 </div>
       
     </li>
@@ -346,8 +346,9 @@
       
         &mdash;
         <div class='inline'>
-<p>分片上传策略，可以接受 :default, :threshold, :always_be_resumeable,
-:never_be_resumeable 四种取值 默认且推荐使用 default 策略</p>
+<p>分片上传策略，可以接受 <code>:default</code>, <code>:threshold</code>,
+<code>:always_be_resumeable</code>, <code>:never_be_resumeable</code> 四种取值
+默认且推荐使用 default 策略</p>
 </div>
       
     </li>
@@ -383,7 +384,7 @@
       
         &mdash;
         <div class='inline'>
-<p>分片上传策略阙值，仅当 resumable_policy 为 :threshold 时起效，为其设置分片上传的阙值</p>
+<p>分片上传策略阙值，仅当 resumable_policy 为 <code>:threshold</code> 时起效，为其设置分片上传的阙值</p>
 </div>
       
     </li>
@@ -539,7 +540,7 @@
                                 <span class='label'>upload_threshold:</span> <span class='id identifier rubyid_upload_threshold'>upload_threshold</span><span class='comma'>,</span>
                                 <span class='label'>thread_pool_size:</span> <span class='id identifier rubyid_thread_pool_size'>thread_pool_size</span><span class='comma'>,</span>
                                 <span class='label'>max_concurrency:</span> <span class='id identifier rubyid_max_concurrency'>max_concurrency</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_reader'>reader</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='symbol'>:CoreFFI</span><span class='rparen'>)</span><span class='op'>::</span><span class='const'>QiniuNgReadableT</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_reader'>reader</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>QiniuNgReadableT</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='id identifier rubyid_reader'>reader</span><span class='lbracket'>[</span><span class='symbol'>:context</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='id identifier rubyid_reader'>reader</span><span class='lbracket'>[</span><span class='symbol'>:read_func</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span><span class='comma'>,</span> <span class='id identifier rubyid_have_read'>have_read</span><span class='op'>|</span>
                          <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span>
@@ -666,7 +667,7 @@
       
         &mdash;
         <div class='inline'>
-<p>自定义变量 <a href="https://developer.qiniu.com/kodo/manual/1235/vars#xvar" target="_parent" title="https://developer.qiniu.com/kodo/manual/1235/vars#xvar">https://developer.qiniu.com/kodo/manual/1235/vars#xvar</a></p>
+<p><a href="https://developer.qiniu.com/kodo/manual/1235/vars#xvar">自定义变量</a></p>
 </div>
       
     </li>
@@ -720,8 +721,9 @@
       
         &mdash;
         <div class='inline'>
-<p>分片上传策略，可以接受 :default, :threshold, :always_be_resumeable,
-:never_be_resumeable 四种取值 默认且推荐使用 default 策略</p>
+<p>分片上传策略，可以接受 <code>:default</code>, <code>:threshold</code>,
+<code>:always_be_resumeable</code>, <code>:never_be_resumeable</code> 四种取值
+默认且推荐使用 default 策略</p>
 </div>
       
     </li>
@@ -757,7 +759,7 @@
       
         &mdash;
         <div class='inline'>
-<p>分片上传策略阙值，仅当 resumable_policy 为 :threshold 时起效，为其设置分片上传的阙值</p>
+<p>分片上传策略阙值，仅当 resumable_policy 为 <code>:threshold</code> 时起效，为其设置分片上传的阙值</p>
 </div>
       
     </li>
@@ -919,7 +921,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Feb 28 04:58:55 2020 by
+  Generated on Fri Feb 28 09:12:14 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

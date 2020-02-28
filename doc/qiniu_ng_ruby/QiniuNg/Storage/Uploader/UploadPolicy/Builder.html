@@ -274,7 +274,8 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>上传成功后，七牛云向业务服务器发送 POST 请求的 URL 列表，`Host`，回调请求的内容以及其 `Content-Type`.</p>
+<p>上传成功后，七牛云向业务服务器发送 POST 请求的 URL 列表，<code>Host</code>，回调请求的内容以及其
+<code>Content-Type</code>.</p>
 </div></span>
   
 </li>
@@ -490,7 +491,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>上传成功后，自定义七牛云最终返回给上传端（在指定 `#return_url` 时是携带在跳转路径参数中）的数据.</p>
+<p>上传成功后，自定义七牛云最终返回给上传端（在指定 <code>#return_url</code> 时是携带在跳转路径参数中）的数据.</p>
 </div></span>
   
 </li>
@@ -747,13 +748,13 @@
       <pre class="lines">
 
 
+242
+243
 244
-245
-246
-247</pre>
+245</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new_for_bucket'>new_for_bucket</span><span class='lparen'>(</span><span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>config must be instance of Config</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../../Config.html" title="QiniuNg::Config (class)">Config</a></span></span><span class='rparen'>)</span>
@@ -878,13 +879,13 @@
       <pre class="lines">
 
 
+260
+261
 262
-263
-264
-265</pre>
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 262</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 260</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new_for_object'>new_for_object</span><span class='lparen'>(</span><span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='id identifier rubyid_object_key'>object_key</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>config must be instance of Config</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../../Config.html" title="QiniuNg::Config (class)">Config</a></span></span><span class='rparen'>)</span>
@@ -1009,13 +1010,13 @@
       <pre class="lines">
 
 
+278
+279
 280
-281
-282
-283</pre>
+281</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 280</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 278</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new_for_objects_with_prefix'>new_for_objects_with_prefix</span><span class='lparen'>(</span><span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='id identifier rubyid_object_key_prefix'>object_key_prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>config must be instance of Config</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../../Config.html" title="QiniuNg::Config (class)">Config</a></span></span><span class='rparen'>)</span>
@@ -1076,12 +1077,12 @@
       <pre class="lines">
 
 
-293
-294
-295</pre>
+291
+292
+293</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 293</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 291</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build!'>build!</span>
   <span class='const'><span class='object_link'><a href="../UploadPolicy.html" title="QiniuNg::Storage::Uploader::UploadPolicy (class)">UploadPolicy</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>UploadPolicy</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='ivar'>@builder</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1171,12 +1172,12 @@
       <pre class="lines">
 
 
-301
-302
-303</pre>
+299
+300
+301</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 301</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 299</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_token'>build_token</span><span class='lparen'>(</span><span class='label'>access_key:</span><span class='comma'>,</span> <span class='label'>secret_key:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../UploadToken.html" title="QiniuNg::Storage::Uploader::UploadToken (class)">UploadToken</a></span></span><span class='period'>.</span><span class='id identifier rubyid_from_policy_builder'><span class='object_link'><a href="../UploadToken.html#from_policy_builder-class_method" title="QiniuNg::Storage::Uploader::UploadToken.from_policy_builder (method)">from_policy_builder</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='label'>access_key:</span> <span class='id identifier rubyid_access_key'>access_key</span><span class='comma'>,</span> <span class='label'>secret_key:</span> <span class='id identifier rubyid_secret_key'>secret_key</span><span class='rparen'>)</span>
@@ -1198,7 +1199,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>上传成功后，七牛云向业务服务器发送 POST 请求的 URL 列表，`Host`，回调请求的内容以及其 `Content-Type`</p>
+<p>上传成功后，七牛云向业务服务器发送 POST 请求的 URL 列表，<code>Host</code>，回调请求的内容以及其
+<code>Content-Type</code></p>
 
 
   </div>
@@ -1236,7 +1238,7 @@
       
         &mdash;
         <div class='inline'>
-<p>回调时的 `Host`</p>
+<p>回调时的 <code>Host</code></p>
 </div>
       
     </li>
@@ -1270,7 +1272,7 @@
       
         &mdash;
         <div class='inline'>
-<p>回调请求体的 `Content-Type`</p>
+<p>回调请求体的 <code>Content-Type</code></p>
 </div>
       
     </li>
@@ -1302,15 +1304,15 @@
       <pre class="lines">
 
 
+372
+373
 374
 375
 376
-377
-378
-379</pre>
+377</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 374</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 372</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_callback'>callback</span><span class='lparen'>(</span><span class='id identifier rubyid_urls'>urls</span><span class='comma'>,</span> <span class='label'>host:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>body:</span><span class='comma'>,</span> <span class='label'>body_type:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_urls'>urls</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1367,13 +1369,13 @@
       <pre class="lines">
 
 
+400
+401
 402
-403
-404
-405</pre>
+403</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 402</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 400</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_disable_mime_detection'>disable_mime_detection</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_disable_mime_detection'>disable_mime_detection</span>
@@ -1428,13 +1430,13 @@
       <pre class="lines">
 
 
+407
+408
 409
-410
-411
-412</pre>
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 409</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 407</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enable_mime_detection'>enable_mime_detection</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_enable_mime_detection'>enable_mime_detection</span>
@@ -1525,13 +1527,13 @@
       <pre class="lines">
 
 
+383
+384
 385
-386
-387
-388</pre>
+386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 385</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 383</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_file_size_limitation'>file_size_limitation</span><span class='lparen'>(</span><span class='id identifier rubyid_min'>min</span><span class='comma'>,</span> <span class='id identifier rubyid_max'>max</span><span class='rparen'>)</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_file_size_limitation'>set_file_size_limitation</span><span class='lparen'>(</span><span class='id identifier rubyid_min'>min</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>||</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_max'>max</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='op'>||</span> <span class='int'>0</span><span class='rparen'>)</span>
@@ -1586,13 +1588,13 @@
       <pre class="lines">
 
 
+338
+339
 340
-341
-342
-343</pre>
+341</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 340</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 338</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_only'>insert_only</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_insert_only'>set_insert_only</span>
@@ -1667,15 +1669,15 @@
       <pre class="lines">
 
 
+391
+392
 393
 394
 395
-396
-397
-398</pre>
+396</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 391</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mime_types'>mime_types</span><span class='lparen'>(</span><span class='id identifier rubyid_mimes'>mimes</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_mimes'>mimes</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1734,13 +1736,13 @@
       <pre class="lines">
 
 
+423
+424
 425
-426
-427
-428</pre>
+426</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 425</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 423</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_object_deadline'>object_deadline</span><span class='lparen'>(</span><span class='id identifier rubyid_deadline'>deadline</span><span class='rparen'>)</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_object_deadline'>set_object_deadline</span><span class='lparen'>(</span><span class='id identifier rubyid_deadline'>deadline</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
@@ -1797,14 +1799,14 @@
       <pre class="lines">
 
 
+430
+431
 432
 433
-434
-435
-436</pre>
+434</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 432</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 430</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_object_lifetime'>object_lifetime</span><span class='lparen'>(</span><span class='id identifier rubyid_lifetime'>lifetime</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lifetime'>lifetime</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Utils.html" title="QiniuNg::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Utils/Duration.html" title="QiniuNg::Utils::Duration (class)">Duration</a></span></span><span class='op'>::</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Utils/Duration.html#initialize-instance_method" title="QiniuNg::Utils::Duration#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_lifetime'>lifetime</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_lifetime'>lifetime</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
@@ -1860,13 +1862,13 @@
       <pre class="lines">
 
 
+345
+346
 347
-348
-349
-350</pre>
+348</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 347</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 345</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_overwritable'>overwritable</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_overwritable'>set_overwritable</span>
@@ -1889,7 +1891,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>上传成功后，自定义七牛云最终返回给上传端（在指定 `#return_url` 时是携带在跳转路径参数中）的数据</p>
+<p>上传成功后，自定义七牛云最终返回给上传端（在指定 <code>#return_url</code> 时是携带在跳转路径参数中）的数据</p>
 
 
   </div>
@@ -1941,13 +1943,13 @@
       <pre class="lines">
 
 
+353
+354
 355
-356
-357
-358</pre>
+356</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 355</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 353</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_return_body'>return_body</span><span class='lparen'>(</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_return_body'>set_return_body</span><span class='lparen'>(</span><span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
@@ -2022,13 +2024,13 @@
       <pre class="lines">
 
 
+361
+362
 363
-364
-365
-366</pre>
+364</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 363</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 361</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_return_url'>return_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_return_url'>set_return_url</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
@@ -2121,13 +2123,13 @@
       <pre class="lines">
 
 
+416
+417
 418
-419
-420
-421</pre>
+419</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 418</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 416</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_as'>save_as</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='label'>force:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_save_as_key'>set_save_as_key</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_force'>force</span><span class='rparen'>)</span>
@@ -2202,13 +2204,13 @@
       <pre class="lines">
 
 
+306
+307
 308
-309
-310
-311</pre>
+309</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 308</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 306</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_token_deadline'>token_deadline</span><span class='lparen'>(</span><span class='id identifier rubyid_deadline'>deadline</span><span class='rparen'>)</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_token_deadline'>set_token_deadline</span><span class='lparen'>(</span><span class='id identifier rubyid_deadline'>deadline</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
@@ -2291,14 +2293,14 @@
       <pre class="lines">
 
 
+316
+317
 318
 319
-320
-321
-322</pre>
+320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 318</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 316</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_token_lifetime'>token_lifetime</span><span class='lparen'>(</span><span class='id identifier rubyid_lifetime'>lifetime</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lifetime'>lifetime</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Utils.html" title="QiniuNg::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Utils/Duration.html" title="QiniuNg::Utils::Duration (class)">Duration</a></span></span><span class='op'>::</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Utils/Duration.html#initialize-instance_method" title="QiniuNg::Utils::Duration#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_lifetime'>lifetime</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_lifetime'>lifetime</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
@@ -2354,13 +2356,13 @@
       <pre class="lines">
 
 
+331
+332
 333
-334
-335
-336</pre>
+334</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 333</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 331</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_use_infrequent_storage'>use_infrequent_storage</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_use_infrequent_storage'>use_infrequent_storage</span>
@@ -2415,13 +2417,13 @@
       <pre class="lines">
 
 
+324
+325
 326
-327
-328
-329</pre>
+327</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 326</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 324</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_use_normal_storage'>use_normal_storage</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_use_normal_storage'>use_normal_storage</span>
@@ -2437,7 +2439,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Feb 28 04:58:55 2020 by
+  Generated on Fri Feb 28 09:12:14 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

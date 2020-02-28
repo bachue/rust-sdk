@@ -393,7 +393,8 @@
       
         &mdash;
         <div class='inline'>
-<p>区域 ID，参考官方文档 <a href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint" target="_parent" title="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">https://developer.qiniu.com/kodo/manual/1671/region-endpoint</a></p>
+<p>区域 ID，参考 <a
+href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档</a></p>
 </div>
       
     </li>
@@ -788,13 +789,13 @@
       <pre class="lines">
 
 
+96
 97
 98
-99
-100</pre>
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_api_urls'>api_urls</span><span class='lparen'>(</span><span class='label'>use_https:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='symbol'>:api_urls</span><span class='comma'>,</span> <span class='id identifier rubyid_use_https'>use_https</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='ivar'>@region</span><span class='period'>.</span><span class='id identifier rubyid_get_api_urls'>get_api_urls</span><span class='lparen'>(</span><span class='id identifier rubyid_use_https'>use_https</span><span class='rparen'>)</span>
@@ -863,15 +864,13 @@
 88
 89
 90
-91
-92</pre>
+91</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_id'>id</span>
-  <span class='id identifier rubyid_core_ffi'>core_ffi</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span> <span class='symbol'>:CoreFFI</span>
-  <span class='id identifier rubyid_id_s'>id_s</span> <span class='op'>=</span> <span class='id identifier rubyid_core_ffi'>core_ffi</span><span class='op'>::</span><span class='const'>QiniuNgRegionIdTWrapper</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_id_s'>id_s</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>QiniuNgRegionIdTWrapper</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='ivar'>@region</span><span class='period'>.</span><span class='id identifier rubyid_get_region_id'>get_region_id</span><span class='lparen'>(</span><span class='id identifier rubyid_id_s'>id_s</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_id_s'>id_s</span><span class='lbracket'>[</span><span class='symbol'>:inner</span><span class='rbracket'>]</span>
   <span class='kw'>when</span> <span class='symbol'>:qiniu_ng_region_z0</span> <span class='kw'>then</span> <span class='symbol'>:z0</span>
@@ -954,13 +953,13 @@
       <pre class="lines">
 
 
+104
 105
 106
-107
-108</pre>
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_io_urls'>io_urls</span><span class='lparen'>(</span><span class='label'>use_https:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='symbol'>:io_urls</span><span class='comma'>,</span> <span class='id identifier rubyid_use_https'>use_https</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='ivar'>@region</span><span class='period'>.</span><span class='id identifier rubyid_get_io_urls'>get_io_urls</span><span class='lparen'>(</span><span class='id identifier rubyid_use_https'>use_https</span><span class='rparen'>)</span>
@@ -1037,13 +1036,13 @@
       <pre class="lines">
 
 
+112
 113
 114
-115
-116</pre>
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rs_urls'>rs_urls</span><span class='lparen'>(</span><span class='label'>use_https:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='symbol'>:rs_urls</span><span class='comma'>,</span> <span class='id identifier rubyid_use_https'>use_https</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='ivar'>@region</span><span class='period'>.</span><span class='id identifier rubyid_get_rs_urls'>get_rs_urls</span><span class='lparen'>(</span><span class='id identifier rubyid_use_https'>use_https</span><span class='rparen'>)</span>
@@ -1120,13 +1119,13 @@
       <pre class="lines">
 
 
+120
 121
 122
-123
-124</pre>
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rsf_urls'>rsf_urls</span><span class='lparen'>(</span><span class='label'>use_https:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='symbol'>:rsf_urls</span><span class='comma'>,</span> <span class='id identifier rubyid_use_https'>use_https</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='ivar'>@region</span><span class='period'>.</span><span class='id identifier rubyid_get_rsf_urls'>get_rsf_urls</span><span class='lparen'>(</span><span class='id identifier rubyid_use_https'>use_https</span><span class='rparen'>)</span>
@@ -1203,13 +1202,13 @@
       <pre class="lines">
 
 
+128
 129
 130
-131
-132</pre>
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/region.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_up_urls'>up_urls</span><span class='lparen'>(</span><span class='label'>use_https:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='lbracket'>[</span><span class='symbol'>:up_urls</span><span class='comma'>,</span> <span class='id identifier rubyid_use_https'>use_https</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='ivar'>@region</span><span class='period'>.</span><span class='id identifier rubyid_get_up_urls'>get_up_urls</span><span class='lparen'>(</span><span class='id identifier rubyid_use_https'>use_https</span><span class='rparen'>)</span>
@@ -1225,7 +1224,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Feb 28 04:58:55 2020 by
+  Generated on Fri Feb 28 09:12:13 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

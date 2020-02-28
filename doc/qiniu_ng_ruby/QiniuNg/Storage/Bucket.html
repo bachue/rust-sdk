@@ -371,8 +371,8 @@
       
         &mdash;
         <div class='inline'>
-<p>存储空间区域，如果传入 nil 将使用懒加载自动检测。 可以接受 <span class='object_link'><a href="Region.html" title="QiniuNg::Storage::Region (class)">Region</a></span> 实例或符号，对于传入符号的情况，如果是 :auto_detect
-表示立即检测，而其他符号表示区域 ID</p>
+<p>存储空间区域，如果传入 nil 将使用懒加载自动检测。 可以接受 <span class='object_link'><a href="Region.html" title="QiniuNg::Storage::Region (class)">Region</a></span> 实例或符号，对于传入符号的情况，如果是
+<code>:auto_detect</code> 表示立即检测，而其他符号表示区域 ID</p>
 </div>
       
     </li>
@@ -909,7 +909,7 @@
       <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/bucket.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uploader'>uploader</span><span class='lparen'>(</span><span class='label'>thread_pool_size:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='const'>BucketUploader</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new_from_bucket</span><span class='comma'>,</span> <span class='ivar'>@uploader_manager</span><span class='comma'>,</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='label'>thread_pool_size:</span> <span class='id identifier rubyid_thread_pool_size'>thread_pool_size</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Uploader.html" title="QiniuNg::Storage::Uploader (class)">Uploader</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Uploader/BucketUploader.html" title="QiniuNg::Storage::Uploader::BucketUploader (class)">BucketUploader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new_from_bucket</span><span class='comma'>,</span> <span class='ivar'>@uploader_manager</span><span class='comma'>,</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='label'>thread_pool_size:</span> <span class='id identifier rubyid_thread_pool_size'>thread_pool_size</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -921,7 +921,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Feb 28 04:58:55 2020 by
+  Generated on Fri Feb 28 09:12:13 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

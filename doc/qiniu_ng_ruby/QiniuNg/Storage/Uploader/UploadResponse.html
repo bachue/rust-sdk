@@ -222,16 +222,16 @@
       <pre class="lines">
 
 
+47
 48
 49
 50
 51
 52
-53
-54</pre>
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_response.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_response.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='symbol'>:parsed_json</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_as_json'>as_json</span><span class='rparen'>)</span>
@@ -296,16 +296,16 @@
       <pre class="lines">
 
 
+38
 39
 40
 41
 42
 43
-44
-45</pre>
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_response.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_response.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='symbol'>:json</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
@@ -369,16 +369,14 @@
 23
 24
 25
-26
-27</pre>
+26</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_response.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
-  <span class='id identifier rubyid_core_ffi'>core_ffi</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span> <span class='symbol'>:CoreFFI</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>FFI</span><span class='op'>::</span><span class='const'>MemoryPointer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>256</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_data_len'>data_len</span> <span class='op'>=</span> <span class='id identifier rubyid_core_ffi'>core_ffi</span><span class='op'>::</span><span class='const'>Size</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_data_len'>data_len</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>Size</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@upload_response</span><span class='period'>.</span><span class='id identifier rubyid_get_hash'>get_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_data_len'>data_len</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_data_len'>data_len</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
   <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_read_string'>read_string</span><span class='lparen'>(</span><span class='id identifier rubyid_data_len'>data_len</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -432,14 +430,14 @@
       <pre class="lines">
 
 
+30
 31
 32
 33
-34
-35</pre>
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_response.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_response.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_key'>key</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='symbol'>:key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='ivar'>@upload_response</span><span class='period'>.</span><span class='id identifier rubyid_get_key'>get_key</span>
@@ -456,7 +454,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Feb 28 04:58:55 2020 by
+  Generated on Fri Feb 28 09:12:14 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

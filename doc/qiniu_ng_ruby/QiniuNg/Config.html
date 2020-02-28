@@ -524,7 +524,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(use_https: nil, api_host: nil, rs_host: nil, rsf_host: nil, uc_host: nil, uplog_host: nil, batch_max_operation_size: nil, http_connect_timeout: nil, http_low_transfer_speed: nil, http_low_transfer_speed_timeout: nil, http_request_retries: nil, http_request_retry_delay: nil, http_request_timeout: nil, tcp_keepalive_idle_timeout: nil, tcp_keepalive_probe_interval: nil, upload_block_size: nil, upload_threshold: nil, upload_token_lifetime: nil, upload_recorder_always_flush_records: nil, upload_recorder_root_directory: nil, upload_recorder_upload_block_lifetime: nil)  &#x21d2; Object </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(use_https: nil, api_host: nil, rs_host: nil, rsf_host: nil, uc_host: nil, uplog_host: nil, batch_max_operation_size: nil, http_connect_timeout: nil, http_low_transfer_speed: nil, http_low_transfer_speed_timeout: nil, http_request_retries: nil, http_request_retry_delay: nil, http_request_timeout: nil, tcp_keepalive_idle_timeout: nil, tcp_keepalive_probe_interval: nil, upload_block_size: nil, upload_threshold: nil, upload_token_lifetime: nil, upload_recorder_always_flush_records: nil, upload_recorder_root_directory: nil, upload_recorder_upload_block_lifetime: nil, uplog_file_lock_policy: nil, uplog_file_max_size: nil, uplog_file_path: nil, uplog_file_upload_threshold: nil)  &#x21d2; Object </a>
     
 
     
@@ -1108,7 +1108,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(use_https: nil, api_host: nil, rs_host: nil, rsf_host: nil, uc_host: nil, uplog_host: nil, batch_max_operation_size: nil, http_connect_timeout: nil, http_low_transfer_speed: nil, http_low_transfer_speed_timeout: nil, http_request_retries: nil, http_request_retry_delay: nil, http_request_timeout: nil, tcp_keepalive_idle_timeout: nil, tcp_keepalive_probe_interval: nil, upload_block_size: nil, upload_threshold: nil, upload_token_lifetime: nil, upload_recorder_always_flush_records: nil, upload_recorder_root_directory: nil, upload_recorder_upload_block_lifetime: nil)  &#x21d2; <tt>Object</tt> 
+    #<strong>initialize</strong>(use_https: nil, api_host: nil, rs_host: nil, rsf_host: nil, uc_host: nil, uplog_host: nil, batch_max_operation_size: nil, http_connect_timeout: nil, http_low_transfer_speed: nil, http_low_transfer_speed_timeout: nil, http_request_retries: nil, http_request_retry_delay: nil, http_request_timeout: nil, tcp_keepalive_idle_timeout: nil, tcp_keepalive_probe_interval: nil, upload_block_size: nil, upload_threshold: nil, upload_token_lifetime: nil, upload_recorder_always_flush_records: nil, upload_recorder_root_directory: nil, upload_recorder_upload_block_lifetime: nil, uplog_file_lock_policy: nil, uplog_file_max_size: nil, uplog_file_path: nil, uplog_file_upload_threshold: nil)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1507,6 +1507,78 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>uplog_file_lock_policy</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>设置文件锁策略，默认为 “在追加日志时为日志文件加共享锁，而上传时使用排他锁”</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>uplog_file_max_size</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>设置上传日志文件的最大尺寸，单位为字节，默认为 4 MB</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>uplog_file_path</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>设置上传日志文件路径</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>uplog_file_upload_threshold</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>设置上传日志文件的上传阙值，单位为字节，默认为 4 KB</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -1573,7 +1645,15 @@
 68
 69
 70
-71</pre>
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 14</span>
@@ -1599,6 +1679,10 @@
                <span class='label'>upload_recorder_always_flush_records:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                <span class='label'>upload_recorder_root_directory:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                <span class='label'>upload_recorder_upload_block_lifetime:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+               <span class='label'>uplog_file_lock_policy:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+               <span class='label'>uplog_file_max_size:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+               <span class='label'>uplog_file_path:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+               <span class='label'>uplog_file_upload_threshold:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                <span class='label'>builder:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                <span class='label'>config:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@cache</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1632,6 +1716,10 @@
   <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_upload_recorder_always_flush_records'>upload_recorder_always_flush_records</span> <span class='op'>=</span> <span class='id identifier rubyid_upload_recorder_always_flush_records'>upload_recorder_always_flush_records</span> <span class='kw'>unless</span> <span class='id identifier rubyid_upload_recorder_always_flush_records'>upload_recorder_always_flush_records</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
   <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_upload_recorder_root_directory'>upload_recorder_root_directory</span> <span class='op'>=</span> <span class='id identifier rubyid_upload_recorder_root_directory'>upload_recorder_root_directory</span> <span class='kw'>unless</span> <span class='id identifier rubyid_upload_recorder_root_directory'>upload_recorder_root_directory</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
   <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_upload_recorder_upload_block_lifetime'>upload_recorder_upload_block_lifetime</span> <span class='op'>=</span> <span class='id identifier rubyid_upload_recorder_upload_block_lifetime'>upload_recorder_upload_block_lifetime</span> <span class='kw'>unless</span> <span class='id identifier rubyid_upload_recorder_upload_block_lifetime'>upload_recorder_upload_block_lifetime</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_uplog_file_lock_policy'>uplog_file_lock_policy</span> <span class='op'>=</span> <span class='id identifier rubyid_uplog_file_lock_policy'>uplog_file_lock_policy</span> <span class='kw'>unless</span> <span class='id identifier rubyid_uplog_file_lock_policy'>uplog_file_lock_policy</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_uplog_file_max_size'>uplog_file_max_size</span> <span class='op'>=</span> <span class='id identifier rubyid_uplog_file_max_size'>uplog_file_max_size</span> <span class='kw'>unless</span> <span class='id identifier rubyid_uplog_file_max_size'>uplog_file_max_size</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_uplog_file_path'>uplog_file_path</span> <span class='op'>=</span> <span class='id identifier rubyid_uplog_file_path'>uplog_file_path</span> <span class='kw'>unless</span> <span class='id identifier rubyid_uplog_file_path'>uplog_file_path</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+  <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_uplog_file_upload_threshold'>uplog_file_upload_threshold</span> <span class='op'>=</span> <span class='id identifier rubyid_uplog_file_upload_threshold'>uplog_file_upload_threshold</span> <span class='kw'>unless</span> <span class='id identifier rubyid_uplog_file_upload_threshold'>uplog_file_upload_threshold</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
   <span class='ivar'>@config</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
               <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>Config</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span><span class='lparen'>(</span><span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@builder</span><span class='rparen'>)</span><span class='rparen'>)</span>
             <span class='kw'>end</span>
@@ -1695,7 +1783,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -1750,7 +1838,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -1805,7 +1893,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 141</span>
 
 </pre>
     </td>
@@ -1860,7 +1948,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 114</span>
 
 </pre>
     </td>
@@ -1915,7 +2003,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -1970,7 +2058,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -2025,7 +2113,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -2080,7 +2168,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 114</span>
 
 </pre>
     </td>
@@ -2135,7 +2223,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 141</span>
 
 </pre>
     </td>
@@ -2190,7 +2278,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -2245,7 +2333,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -2300,7 +2388,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 141</span>
 
 </pre>
     </td>
@@ -2355,7 +2443,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -2410,7 +2498,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 141</span>
 
 </pre>
     </td>
@@ -2465,7 +2553,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -2520,7 +2608,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -2575,7 +2663,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -2630,7 +2718,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -2685,7 +2773,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -2740,7 +2828,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -2795,7 +2883,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -2850,7 +2938,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -2905,7 +2993,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -2960,7 +3048,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -3015,7 +3103,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 141</span>
 
 </pre>
     </td>
@@ -3070,7 +3158,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 114</span>
 
 </pre>
     </td>
@@ -3125,7 +3213,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -3180,7 +3268,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -3235,7 +3323,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 141</span>
 
 </pre>
     </td>
@@ -3290,7 +3378,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 233</span>
 
 </pre>
     </td>
@@ -3345,7 +3433,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 114</span>
 
 </pre>
     </td>
@@ -3397,28 +3485,26 @@
       <pre class="lines">
 
 
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
 290
 291
-292</pre>
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 278</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 290</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uplog_file_lock_policy'>uplog_file_lock_policy</span>
-  <span class='id identifier rubyid_core_ffi'>core_ffi</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='symbol'>:CoreFFI</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_policy'>policy</span> <span class='op'>=</span> <span class='id identifier rubyid_core_ffi'>core_ffi</span><span class='op'>::</span><span class='const'>QiniuNgUploadLoggerLockPolicyTWrapper</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_policy'>policy</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>QiniuNgUploadLoggerLockPolicyTWrapper</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_uplog_file_lock_policy'>get_uplog_file_lock_policy</span><span class='lparen'>(</span><span class='id identifier rubyid_policy'>policy</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_policy'>policy</span><span class='lbracket'>[</span><span class='symbol'>:inner</span><span class='rbracket'>]</span>
   <span class='kw'>when</span> <span class='symbol'>:qiniu_ng_lock_policy_lock_shared_duration_appending_and_lock_exclusive_duration_uploading</span>
@@ -3480,19 +3566,17 @@
       <pre class="lines">
 
 
-305
-306
-307
-308
-309
-310</pre>
+315
+316
+317
+318
+319</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 305</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 315</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uplog_file_max_size'>uplog_file_max_size</span>
-  <span class='id identifier rubyid_core_ffi'>core_ffi</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='symbol'>:CoreFFI</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_u32'>u32</span> <span class='op'>=</span> <span class='id identifier rubyid_core_ffi'>core_ffi</span><span class='op'>::</span><span class='const'>U32</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_u32'>u32</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>U32</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_uplog_file_max_size'>get_uplog_file_max_size</span><span class='lparen'>(</span><span class='id identifier rubyid_u32'>u32</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_u32'>u32</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -3548,7 +3632,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -3600,19 +3684,17 @@
       <pre class="lines">
 
 
-296
-297
-298
-299
-300
-301</pre>
+307
+308
+309
+310
+311</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 296</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 307</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uplog_file_upload_threshold'>uplog_file_upload_threshold</span>
-  <span class='id identifier rubyid_core_ffi'>core_ffi</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='period'>.</span><span class='id identifier rubyid_const_get'>const_get</span><span class='lparen'>(</span><span class='symbol'>:CoreFFI</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_u32'>u32</span> <span class='op'>=</span> <span class='id identifier rubyid_core_ffi'>core_ffi</span><span class='op'>::</span><span class='const'>U32</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_u32'>u32</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>U32</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_get_uplog_file_upload_threshold'>get_uplog_file_upload_threshold</span><span class='lparen'>(</span><span class='id identifier rubyid_u32'>u32</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_u32'>u32</span><span class='lbracket'>[</span><span class='symbol'>:value</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -3668,7 +3750,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -3723,7 +3805,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -3778,7 +3860,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 114</span>
 
 </pre>
     </td>
@@ -3833,7 +3915,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 172</span>
 
 </pre>
     </td>
@@ -3846,7 +3928,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Feb 28 04:58:54 2020 by
+  Generated on Fri Feb 28 09:12:13 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>
