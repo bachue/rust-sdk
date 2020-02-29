@@ -2022,7 +2022,7 @@
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_seekable</span> {
             <span class="self">self</span>.<span class="ident">io</span>
                 .<span class="ident">seek</span>(<span class="ident">SeekFrom</span>::<span class="ident">Start</span>(<span class="number">0</span>))
-                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error_from_parts</span>(<span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>))<span class="question-mark">?</span>;
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(<span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>))<span class="question-mark">?</span>;
         }
         <span class="self">self</span>.<span class="ident">uploaded_size</span>.<span class="ident">store</span>(<span class="number">0</span>, <span class="ident">Relaxed</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">uploading_progress_callback</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">uploading_progress_callback</span> {
@@ -2188,7 +2188,7 @@
                         .<span class="ident">drop</span>(<span class="ident">file_path</span>, <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">key</span><span class="op">|</span> <span class="ident">key</span>.<span class="ident">as_ref</span>()));
                 })
             }),
-            <span class="ident">IOStatusResult</span>::<span class="ident">IOError</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error_from_parts</span>(
+            <span class="ident">IOStatusResult</span>::<span class="ident">IOError</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(
                 <span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>),
                 <span class="prelude-val">None</span>,
                 <span class="prelude-val">None</span>,
@@ -2330,7 +2330,7 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">upload_recorder</span>) <span class="op">=</span> <span class="ident">upload_recorder</span> {
             <span class="ident">upload_recorder</span>
                 .<span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>.<span class="ident">etag</span>, <span class="ident">part_number</span>)
-                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error_from_parts</span>(<span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>))<span class="question-mark">?</span>;
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(<span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>))<span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(<span class="ident">result</span>.<span class="ident">etag</span>)
     }
@@ -2836,7 +2836,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="ident">called</span><span class="op">|</span> {
                         <span class="kw">if</span> <span class="ident">called</span> <span class="op">&gt;=</span> <span class="number">3</span> {
-                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_retryable_error_from_parts</span>(
+                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_retryable_error</span>(
                                 <span class="ident">HTTPErrorKind</span>::<span class="ident">MaliciousResponse</span>,
                                 <span class="bool-val">true</span>,
                                 <span class="prelude-val">None</span>,
@@ -2934,7 +2934,7 @@
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
-                        <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_zone_unretryable_error_from_parts</span>(
+                        <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_zone_unretryable_error</span>(
                             <span class="ident">HTTPErrorKind</span>::<span class="ident">MaliciousResponse</span>,
                             <span class="bool-val">true</span>,
                             <span class="prelude-val">None</span>,
@@ -3090,7 +3090,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="ident">called</span><span class="op">|</span> {
                         <span class="kw">if</span> <span class="ident">called</span> <span class="op">&gt;=</span> <span class="number">3</span> {
-                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_retryable_error_from_parts</span>(
+                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_retryable_error</span>(
                                 <span class="ident">HTTPErrorKind</span>::<span class="ident">MaliciousResponse</span>,
                                 <span class="bool-val">true</span>,
                                 <span class="prelude-val">None</span>,
@@ -3214,7 +3214,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="ident">request</span>, <span class="ident">called</span><span class="op">|</span> {
                         <span class="kw">if</span> <span class="ident">called</span> <span class="op">==</span> <span class="number">3</span> {
-                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error_from_parts</span>(
+                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(
                                 <span class="ident">HTTPErrorKind</span>::<span class="ident">MaliciousResponse</span>,
                                 <span class="prelude-val">None</span>,
                                 <span class="prelude-val">None</span>,
@@ -3327,7 +3327,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="ident">called</span><span class="op">|</span> {
                         <span class="kw">if</span> <span class="ident">called</span> <span class="op">&gt;=</span> <span class="number">3</span> {
-                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error_from_parts</span>(
+                            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(
                                 <span class="ident">HTTPErrorKind</span>::<span class="ident">MaliciousResponse</span>,
                                 <span class="prelude-val">None</span>,
                                 <span class="prelude-val">None</span>,
