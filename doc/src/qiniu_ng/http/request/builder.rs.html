@@ -151,7 +151,7 @@
     },
     <span class="ident">HTTPError</span>, <span class="ident">HTTPResult</span>, <span class="ident">HeaderName</span>, <span class="ident">HeaderValue</span>, <span class="ident">Headers</span>, <span class="ident">Method</span>, <span class="ident">Parts</span>, <span class="ident">Request</span>,
 };
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Config</span>, <span class="ident">Credential</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">utils</span>::<span class="ident">mime</span>, <span class="ident">Config</span>, <span class="ident">Credential</span>};
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Serialize</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">borrow</span>::<span class="ident">Cow</span>, <span class="ident">collections</span>::<span class="ident">HashMap</span>, <span class="ident">time</span>::<span class="ident">Duration</span>};
 
@@ -255,13 +255,13 @@
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">accept_json</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">header</span>(<span class="string">&quot;Accept&quot;</span>, <span class="string">&quot;application/json&quot;</span>);
+        <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">header</span>(<span class="string">&quot;Accept&quot;</span>, <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>);
         <span class="self">self</span>.<span class="ident">parts</span>.<span class="ident">read_body</span> <span class="op">=</span> <span class="bool-val">true</span>;
         <span class="self">self</span>
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">no_body</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">header</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/x-www-form-urlencoded&quot;</span>);
+        <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">header</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="ident">mime</span>::<span class="ident">FORM_MIME</span>);
         <span class="self">self</span>.<span class="ident">build</span>()
     }
 
@@ -277,7 +277,7 @@
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">json_body</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Serialize</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">serde_json</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
         <span class="kw">let</span> <span class="ident">serialized_body</span> <span class="op">=</span> <span class="ident">serde_json</span>::<span class="ident">to_vec</span>(<span class="ident">body</span>)<span class="question-mark">?</span>;
-        <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">header</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;application/json&quot;</span>);
+        <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">header</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>);
         <span class="self">self</span>.<span class="ident">parts</span>.<span class="ident">body</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">serialized_body</span>);
         <span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">build</span>())
     }

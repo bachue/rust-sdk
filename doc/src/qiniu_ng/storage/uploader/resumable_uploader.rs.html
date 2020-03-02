@@ -1712,6 +1712,7 @@
 <span id="1712">1712</span>
 <span id="1713">1713</span>
 <span id="1714">1714</span>
+<span id="1715">1715</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::{
     <span class="ident">io_status_manager</span>::{<span class="ident">IOStatusManager</span>, <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">IOStatusResult</span>},
@@ -2489,6 +2490,7 @@
         <span class="ident">config</span>::<span class="ident">ConfigBuilder</span>,
         <span class="ident">credential</span>::<span class="ident">Credential</span>,
         <span class="ident">http</span>::{<span class="ident">DomainsManagerBuilder</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">HTTPError</span>, <span class="ident">ErrorKind</span> <span class="kw">as</span> <span class="ident">HTTPErrorKind</span>, <span class="ident">Headers</span>, <span class="ident">Method</span>},
+        <span class="ident">utils</span>::<span class="ident">mime</span>,
     };
     <span class="kw">use</span> <span class="ident">qiniu_http</span>::<span class="ident">ResponseBuilder</span>;
     <span class="kw">use</span> <span class="ident">qiniu_test_utils</span>::{
@@ -2517,7 +2519,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2541,7 +2543,7 @@
                             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected call `PUT {}` for {} times&quot;</span>, <span class="ident">request</span>.<span class="ident">url</span>(), <span class="ident">called</span>);
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2561,7 +2563,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2621,7 +2623,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2641,7 +2643,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2661,7 +2663,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2721,7 +2723,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2745,7 +2747,7 @@
                             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected call `PUT {}` for {} times&quot;</span>, <span class="ident">request</span>.<span class="ident">url</span>(), <span class="ident">called</span>);
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2765,7 +2767,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2815,7 +2817,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2844,7 +2846,7 @@
                             ));
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2868,7 +2870,7 @@
                             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected call `PUT {}` for {} times&quot;</span>, <span class="ident">request</span>.<span class="ident">url</span>(), <span class="ident">called</span>);
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2888,7 +2890,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2953,7 +2955,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2977,7 +2979,7 @@
                             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected call `PUT {}` for {} times&quot;</span>, <span class="ident">request</span>.<span class="ident">url</span>(), <span class="ident">called</span>);
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -2997,7 +2999,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3049,7 +3051,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3069,7 +3071,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3098,7 +3100,7 @@
                             ));
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3122,7 +3124,7 @@
                             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected call `PUT {}` for {} times&quot;</span>, <span class="ident">request</span>.<span class="ident">url</span>(), <span class="ident">called</span>);
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3142,7 +3144,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3193,7 +3195,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3223,7 +3225,7 @@
                             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected call `PUT {}` for {} times&quot;</span>, <span class="ident">request</span>.<span class="ident">url</span>(), <span class="ident">called</span>);
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3243,7 +3245,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3306,7 +3308,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="ident">called</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3334,7 +3336,7 @@
                             ));
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3358,7 +3360,7 @@
                             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected call `PUT {}` for {} times&quot;</span>, <span class="ident">request</span>.<span class="ident">url</span>(), <span class="ident">called</span>);
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
@@ -3378,7 +3380,7 @@
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
                     <span class="op">|</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">|</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
-                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="string">&quot;application/json&quot;</span>.<span class="ident">into</span>());
+                        <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;Content-Type&quot;</span>.<span class="ident">into</span>(), <span class="ident">mime</span>::<span class="ident">JSON_MIME</span>.<span class="ident">into</span>());
                         <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;X-Reqid&quot;</span>.<span class="ident">into</span>(), <span class="ident">fake_req_id</span>().<span class="ident">into</span>());
                         <span class="prelude-val">Ok</span>(<span class="ident">ResponseBuilder</span>::<span class="ident">default</span>()
                             .<span class="ident">status_code</span>(<span class="number">200u16</span>)
