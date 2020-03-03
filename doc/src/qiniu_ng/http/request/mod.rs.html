@@ -825,6 +825,9 @@
 <span id="825">825</span>
 <span id="826">826</span>
 <span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">mod</span> <span class="ident">builder</span>;
 <span class="kw">mod</span> <span class="ident">parts</span>;
@@ -867,6 +870,7 @@
                 <span class="ident">HTTPErrorKind</span>::<span class="ident">UnknownError</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">err</span>)),
                 <span class="bool-val">true</span>,
                 <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">parts</span>.<span class="ident">method</span>.<span class="ident">to_owned</span>()),
+                <span class="prelude-val">None</span>,
                 <span class="prelude-val">None</span>,
             )
         })<span class="question-mark">?</span>;
@@ -999,6 +1003,7 @@
                         <span class="ident">HTTPErrorKind</span>::<span class="ident">UnknownError</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">err</span>)),
                         <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">parts</span>.<span class="ident">method</span>),
                         <span class="prelude-val">Some</span>(<span class="ident">url</span>.<span class="ident">into</span>()),
+                        <span class="prelude-val">None</span>,
                     )
                 })<span class="question-mark">?</span>
                 .<span class="ident">into_string</span>();
@@ -1191,6 +1196,7 @@
                 <span class="self">self</span>.<span class="ident">retry_kind</span>,
                 <span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>, <span class="string">&quot;Test Error&quot;</span>)),
                 <span class="self">self</span>.<span class="ident">is_retry_safe</span>,
+                <span class="prelude-val">None</span>,
                 <span class="prelude-val">None</span>,
                 <span class="prelude-val">None</span>,
             ))

@@ -429,6 +429,36 @@
 <span id="429">429</span>
 <span id="430">430</span>
 <span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::{
     <span class="ident">method</span>::<span class="ident">Method</span>,
@@ -642,13 +672,14 @@
 
     <span class="doccomment">/// 通过直接赋值的方式创建 HTTP 错误</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL 和 HTTP 方法即可</span>
+    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL，HTTP 和 RequestID 方法即可</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
         <span class="ident">retry_kind</span>: <span class="ident">RetryKind</span>,
         <span class="ident">error_kind</span>: <span class="ident">ErrorKind</span>,
         <span class="ident">is_retry_safe</span>: <span class="ident">bool</span>,
         <span class="ident">method</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Method</span><span class="op">&gt;</span>,
         <span class="ident">url</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">URL</span><span class="op">&gt;</span>,
+        <span class="ident">request_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RequestID</span><span class="op">&gt;</span>,
     ) <span class="op">-&gt;</span> <span class="ident">Error</span> {
         <span class="ident">Error</span> {
             <span class="ident">retry_kind</span>,
@@ -656,52 +687,81 @@
             <span class="ident">is_retry_safe</span>,
             <span class="ident">method</span>,
             <span class="ident">url</span>,
-            <span class="ident">request_id</span>: <span class="prelude-val">None</span>,
+            <span class="ident">request_id</span>,
         }
     }
 
     <span class="doccomment">/// 创建可重试的 HTTP 错误</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL 和 HTTP 方法即可</span>
+    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL，HTTP 和 RequestID 方法即可</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_retryable_error</span>(
         <span class="ident">error_kind</span>: <span class="ident">ErrorKind</span>,
         <span class="ident">is_retry_safe</span>: <span class="ident">bool</span>,
         <span class="ident">method</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Method</span><span class="op">&gt;</span>,
         <span class="ident">url</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">URL</span><span class="op">&gt;</span>,
+        <span class="ident">request_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RequestID</span><span class="op">&gt;</span>,
     ) <span class="op">-&gt;</span> <span class="ident">Error</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">RetryKind</span>::<span class="ident">RetryableError</span>, <span class="ident">error_kind</span>, <span class="ident">is_retry_safe</span>, <span class="ident">method</span>, <span class="ident">url</span>)
+        <span class="self">Self</span>::<span class="ident">new</span>(
+            <span class="ident">RetryKind</span>::<span class="ident">RetryableError</span>,
+            <span class="ident">error_kind</span>,
+            <span class="ident">is_retry_safe</span>,
+            <span class="ident">method</span>,
+            <span class="ident">url</span>,
+            <span class="ident">request_id</span>,
+        )
     }
 
     <span class="doccomment">/// 创建区域不可重试的 HTTP 错误</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL 和 HTTP 方法即可</span>
+    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL，HTTP 和 RequestID 方法即可</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_zone_unretryable_error</span>(
         <span class="ident">error_kind</span>: <span class="ident">ErrorKind</span>,
         <span class="ident">is_retry_safe</span>: <span class="ident">bool</span>,
         <span class="ident">method</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Method</span><span class="op">&gt;</span>,
         <span class="ident">url</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">URL</span><span class="op">&gt;</span>,
+        <span class="ident">request_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RequestID</span><span class="op">&gt;</span>,
     ) <span class="op">-&gt;</span> <span class="ident">Error</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">RetryKind</span>::<span class="ident">ZoneUnretryableError</span>, <span class="ident">error_kind</span>, <span class="ident">is_retry_safe</span>, <span class="ident">method</span>, <span class="ident">url</span>)
+        <span class="self">Self</span>::<span class="ident">new</span>(
+            <span class="ident">RetryKind</span>::<span class="ident">ZoneUnretryableError</span>,
+            <span class="ident">error_kind</span>,
+            <span class="ident">is_retry_safe</span>,
+            <span class="ident">method</span>,
+            <span class="ident">url</span>,
+            <span class="ident">request_id</span>,
+        )
     }
 
     <span class="doccomment">/// 创建主机不可重试的 HTTP 错误</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL 和 HTTP 方法即可</span>
+    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL，HTTP 和 RequestID 方法即可</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_host_unretryable_error</span>(
         <span class="ident">error_kind</span>: <span class="ident">ErrorKind</span>,
         <span class="ident">is_retry_safe</span>: <span class="ident">bool</span>,
         <span class="ident">method</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Method</span><span class="op">&gt;</span>,
         <span class="ident">url</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">URL</span><span class="op">&gt;</span>,
+        <span class="ident">request_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RequestID</span><span class="op">&gt;</span>,
     ) <span class="op">-&gt;</span> <span class="ident">Error</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">RetryKind</span>::<span class="ident">HostUnretryableError</span>, <span class="ident">error_kind</span>, <span class="ident">is_retry_safe</span>, <span class="ident">method</span>, <span class="ident">url</span>)
+        <span class="self">Self</span>::<span class="ident">new</span>(
+            <span class="ident">RetryKind</span>::<span class="ident">HostUnretryableError</span>,
+            <span class="ident">error_kind</span>,
+            <span class="ident">is_retry_safe</span>,
+            <span class="ident">method</span>,
+            <span class="ident">url</span>,
+            <span class="ident">request_id</span>,
+        )
     }
 
     <span class="doccomment">/// 创建不可重试的 HTTP 错误</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL 和 HTTP 方法即可。</span>
+    <span class="doccomment">/// 此类错误通常发生的 HTTP 请求发生前，因此 `#new` 方法的 `request` 参数无法给出，此时，可以调用该方法，直接传入 URL，HTTP 和 RequestID 方法即可。</span>
     <span class="doccomment">/// 由于是不可重试的，因此总被认为是重试不安全的</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unretryable_error</span>(<span class="ident">error_kind</span>: <span class="ident">ErrorKind</span>, <span class="ident">method</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Method</span><span class="op">&gt;</span>, <span class="ident">url</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">URL</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Error</span> {
-        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">RetryKind</span>::<span class="ident">UnretryableError</span>, <span class="ident">error_kind</span>, <span class="bool-val">false</span>, <span class="ident">method</span>, <span class="ident">url</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unretryable_error</span>(
+        <span class="ident">error_kind</span>: <span class="ident">ErrorKind</span>,
+        <span class="ident">method</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Method</span><span class="op">&gt;</span>,
+        <span class="ident">url</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">URL</span><span class="op">&gt;</span>,
+        <span class="ident">request_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RequestID</span><span class="op">&gt;</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">Error</span> {
+        <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">RetryKind</span>::<span class="ident">UnretryableError</span>, <span class="ident">error_kind</span>, <span class="bool-val">false</span>, <span class="ident">method</span>, <span class="ident">url</span>, <span class="ident">request_id</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">extract_req_id_from_response</span>(<span class="ident">response</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Response</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RequestID</span><span class="op">&gt;</span> {

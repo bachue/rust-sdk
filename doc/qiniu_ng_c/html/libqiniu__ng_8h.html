@@ -733,10 +733,10 @@ $(document).ready(function(){initNavTree('libqiniu__ng_8h.html','');});
 <tr class="memdesc:a2c303d4efede4128c46e4e380831e34e"><td class="mdescLeft">&#160;</td><td class="mdescRight">创建 JSON 错误  <a href="#a2c303d4efede4128c46e4e380831e34e">更多...</a><br /></td></tr>
 <tr class="separator:a2c303d4efede4128c46e4e380831e34e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a738c453d447520f954925bea1e09036e"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a738c453d447520f954925bea1e09036e">qiniu_ng_err_os_error_extract</a> (<a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *err, int32_t *code)</td></tr>
-<tr class="memdesc:a738c453d447520f954925bea1e09036e"><td class="mdescLeft">&#160;</td><td class="mdescRight">判定错误是否是操作系统异常，如果是，则释放其内存  <a href="#a738c453d447520f954925bea1e09036e">更多...</a><br /></td></tr>
+<tr class="memdesc:a738c453d447520f954925bea1e09036e"><td class="mdescLeft">&#160;</td><td class="mdescRight">判定错误是否是系统调用异常，如果是，则释放其内存  <a href="#a738c453d447520f954925bea1e09036e">更多...</a><br /></td></tr>
 <tr class="separator:a738c453d447520f954925bea1e09036e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93452e025a8d451e41f38c680fd50a93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a93452e025a8d451e41f38c680fd50a93">qiniu_ng_err_os_error_new</a> (int32_t code)</td></tr>
-<tr class="memdesc:a93452e025a8d451e41f38c680fd50a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">创建操作系统异常  <a href="#a93452e025a8d451e41f38c680fd50a93">更多...</a><br /></td></tr>
+<tr class="memdesc:a93452e025a8d451e41f38c680fd50a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">创建系统调用异常  <a href="#a93452e025a8d451e41f38c680fd50a93">更多...</a><br /></td></tr>
 <tr class="separator:a93452e025a8d451e41f38c680fd50a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d815acac9231e4c3a01d1945ba5ff49"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a2d815acac9231e4c3a01d1945ba5ff49">qiniu_ng_err_response_status_code_error_extract</a> (<a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *err, uint16_t *status_code, <a class="el" href="structqiniu__ng__str__t.html">qiniu_ng_str_t</a> *error)</td></tr>
 <tr class="memdesc:a2d815acac9231e4c3a01d1945ba5ff49"><td class="mdescLeft">&#160;</td><td class="mdescRight">判定错误是否是 HTTP 状态码错误，如果是，则释放其内存  <a href="#a2d815acac9231e4c3a01d1945ba5ff49">更多...</a><br /></td></tr>
@@ -1335,7 +1335,7 @@ $(document).ready(function(){initNavTree('libqiniu__ng_8h.html','');});
 <table class="fieldtable">
 <tr><th colspan="2">枚举值</th></tr><tr><td class="fieldname"><a id="a1d855d17f69dc7c7ca396c977ac2aa1daf21dbfd5445483d3ad4a85a83249d466"></a>qiniu_ng_err_kind_none&#160;</td><td class="fielddoc"><p>没有错误 </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a1d855d17f69dc7c7ca396c977ac2aa1da04d09a97e3607899b76212ead3a750ea"></a>qiniu_ng_err_kind_os_error&#160;</td><td class="fielddoc"><p>操作系统异常 </p>
+<tr><td class="fieldname"><a id="a1d855d17f69dc7c7ca396c977ac2aa1da04d09a97e3607899b76212ead3a750ea"></a>qiniu_ng_err_kind_os_error&#160;</td><td class="fielddoc"><p>系统调用异常 </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a1d855d17f69dc7c7ca396c977ac2aa1da718f6c51b70c66b4f58a847d932acbf3"></a>qiniu_ng_err_kind_io_error&#160;</td><td class="fielddoc"><p>IO 异常 </p>
 </td></tr>
@@ -6713,7 +6713,7 @@ SDK 会自动重试，或出错退出
 </div><div class="memdoc">
 
 <p>判定错误是否是 IO 异常，如果是，则释放其内存 </p>
-<p>IO 异常是 SDK 对操作系统异常的补充，当 SDK 发生了无法用操作系统错误表示的 IO 异常时，则使用该类型表示 </p><dl class="params"><dt>参数</dt><dd>
+<p>IO 异常是 SDK 对系统调用异常的补充，当 SDK 发生了无法用系统调用错误代码表示的 IO 异常时，则使用该类型表示 </p><dl class="params"><dt>参数</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">err</td><td>SDK 错误实例 </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">description</td><td>用于返回 IO 错误描述，如果传入 <code>NULL</code> 表示不获取 <code>description</code>，但如果错误确实是 IO 异常，返回值依然是 <code>true</code> 且内存依然会被释放 </td></tr>
@@ -6866,17 +6866,17 @@ SDK 会自动重试，或出错退出
       </table>
 </div><div class="memdoc">
 
-<p>判定错误是否是操作系统异常，如果是，则释放其内存 </p>
+<p>判定错误是否是系统调用异常，如果是，则释放其内存 </p>
 <dl class="params"><dt>参数</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">err</td><td>SDK 错误实例 </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>用于返回操作系统异常号码，如果传入 <code>NULL</code> 表示不获取 <code>code</code>，但如果错误确实是操作系统异常，返回值依然是 <code>true</code> 且内存依然会被释放 </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>用于返回系统调用异常号码，如果传入 <code>NULL</code> 表示不获取 <code>code</code>，但如果错误确实是系统调用异常，返回值依然是 <code>true</code> 且内存依然会被释放 </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>返回值</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">_Bool</td><td>当错误确实是操作系统异常时返回 <code>true</code> </td></tr>
+    <tr><td class="paramname">_Bool</td><td>当错误确实是系统调用异常时返回 <code>true</code> </td></tr>
   </table>
   </dd>
 </dl>
@@ -6899,16 +6899,16 @@ SDK 会自动重试，或出错退出
       </table>
 </div><div class="memdoc">
 
-<p>创建操作系统异常 </p>
+<p>创建系统调用异常 </p>
 <dl class="params"><dt>参数</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>操作系统异常号码 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>系统调用异常号码 </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>返回值</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="structqiniu__ng__err__t.html" title="SDK 错误 ">qiniu_ng_err_t</a></td><td>返回创建的操作系统异常 </td></tr>
+    <tr><td class="paramname"><a class="el" href="structqiniu__ng__err__t.html" title="SDK 错误 ">qiniu_ng_err_t</a></td><td>返回创建的系统调用异常 </td></tr>
   </table>
   </dd>
 </dl>

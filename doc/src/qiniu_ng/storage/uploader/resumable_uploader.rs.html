@@ -1713,6 +1713,12 @@
 <span id="1713">1713</span>
 <span id="1714">1714</span>
 <span id="1715">1715</span>
+<span id="1716">1716</span>
+<span id="1717">1717</span>
+<span id="1718">1718</span>
+<span id="1719">1719</span>
+<span id="1720">1720</span>
+<span id="1721">1721</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::{
     <span class="ident">io_status_manager</span>::{<span class="ident">IOStatusManager</span>, <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">IOStatusResult</span>},
@@ -2023,7 +2029,7 @@
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_seekable</span> {
             <span class="self">self</span>.<span class="ident">io</span>
                 .<span class="ident">seek</span>(<span class="ident">SeekFrom</span>::<span class="ident">Start</span>(<span class="number">0</span>))
-                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(<span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>))<span class="question-mark">?</span>;
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(<span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>))<span class="question-mark">?</span>;
         }
         <span class="self">self</span>.<span class="ident">uploaded_size</span>.<span class="ident">store</span>(<span class="number">0</span>, <span class="ident">Relaxed</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">uploading_progress_callback</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">uploading_progress_callback</span> {
@@ -2193,6 +2199,7 @@
                 <span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>),
                 <span class="prelude-val">None</span>,
                 <span class="prelude-val">None</span>,
+                <span class="prelude-val">None</span>,
             )),
             <span class="ident">IOStatusResult</span>::<span class="ident">HTTPError</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>),
         }
@@ -2331,7 +2338,7 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">upload_recorder</span>) <span class="op">=</span> <span class="ident">upload_recorder</span> {
             <span class="ident">upload_recorder</span>
                 .<span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="ident">result</span>.<span class="ident">etag</span>, <span class="ident">part_number</span>)
-                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(<span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>))<span class="question-mark">?</span>;
+                .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(<span class="ident">HTTPErrorKind</span>::<span class="ident">IOError</span>(<span class="ident">err</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>))<span class="question-mark">?</span>;
         }
         <span class="prelude-val">Ok</span>(<span class="ident">result</span>.<span class="ident">etag</span>)
     }
@@ -2843,6 +2850,7 @@
                                 <span class="bool-val">true</span>,
                                 <span class="prelude-val">None</span>,
                                 <span class="prelude-val">None</span>,
+                                <span class="prelude-val">None</span>,
                             ));
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
@@ -2939,6 +2947,7 @@
                         <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_zone_unretryable_error</span>(
                             <span class="ident">HTTPErrorKind</span>::<span class="ident">MaliciousResponse</span>,
                             <span class="bool-val">true</span>,
+                            <span class="prelude-val">None</span>,
                             <span class="prelude-val">None</span>,
                             <span class="prelude-val">None</span>,
                         ))
@@ -3097,6 +3106,7 @@
                                 <span class="bool-val">true</span>,
                                 <span class="prelude-val">None</span>,
                                 <span class="prelude-val">None</span>,
+                                <span class="prelude-val">None</span>,
                             ));
                         }
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
@@ -3220,6 +3230,7 @@
                                 <span class="ident">HTTPErrorKind</span>::<span class="ident">MaliciousResponse</span>,
                                 <span class="prelude-val">None</span>,
                                 <span class="prelude-val">None</span>,
+                                <span class="prelude-val">None</span>,
                             ));
                         } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">called</span> <span class="op">&gt;=</span> <span class="number">5</span> {
                             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unexpected call `PUT {}` for {} times&quot;</span>, <span class="ident">request</span>.<span class="ident">url</span>(), <span class="ident">called</span>);
@@ -3331,6 +3342,7 @@
                         <span class="kw">if</span> <span class="ident">called</span> <span class="op">&gt;=</span> <span class="number">3</span> {
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(
                                 <span class="ident">HTTPErrorKind</span>::<span class="ident">MaliciousResponse</span>,
+                                <span class="prelude-val">None</span>,
                                 <span class="prelude-val">None</span>,
                                 <span class="prelude-val">None</span>,
                             ));
