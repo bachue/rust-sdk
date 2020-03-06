@@ -512,7 +512,8 @@
 92
 93
 94
-95</pre>
+95
+96</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/bucket_uploader.rb', line 53</span>
@@ -556,6 +557,7 @@
                       <span class='ivar'>@bucket_uploader</span><span class='period'>.</span><span class='id identifier rubyid_upload_reader'>upload_reader</span><span class='lparen'>(</span>
                         <span class='id identifier rubyid_upload_token'>upload_token</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@upload_token</span><span class='rparen'>)</span><span class='comma'>,</span>
                         <span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span>
+                        <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:size</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>:</span> <span class='int'>0</span><span class='comma'>,</span>
                         <span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
                     <span class='kw'>end</span>
   <span class='const'><span class='object_link'><a href="UploadResponse.html" title="QiniuNg::Storage::Uploader::UploadResponse (class)">UploadResponse</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='id identifier rubyid_upload_response'>upload_response</span><span class='rparen'>)</span>
@@ -845,7 +847,6 @@
       <pre class="lines">
 
 
-115
 116
 117
 118
@@ -875,10 +876,11 @@
 142
 143
 144
-145</pre>
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/bucket_uploader.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/bucket_uploader.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upload_file_path'>upload_file_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='comma'>,</span> <span class='label'>upload_token:</span><span class='comma'>,</span> <span class='label'>key:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                                                <span class='label'>file_name:</span> <span class='kw'>nil</span><span class='comma'>,</span>
@@ -921,7 +923,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Mar  3 04:52:05 2020 by
+  Generated on Fri Mar  6 05:21:17 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

@@ -1719,6 +1719,7 @@
 <span id="1719">1719</span>
 <span id="1720">1720</span>
 <span id="1721">1721</span>
+<span id="1722">1722</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::{
     <span class="ident">io_status_manager</span>::{<span class="ident">IOStatusManager</span>, <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">IOStatusResult</span>},
@@ -1938,6 +1939,7 @@
     <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">stream</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>: <span class="lifetime">&#39;u</span>, <span class="ident">R</span>: <span class="ident">Read</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;u</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">stream</span>: <span class="ident">R</span>,
+        <span class="ident">size</span>: <span class="ident">u64</span>,
         <span class="ident">mime_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>,
         <span class="ident">file_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
         <span class="ident">checksum_enabled</span>: <span class="ident">bool</span>,
@@ -1949,7 +1951,7 @@
             <span class="ident">key</span>: <span class="self">self</span>.<span class="ident">key</span>,
             <span class="ident">file_path</span>: <span class="prelude-val">None</span>,
             <span class="ident">io</span>: <span class="ident">seek_adapter</span>::<span class="ident">SeekAdapter</span>(<span class="ident">stream</span>),
-            <span class="ident">io_size</span>: <span class="prelude-val">None</span>,
+            <span class="ident">io_size</span>: <span class="kw">if</span> <span class="ident">size</span> <span class="op">&gt;</span> <span class="number">0</span> { <span class="prelude-val">Some</span>(<span class="ident">size</span>) } <span class="kw">else</span> { <span class="prelude-val">None</span> },
             <span class="ident">uploaded_size</span>: <span class="ident">AtomicU64</span>::<span class="ident">new</span>(<span class="number">0</span>),
             <span class="ident">checksum_enabled</span>,
             <span class="ident">is_seekable</span>: <span class="bool-val">false</span>,
@@ -1965,7 +1967,7 @@
             <span class="ident">uploading_progress_callback</span>: <span class="self">self</span>.<span class="ident">on_uploading_progress</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">callback</span><span class="op">|</span> <span class="ident">UploadingProgressCallback</span> {
                 <span class="ident">callback</span>,
                 <span class="ident">completed_size</span>: <span class="ident">AtomicU64</span>::<span class="ident">new</span>(<span class="number">0</span>),
-                <span class="ident">total_size</span>: <span class="prelude-val">None</span>,
+                <span class="ident">total_size</span>: <span class="kw">if</span> <span class="ident">size</span> <span class="op">&gt;</span> <span class="number">0</span> { <span class="prelude-val">Some</span>(<span class="ident">size</span>) } <span class="kw">else</span> { <span class="prelude-val">None</span> },
             }),
             <span class="ident">thread_pool</span>: <span class="self">self</span>
                 .<span class="ident">thread_pool</span>

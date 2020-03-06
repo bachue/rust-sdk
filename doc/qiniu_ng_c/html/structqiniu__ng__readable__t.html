@@ -105,17 +105,18 @@ $(document).ready(function(){initNavTree('structqiniu__ng__readable__t.html','')
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 成员变量</h2></td></tr>
-<tr class="memitem:a89a7803f51d8cf6c21e2e086bf45e9ea"><td class="memItemLeft" align="right" valign="top">int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structqiniu__ng__readable__t.html#a89a7803f51d8cf6c21e2e086bf45e9ea">read_func</a> )(void *context, void *buf, size_t count, size_t *have_read)</td></tr>
+<tr class="memitem:a89a7803f51d8cf6c21e2e086bf45e9ea"><td class="memItemLeft" align="right" valign="top">int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structqiniu__ng__readable__t.html#a89a7803f51d8cf6c21e2e086bf45e9ea">read_func</a> )(void *<a class="el" href="structqiniu__ng__readable__t.html#a009b64f92a0a94fb149338e50ca6171d">context</a>, void *buf, size_t count, size_t *have_read)</td></tr>
 <tr class="memdesc:a89a7803f51d8cf6c21e2e086bf45e9ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">该字段需要您用来定义回调函数实现对数据的读取  <a href="#a89a7803f51d8cf6c21e2e086bf45e9ea">更多...</a><br /></td></tr>
 <tr class="separator:a89a7803f51d8cf6c21e2e086bf45e9ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a009b64f92a0a94fb149338e50ca6171d"><td class="memItemLeft" align="right" valign="top"><a id="a009b64f92a0a94fb149338e50ca6171d"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>context</b></td></tr>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structqiniu__ng__readable__t.html#a009b64f92a0a94fb149338e50ca6171d">context</a></td></tr>
+<tr class="memdesc:a009b64f92a0a94fb149338e50ca6171d"><td class="mdescLeft">&#160;</td><td class="mdescRight">上下文参数指针 <br /></td></tr>
 <tr class="separator:a009b64f92a0a94fb149338e50ca6171d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">详细描述</h2>
 <div class="textblock"><p>数据读取器结构体，用于实现数据读取 </p>
 <p>该结构是个简单的开放结构体，其中的 <code>read_func</code> 字段需要您用来定义回调函数实现对数据的读取。</p>
-<p><code>context</code> 字段则是您用来传入到回调函数的上下文参数指针，您可以用来作为回调函数的上下文使用 </p>
+<p><code>context</code> 字段则是您用来传入到回调函数的上下文参数指针，您可以用来作为回调函数的上下文使用。 </p>
 </div><h2 class="groupheader">结构体成员变量说明</h2>
 <a id="a89a7803f51d8cf6c21e2e086bf45e9ea"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a89a7803f51d8cf6c21e2e086bf45e9ea">&#9670;&nbsp;</a></span>read_func</h2>
@@ -124,7 +125,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>context</b></td></t
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int(* qiniu_ng_readable_t::read_func) (void *context, void *buf, size_t count, size_t *have_read)</td>
+          <td class="memname">int(* qiniu_ng_readable_t::read_func) (void *<a class="el" href="structqiniu__ng__readable__t.html#a009b64f92a0a94fb149338e50ca6171d">context</a>, void *buf, size_t count, size_t *have_read)</td>
         </tr>
       </table>
 </div><div class="memdoc">

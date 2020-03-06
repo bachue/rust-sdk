@@ -944,10 +944,10 @@
 <span class="doccomment">//! #                                         .build();</span>
 <span class="doccomment">//! #</span>
 <span class="doccomment">//! # let upload_token = UploadToken::new(upload_policy, &amp;credential);</span>
-<span class="doccomment">//! let stream = Cursor::new(bytes);</span>
+<span class="doccomment">//! let stream = Cursor::new(&amp;bytes);</span>
 <span class="doccomment">//! let upload_manager = UploadManager::new(config);</span>
 <span class="doccomment">//! let upload_response = upload_manager.for_upload_token(upload_token)?</span>
-<span class="doccomment">//!                                     .upload_stream(stream, &quot;file name&quot;, None)?;</span>
+<span class="doccomment">//!                                     .upload_stream(stream, bytes.len() as u64, &quot;file name&quot;, None)?;</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>
@@ -974,7 +974,7 @@
 <span class="doccomment">//! # let upload_token = UploadToken::new(upload_policy, &amp;credential);</span>
 <span class="doccomment">//! let upload_manager = UploadManager::new(config);</span>
 <span class="doccomment">//! let upload_response = upload_manager.for_upload_token(upload_token)?</span>
-<span class="doccomment">//!                                     .upload_stream(stdin(), &quot;file name&quot;, None)?;</span>
+<span class="doccomment">//!                                     .upload_stream(stdin(), 0, &quot;file name&quot;, None)?;</span>
 <span class="doccomment">//! # Ok(())</span>
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>

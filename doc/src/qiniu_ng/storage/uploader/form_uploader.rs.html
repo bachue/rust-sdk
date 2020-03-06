@@ -725,7 +725,7 @@
         .<span class="ident">upload_token</span>(<span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">policy</span>, <span class="ident">get_credential</span>()))
         .<span class="ident">key</span>(<span class="string">&quot;test:file&quot;</span>)
         .<span class="ident">never_be_resumable</span>()
-        .<span class="ident">upload_stream</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>)
+        .<span class="ident">upload_stream</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>, <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">10</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>)
         .<span class="ident">unwrap_err</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mock</span>.<span class="ident">call_called</span>(), <span class="number">16</span>);
         <span class="prelude-val">Ok</span>(())
@@ -755,7 +755,7 @@
         .<span class="ident">upload_token</span>(<span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">policy</span>, <span class="ident">get_credential</span>()))
         .<span class="ident">key</span>(<span class="string">&quot;test:file&quot;</span>)
         .<span class="ident">never_be_resumable</span>()
-        .<span class="ident">upload_stream</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>)
+        .<span class="ident">upload_stream</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>, <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">10</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>)
         .<span class="ident">unwrap_err</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mock</span>.<span class="ident">call_called</span>(), <span class="number">4</span>);
         <span class="prelude-val">Ok</span>(())
@@ -785,7 +785,7 @@
         .<span class="ident">upload_token</span>(<span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">policy</span>, <span class="ident">get_credential</span>()))
         .<span class="ident">key</span>(<span class="string">&quot;test:file&quot;</span>)
         .<span class="ident">never_be_resumable</span>()
-        .<span class="ident">upload_stream</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>)
+        .<span class="ident">upload_stream</span>(<span class="kw-2">&amp;</span><span class="ident">file</span>, <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">10</span>, <span class="string">&quot;&quot;</span>, <span class="prelude-val">None</span>)
         .<span class="ident">unwrap_err</span>();
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">mock</span>.<span class="ident">call_called</span>(), <span class="number">2</span>);
         <span class="prelude-val">Ok</span>(())

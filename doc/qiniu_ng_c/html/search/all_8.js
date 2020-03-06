@@ -26,7 +26,7 @@ var searchData=
   ['qiniu_5fng_5fbucket_5fuploader_5ft',['qiniu_ng_bucket_uploader_t',['../structqiniu__ng__bucket__uploader__t.html',1,'']]],
   ['qiniu_5fng_5fbucket_5fuploader_5fupload_5ffile',['qiniu_ng_bucket_uploader_upload_file',['../libqiniu__ng_8h.html#a71244ae13af1a90c69b97f0e3e6430ff',1,'libqiniu_ng.h']]],
   ['qiniu_5fng_5fbucket_5fuploader_5fupload_5ffile_5fpath',['qiniu_ng_bucket_uploader_upload_file_path',['../libqiniu__ng_8h.html#a3bb25bd00c56916e20441ed901a30a8d',1,'libqiniu_ng.h']]],
-  ['qiniu_5fng_5fbucket_5fuploader_5fupload_5freader',['qiniu_ng_bucket_uploader_upload_reader',['../libqiniu__ng_8h.html#a0e2e6d461daf4fb35e51f3604da34b86',1,'libqiniu_ng.h']]],
+  ['qiniu_5fng_5fbucket_5fuploader_5fupload_5freader',['qiniu_ng_bucket_uploader_upload_reader',['../libqiniu__ng_8h.html#a057c6a80167b3df4906b1fad1b0f977f',1,'libqiniu_ng.h']]],
   ['qiniu_5fng_5fcallback_5ferr_5ft',['qiniu_ng_callback_err_t',['../structqiniu__ng__callback__err__t.html',1,'']]],
   ['qiniu_5fng_5fchar_5ft',['qiniu_ng_char_t',['../libqiniu__ng_8h.html#aefc35b9037a2f643594316d4872fcd60',1,'libqiniu_ng.h']]],
   ['qiniu_5fng_5fclient_5ffree',['qiniu_ng_client_free',['../libqiniu__ng_8h.html#a5d708468cb8fedee54a844ac03eebcaf',1,'libqiniu_ng.h']]],

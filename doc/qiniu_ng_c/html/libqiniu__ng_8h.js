@@ -122,7 +122,7 @@ var libqiniu__ng_8h =
     [ "qiniu_ng_bucket_uploader_new_from_bucket_name", "libqiniu__ng_8h.html#ad0eefab48d00ffe9376d3207894d1e90", null ],
     [ "qiniu_ng_bucket_uploader_upload_file", "libqiniu__ng_8h.html#a71244ae13af1a90c69b97f0e3e6430ff", null ],
     [ "qiniu_ng_bucket_uploader_upload_file_path", "libqiniu__ng_8h.html#a3bb25bd00c56916e20441ed901a30a8d", null ],
-    [ "qiniu_ng_bucket_uploader_upload_reader", "libqiniu__ng_8h.html#a0e2e6d461daf4fb35e51f3604da34b86", null ],
+    [ "qiniu_ng_bucket_uploader_upload_reader", "libqiniu__ng_8h.html#a057c6a80167b3df4906b1fad1b0f977f", null ],
     [ "qiniu_ng_client_free", "libqiniu__ng_8h.html#a5d708468cb8fedee54a844ac03eebcaf", null ],
     [ "qiniu_ng_client_get_access_key", "libqiniu__ng_8h.html#a500724467f41795fa7fd9f353b96fc48", null ],
     [ "qiniu_ng_client_get_config", "libqiniu__ng_8h.html#a546b4c78541bbdcc823037bacf795fe9", null ],
