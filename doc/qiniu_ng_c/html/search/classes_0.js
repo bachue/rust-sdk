@@ -7,6 +7,7 @@ var searchData=
   ['qiniu_5fng_5fclient_5ft',['qiniu_ng_client_t',['../structqiniu__ng__client__t.html',1,'']]],
   ['qiniu_5fng_5fconfig_5fbuilder_5ft',['qiniu_ng_config_builder_t',['../structqiniu__ng__config__builder__t.html',1,'']]],
   ['qiniu_5fng_5fconfig_5ft',['qiniu_ng_config_t',['../structqiniu__ng__config__t.html',1,'']]],
+  ['qiniu_5fng_5fcredential_5ft',['qiniu_ng_credential_t',['../structqiniu__ng__credential__t.html',1,'']]],
   ['qiniu_5fng_5ferr_5fkind_5fbad_5fmime_5ftype_5fbody',['qiniu_ng_err_kind_bad_mime_type_Body',['../structqiniu__ng__err__kind__bad__mime__type___body.html',1,'']]],
   ['qiniu_5fng_5ferr_5fkind_5fcurl_5ferror_5fbody',['qiniu_ng_err_kind_curl_error_Body',['../structqiniu__ng__err__kind__curl__error___body.html',1,'']]],
   ['qiniu_5fng_5ferr_5fkind_5finvalid_5fupload_5ftoken_5ferror_5fbody',['qiniu_ng_err_kind_invalid_upload_token_error_Body',['../structqiniu__ng__err__kind__invalid__upload__token__error___body.html',1,'']]],

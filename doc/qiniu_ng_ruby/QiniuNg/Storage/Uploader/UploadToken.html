@@ -69,10 +69,12 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName">Object</span>
+      <span class="inheritName">String</span>
       
         <ul class="fullTree">
           <li>Object</li>
+          
+            <li class="next">String</li>
           
             <li class="next">QiniuNg::Storage::Uploader::UploadToken</li>
           
@@ -288,6 +290,7 @@ href="https://developer.qiniu.com/kodo/manual/1208/upload-token">这里</a>
   
 
 
+  
 
   <div id="class_method_details" class="method_details_list">
     <h2>Class Method Details</h2>
@@ -357,12 +360,12 @@ href="https://developer.qiniu.com/kodo/manual/1208/upload-token">这里</a>
       <pre class="lines">
 
 
-48
 49
-50</pre>
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from'>from</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Bindings</span><span class='op'>::</span><span class='const'>UploadToken</span><span class='period'>.</span><span class='id identifier rubyid_new_from'>new_from</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -486,16 +489,16 @@ href="https://developer.qiniu.com/kodo/manual/1208/upload-token">这里</a>
       <pre class="lines">
 
 
-23
 24
 25
 26
 27
 28
-29</pre>
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_policy'>from_policy</span><span class='lparen'>(</span><span class='id identifier rubyid_policy'>policy</span><span class='comma'>,</span> <span class='label'>access_key:</span><span class='comma'>,</span> <span class='label'>secret_key:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>policy must be instance of UploadPolicy</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_policy'>policy</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="UploadPolicy.html" title="QiniuNg::Storage::Uploader::UploadPolicy (class)">UploadPolicy</a></span></span><span class='rparen'>)</span>
@@ -623,16 +626,16 @@ href="https://developer.qiniu.com/kodo/manual/1208/upload-token">这里</a>
       <pre class="lines">
 
 
-37
 38
 39
 40
 41
 42
-43</pre>
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_from_policy_builder'>from_policy_builder</span><span class='lparen'>(</span><span class='id identifier rubyid_builder'>builder</span><span class='comma'>,</span> <span class='label'>access_key:</span><span class='comma'>,</span> <span class='label'>secret_key:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>builder must be instance of UploadPolicy::Builder</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="UploadPolicy.html" title="QiniuNg::Storage::Uploader::UploadPolicy (class)">UploadPolicy</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="UploadPolicy/Builder.html" title="QiniuNg::Storage::Uploader::UploadPolicy::Builder (class)">Builder</a></span></span><span class='rparen'>)</span>
@@ -696,15 +699,15 @@ href="https://developer.qiniu.com/kodo/manual/1208/upload-token">这里</a>
       <pre class="lines">
 
 
-54
 55
 56
 57
 58
-59</pre>
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_access_key'>access_key</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='symbol'>:access_key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
@@ -761,7 +764,6 @@ href="https://developer.qiniu.com/kodo/manual/1208/upload-token">这里</a>
       <pre class="lines">
 
 
-63
 64
 65
 66
@@ -769,10 +771,11 @@ href="https://developer.qiniu.com/kodo/manual/1208/upload-token">这里</a>
 68
 69
 70
-71</pre>
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_policy'>policy</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='symbol'>:policy</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='kw'>begin</span>
@@ -836,15 +839,15 @@ href="https://developer.qiniu.com/kodo/manual/1208/upload-token">这里</a>
       <pre class="lines">
 
 
-75
 76
 77
 78
 79
-80</pre>
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_token.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='symbol'>:token</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
@@ -862,7 +865,7 @@ href="https://developer.qiniu.com/kodo/manual/1208/upload-token">这里</a>
 </div>
 
       <div id="footer">
-  Generated on Fri Mar  6 05:21:16 2020 by
+  Generated on Fri Mar  6 09:00:57 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

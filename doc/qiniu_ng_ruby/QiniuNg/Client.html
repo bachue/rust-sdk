@@ -253,6 +253,30 @@ SecretKey，因此不推荐在客户端应用程序上使用，而应该只在�
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#credential-instance_method" title="#credential (instance method)">#<strong>credential</strong>  &#x21d2; Credential </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>获取认证信息.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#drop_bucket-instance_method" title="#drop_bucket (instance method)">#<strong>drop_bucket</strong>(bucket_name)  &#x21d2; Object </a>
     
 
@@ -355,7 +379,7 @@ SecretKey，因此不推荐在客户端应用程序上使用，而应该只在�
       
       <pre class="example code"><code><span class='id identifier rubyid_access_key'>access_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>[Qiniu Access Key]</span><span class='tstring_end'>&#39;</span></span>
 <span class='id identifier rubyid_secret_key'>secret_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>[Qiniu Secret Key]</span><span class='tstring_end'>&#39;</span></span>
-<span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="QiniuNg::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_access_key'>access_key</span><span class='comma'>,</span> <span class='id identifier rubyid_secret_key'>secret_key</span><span class='rparen'>)</span></code></pre>
+<span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="QiniuNg::Client (class)">Client</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='label'>access_key:</span> <span class='id identifier rubyid_access_key'>access_key</span><span class='comma'>,</span> <span class='label'>secret_key:</span> <span class='id identifier rubyid_secret_key'>secret_key</span></code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -605,12 +629,12 @@ SecretKey，因此不推荐在客户端应用程序上使用，而应该只在�
       <pre class="lines">
 
 
-60
-61
-62</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bucket'>bucket</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Storage.html" title="QiniuNg::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Bucket.html" title="QiniuNg::Storage::Bucket (class)">Bucket</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Storage/Bucket.html#initialize-instance_method" title="QiniuNg::Storage::Bucket#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>client:</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='label'>bucket_name:</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -664,15 +688,15 @@ SecretKey，因此不推荐在客户端应用程序上使用，而应该只在�
       <pre class="lines">
 
 
-66
-67
-68
-69
-70
-71</pre>
+72
+73
+74
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bucket_names'>bucket_names</span>
   <span class='id identifier rubyid_list'>list</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
@@ -729,12 +753,12 @@ SecretKey，因此不推荐在客户端应用程序上使用，而应该只在�
       <pre class="lines">
 
 
-53
-54
-55</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span>
   <span class='ivar'>@config</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Config.html" title="QiniuNg::Config (class)">Config</a></span></span><span class='op'>::</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Config.html#initialize-instance_method" title="QiniuNg::Config#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>config:</span> <span class='ivar'>@client</span><span class='period'>.</span><span class='id identifier rubyid_get_config'>get_config</span><span class='rparen'>)</span>
@@ -836,12 +860,6 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
       <pre class="lines">
 
 
-85
-86
-87
-88
-89
-90
 91
 92
 93
@@ -855,10 +873,16 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
 101
 102
 103
-104</pre>
+104
+105
+106
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_bucket'>create_bucket</span><span class='lparen'>(</span><span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='id identifier rubyid_region'>region</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_region'>region</span> <span class='op'>=</span> <span class='id identifier rubyid_region'>region</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='kw'>if</span> <span class='id identifier rubyid_region'>region</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Storage.html" title="QiniuNg::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Region.html" title="QiniuNg::Storage::Region (class)">Region</a></span></span><span class='rparen'>)</span>
@@ -879,6 +903,65 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_bucket'>bucket</span><span class='lparen'>(</span><span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="credential-instance_method">
+  
+    #<strong>credential</strong>  &#x21d2; <tt><span class='object_link'><a href="Credential.html" title="QiniuNg::Credential (class)">Credential</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>获取认证信息</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Credential.html" title="QiniuNg::Credential (class)">Credential</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回认证信息</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_credential'>credential</span>
+  <span class='ivar'>@credential</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Credential.html" title="QiniuNg::Credential (class)">Credential</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Credential.html#initialize-instance_method" title="QiniuNg::Credential#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_access_key'>access_key</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_secret_key'>secret_key</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -933,15 +1016,15 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
       <pre class="lines">
 
 
-111
-112
-113
-114
-115
-116</pre>
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_drop_bucket'>drop_bucket</span><span class='lparen'>(</span><span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
@@ -1020,7 +1103,7 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
 </div>
 
       <div id="footer">
-  Generated on Fri Mar  6 05:21:14 2020 by
+  Generated on Fri Mar  6 09:00:55 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

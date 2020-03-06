@@ -7,6 +7,7 @@ var annotated_dup =
     [ "qiniu_ng_client_t", "structqiniu__ng__client__t.html", "structqiniu__ng__client__t" ],
     [ "qiniu_ng_config_builder_t", "structqiniu__ng__config__builder__t.html", "structqiniu__ng__config__builder__t" ],
     [ "qiniu_ng_config_t", "structqiniu__ng__config__t.html", "structqiniu__ng__config__t" ],
+    [ "qiniu_ng_credential_t", "structqiniu__ng__credential__t.html", "structqiniu__ng__credential__t" ],
     [ "qiniu_ng_err_kind_bad_mime_type_Body", "structqiniu__ng__err__kind__bad__mime__type___body.html", "structqiniu__ng__err__kind__bad__mime__type___body" ],
     [ "qiniu_ng_err_kind_curl_error_Body", "structqiniu__ng__err__kind__curl__error___body.html", "structqiniu__ng__err__kind__curl__error___body" ],
     [ "qiniu_ng_err_kind_invalid_upload_token_error_Body", "structqiniu__ng__err__kind__invalid__upload__token__error___body.html", "structqiniu__ng__err__kind__invalid__upload__token__error___body" ],

@@ -83,8 +83,8 @@ Access Key 和 Secret Key</p>
 <h1 id="label-E5-AD-98-E5-82-A8-E7-A9-BA-E9-97-B4">存储空间</h1>
 
 <p>七牛对象存储的文件需要存储在存储空间中，存储空间即可以通过<a
-href="https://portal.qiniu.com/kodo/bucket">七牛开发者后台</a>进行管理，也可以调用 C SDK 提供的
-API 进行管理。</p>
+href="https://portal.qiniu.com/kodo/bucket">七牛开发者后台</a>进行管理，也可以调用 Ruby SDK
+提供的 API 进行管理。</p>
 
 <h2 id="label-E5-88-9B-E5-BB-BA-E5-AD-98-E5-82-A8-E7-A9-BA-E9-97-B4">创建存储空间</h2>
 
@@ -137,7 +137,7 @@ href="https://developer.qiniu.com/kodo/manual/programming-model">七牛业务流
 <h2 id="label-E5-AE-A2-E6-88-B7-E7-AB-AF-E4-B8-8A-E4-BC-A0-E5-87-AD-E8-AF-81">客户端上传凭证</h2>
 
 <p>客户端（移动端或者 Web 端）上传文件的时候，需要从客户自己的业务服务器获取上传凭证，而这些上传凭证是通过服务端的 SDK
-来生成的，然后通过客户自己的业务 API 分发给客户端使用。根据上传的业务需求不同，七牛云 C SDK 支持丰富的上传凭证生成方式。</p>
+来生成的，然后通过客户自己的业务 API 分发给客户端使用。根据上传的业务需求不同，七牛云 Ruby SDK 支持丰富的上传凭证生成方式。</p>
 
 <h3 id="label-E7-AE-80-E5-8D-95-E4-B8-8A-E4-BC-A0-E5-87-AD-E8-AF-81">简单上传凭证</h3>
 
@@ -376,9 +376,36 @@ MB，可以通过修改配置增加尺寸，但必须是 4 MB
 </span>                    <span class='label'>upload_recorder_upload_block_lifetime:</span> <span class='int'>5</span> <span class='op'>*</span> <span class='int'>24</span> <span class='op'>*</span> <span class='int'>60</span> <span class='op'>*</span> <span class='int'>60</span><span class='rparen'>)</span>     <span class='comment'># 每个分块的有效期减少为 5 天
 </span></code></pre>
 
+<h3 id="label-E4-B8-9A-E5-8A-A1-E6-9C-8D-E5-8A-A1-E5-99-A8-E9-AA-8C-E8-AF-81-E4-B8-83-E7-89-9B-E5-9B-9E-E8-B0-83">业务服务器验证七牛回调</h3>
+
+<p>在上传策略里面设置了上传回调相关参数的时候，七牛在文件上传到服务器之后，会主动地向 <code>callback_url</code> 发送
+<code>POST</code> 请求的回调，回调的内容为 <code>callback_body</code>
+模版所定义的内容，如果这个模版里面引用了魔法变量或者自定义变量，那么这些变量会被自动填充对应的值，然后在发送给业务服务器。</p>
+
+<p>业务服务器在收到来自七牛的回调请求的时候，可以根据请求头部的 <code>Authorization</code>
+字段来进行验证，查看该请求是否是来自七牛的未经篡改的请求。</p>
+
+<p>Ruby SDK 提供了一个方法
+<code>QiniuNg::Credential#validate_qiniu_callback_request</code> 用于验证回调的请求：</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>qiniu_ng</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_access_key'>access_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>[Qiniu Access Key]</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_secret_key'>secret_key</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>[Qiniu Secret Key]</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_url'>url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://api.example.com/qiniu/upload/callback</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_content_type'>content_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_authorization'>authorization</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>QBox [Qiniu Access Key]:[Authorization Token]</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>{\&quot;key\&quot;:\&quot;github-x.png\&quot;,\&quot;hash\&quot;:\&quot;FqKXVdTvIx_mPjOYdjDyUSy_H1jr\&quot;,\&quot;fsize\&quot;:6091,\&quot;bucket\&quot;:\&quot;if-pbl\&quot;,\&quot;name\&quot;:\&quot;github logo\&quot;}</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_is_valid'>is_valid</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="QiniuNg/Credential.html" title="QiniuNg::Credential (class)">Credential</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="QiniuNg/Credential.html#initialize-instance_method" title="QiniuNg::Credential#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_access_key'>access_key</span><span class='comma'>,</span> <span class='id identifier rubyid_secret_key'>secret_key</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_validate_qiniu_callback_request'><span class='object_link'><a href="QiniuNg/Credential.html#validate_qiniu_callback_request-instance_method" title="QiniuNg::Credential#validate_qiniu_callback_request (method)">validate_qiniu_callback_request</a></span></span> <span class='label'>url:</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span>
+                                                                                           <span class='label'>content_type:</span> <span class='id identifier rubyid_content_type'>content_type</span><span class='comma'>,</span>
+                                                                                           <span class='label'>authorization:</span> <span class='id identifier rubyid_authorization'>authorization</span><span class='comma'>,</span>
+                                                                                           <span class='label'>body:</span> <span class='id identifier rubyid_body'>body</span>
+</code></pre>
+
 <h2 id="label-E7-A7-81-E6-9C-89-E4-BA-91-E9-85-8D-E7-BD-AE">私有云配置</h2>
 
-<p>默认情况下，C SDK 内置了七牛公有云存储的配置。如果需要使用七牛私有云，则需要对
+<p>默认情况下，Ruby SDK 内置了七牛公有云存储的配置。如果需要使用七牛私有云，则需要对
 <code>qiniu_ng_config_builder_t</code> 中的配置作出必要的调整，这里给出一个例子：</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>qiniu_ng</span><span class='tstring_end'>&#39;</span></span>
@@ -392,7 +419,7 @@ MB，可以通过修改配置增加尺寸，但必须是 4 MB
 </div></div>
 
       <div id="footer">
-  Generated on Fri Mar  6 05:21:12 2020 by
+  Generated on Fri Mar  6 09:00:53 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

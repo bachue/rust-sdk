@@ -164,8 +164,6 @@
     
 
     
-      (also: from_buffer)
-    
   </span>
   
   
@@ -351,12 +349,12 @@
       <pre class="lines">
 
 
+51
 52
-53
-54</pre>
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@etag</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>Etag</span><span class='period'>.</span><span class='id identifier rubyid_new!'>new!</span>
@@ -379,10 +377,6 @@
     .<strong>from_data</strong>(data)  &#x21d2; <tt>String</tt> 
   
 
-  
-    <span class="aliases">Also known as:
-    <span class="names"><span id='from_buffer-class_method'>from_buffer</span></span>
-    </span>
   
 
   
@@ -452,7 +446,7 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_data'>from_data</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_etag_result'>etag_result</span> <span class='op'>=</span> <span class='const'>FFI</span><span class='op'>::</span><span class='const'>MemoryPointer</span><span class='op'>::</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#ETAG_SIZE-constant" title="QiniuNg::Utils::Etag::ETAG_SIZE (constant)">ETAG_SIZE</a></span></span><span class='rparen'>)</span>
-  <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>Etag</span><span class='period'>.</span><span class='id identifier rubyid_from_buffer'>from_buffer</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_etag_result'>etag_result</span><span class='rparen'>)</span>
+  <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>Etag</span><span class='period'>.</span><span class='id identifier rubyid_from_data'>from_data</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_etag_result'>etag_result</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_etag_result'>etag_result</span><span class='period'>.</span><span class='id identifier rubyid_read_bytes'>read_bytes</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#ETAG_SIZE-constant" title="QiniuNg::Utils::Etag::ETAG_SIZE (constant)">ETAG_SIZE</a></span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -524,16 +518,16 @@
       <pre class="lines">
 
 
+26
 27
 28
 29
 30
 31
-32
-33</pre>
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_file_path'>from_file_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_etag_result'>etag_result</span> <span class='op'>=</span> <span class='const'>FFI</span><span class='op'>::</span><span class='const'>MemoryPointer</span><span class='op'>::</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#ETAG_SIZE-constant" title="QiniuNg::Utils::Etag::ETAG_SIZE (constant)">ETAG_SIZE</a></span></span><span class='rparen'>)</span>
@@ -615,17 +609,17 @@
       <pre class="lines">
 
 
+37
 38
 39
 40
 41
 42
 43
-44
-45</pre>
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_io'>from_io</span><span class='lparen'>(</span><span class='id identifier rubyid_io'>io</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_io'>io</span><span class='period'>.</span><span class='id identifier rubyid_binmode'>binmode</span>
@@ -692,14 +686,14 @@
       <pre class="lines">
 
 
+69
 70
 71
 72
-73
-74</pre>
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_result'>result</span>
   <span class='id identifier rubyid_etag_result'>etag_result</span> <span class='op'>=</span> <span class='const'>FFI</span><span class='op'>::</span><span class='const'>MemoryPointer</span><span class='op'>::</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="#ETAG_SIZE-constant" title="QiniuNg::Utils::Etag::ETAG_SIZE (constant)">ETAG_SIZE</a></span></span><span class='rparen'>)</span>
@@ -764,7 +758,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/utils/etag.rb', line 57</span>
 
 </pre>
     </td>
@@ -777,7 +771,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Mar  6 05:21:15 2020 by
+  Generated on Fri Mar  6 09:00:56 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>
