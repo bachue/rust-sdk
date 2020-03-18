@@ -143,6 +143,9 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! 存储管理模块</span>
 <span class="doccomment">//!</span>
@@ -267,6 +270,7 @@
         <span class="ident">BucketBuilder</span>::<span class="ident">new</span>(<span class="ident">bucket</span>.<span class="ident">into</span>(), <span class="self">self</span>.<span class="ident">credential</span>.<span class="ident">borrow</span>().<span class="ident">into</span>(), <span class="self">self</span>.<span class="ident">upload_manager</span>())
     }
 
+    <span class="doccomment">/// 获取存储管理器中的认证信息</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">credential</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Credential</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">credential</span>
     }
@@ -281,8 +285,10 @@
 <span class="doccomment">/// 删除存储空间错误</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Error</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DropBucketError</span> {
+    <span class="doccomment">/// HTTP API 调用错误</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Qiniu API call error: {0}&quot;</span>)]</span>
     <span class="ident">HTTPError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">HTTPError</span>),
+    <span class="doccomment">/// 不允许删除非空的存储空间</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Drop non empty bucket is not allowed&quot;</span>)]</span>
     <span class="ident">CannotDropNonEmptyBucket</span>,
 }

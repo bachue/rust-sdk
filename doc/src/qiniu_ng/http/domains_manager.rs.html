@@ -1060,6 +1060,17 @@
 <span id="1060">1060</span>
 <span id="1061">1061</span>
 <span id="1062">1062</span>
+<span id="1063">1063</span>
+<span id="1064">1064</span>
+<span id="1065">1065</span>
+<span id="1066">1066</span>
+<span id="1067">1067</span>
+<span id="1068">1068</span>
+<span id="1069">1069</span>
+<span id="1070">1070</span>
+<span id="1071">1071</span>
+<span id="1072">1072</span>
+<span id="1073">1073</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! 域名管理 模块</span>
 <span class="doccomment">//!</span>
@@ -1767,9 +1778,9 @@
         }
     }
 
-    <span class="comment">// 异步预解析 `Config` 中所有域名</span>
-    <span class="comment">//</span>
-    <span class="comment">// 可以在配置私有云域名后，调用该方法将私有云 URL 域名解析结果纳入域名解析缓存</span>
+    <span class="doccomment">/// 异步预解析 `Config` 中所有域名</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// 可以在配置私有云域名后，调用该方法将私有云 URL 域名解析结果纳入域名解析缓存</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">async_resolve_config</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">config</span>: <span class="kw-2">&amp;</span><span class="ident">Config</span>) {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">urls</span> <span class="op">=</span> <span class="ident">HashSet</span>::<span class="ident">with_capacity</span>(<span class="number">6</span>);
         <span class="ident">urls</span>.<span class="ident">insert</span>(<span class="ident">Cow</span>::<span class="ident">Owned</span>(<span class="ident">config</span>.<span class="ident">uc_url</span>()));
@@ -1780,9 +1791,9 @@
         <span class="self">self</span>.<span class="ident">async_resolve_urls</span>(<span class="ident">urls</span>)
     }
 
-    <span class="comment">// 异步预解析 `Region` 中所有域名</span>
-    <span class="comment">//</span>
-    <span class="comment">// 可以在创建私有云区域后，调用该方法将所有区域中的 URL 域名解析结果纳入域名解析缓存</span>
+    <span class="doccomment">/// 异步预解析 `Region` 中所有域名</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// 可以在创建私有云区域后，调用该方法将所有区域中的 URL 域名解析结果纳入域名解析缓存</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">async_resolve_region</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">region</span>: <span class="kw-2">&amp;</span><span class="ident">Region</span>) {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">urls</span> <span class="op">=</span> <span class="ident">HashSet</span>::<span class="ident">with_capacity</span>(<span class="number">100</span>);
         <span class="ident">region</span>.<span class="ident">up_urls_owned</span>(<span class="bool-val">false</span>).<span class="ident">into_iter</span>().<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">url</span><span class="op">|</span> {
@@ -1944,7 +1955,9 @@
 <span class="doccomment">/// 一个简单的结构体，包含候选 URL 及其域名解析结果</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Choice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// 候选 URL</span>
     <span class="kw">pub</span> <span class="ident">base_url</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="doccomment">/// 域名解析结果</span>
     <span class="kw">pub</span> <span class="ident">socket_addrs</span>: <span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">SocketAddr</span>]<span class="op">&gt;</span>,
 }
 
@@ -1955,8 +1968,13 @@
 <span class="doccomment">/// URL 解析错误</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Error</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">URLParseError</span> {
+    <span class="doccomment">/// URL 的域名部分不存在</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Invalid url: {url}&quot;</span>)]</span>
-    <span class="ident">InvalidURL</span> { <span class="ident">url</span>: <span class="ident">String</span> },
+    <span class="ident">InvalidURL</span> {
+        <span class="doccomment">/// 发生错误的 URL 字符串</span>
+        <span class="ident">url</span>: <span class="ident">String</span>,
+    },
+    <span class="doccomment">/// URL 解析出错</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;URL parse error: {0}&quot;</span>)]</span>
     <span class="ident">URLParseError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">url</span>::<span class="ident">ParseError</span>),
 }
@@ -1967,8 +1985,10 @@
 <span class="doccomment">/// URL 域名解析错误</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Error</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ResolveError</span> {
+    <span class="doccomment">/// URL 解析出错</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;URL Parse error: {0}&quot;</span>)]</span>
     <span class="ident">URLParseError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">URLParseError</span>),
+    <span class="doccomment">/// URL 域名解析出错</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Resolve URL error: {0}&quot;</span>)]</span>
     <span class="ident">ResolveError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">IOError</span>),
 }
@@ -1979,8 +1999,10 @@
 <span class="doccomment">/// 持久化错误</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Error</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PersistentError</span> {
+    <span class="doccomment">/// JSON 错误</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;JSON encode error: {0}&quot;</span>)]</span>
     <span class="ident">JSONError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">serde_json</span>::<span class="ident">Error</span>),
+    <span class="doccomment">/// 读写 I/O 错误</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;IO error: {0}&quot;</span>)]</span>
     <span class="ident">IOError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">IOError</span>),
 }

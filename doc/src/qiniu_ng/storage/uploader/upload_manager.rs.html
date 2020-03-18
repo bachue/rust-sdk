@@ -135,6 +135,33 @@
 <span id="135">135</span>
 <span id="136">136</span>
 <span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! 上传管理器</span>
 <span class="doccomment">//!</span>
@@ -146,7 +173,7 @@
         <span class="ident">region</span>::<span class="ident">Region</span>,
         <span class="ident">uploader</span>::{<span class="ident">UploadPolicy</span>, <span class="ident">UploadToken</span>, <span class="ident">UploadTokenParseError</span>},
     },
-    <span class="ident">BucketUploaderBuilder</span>, <span class="ident">FileUploaderBuilder</span>,
+    <span class="ident">BatchUploader</span>, <span class="ident">BucketUploaderBuilder</span>, <span class="ident">FileUploaderBuilder</span>,
 };
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">config</span>::<span class="ident">Config</span>, <span class="ident">credential</span>::<span class="ident">Credential</span>, <span class="ident">utils</span>::<span class="ident">ron</span>::<span class="ident">Ron</span>};
 <span class="kw">use</span> <span class="ident">assert_impl</span>::<span class="ident">assert_impl</span>;
@@ -244,6 +271,33 @@
         <span class="ident">credential</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">Credential</span><span class="op">&gt;</span>,
     ) <span class="op">-&gt;</span> <span class="ident">CreateUploaderResult</span><span class="op">&lt;</span><span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span><span class="op">&gt;&gt;</span> {
         <span class="self">self</span>.<span class="ident">for_upload_token</span>(<span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>))
+    }
+
+    <span class="doccomment">/// 根据上传凭证创建批量文件上传器生成器</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">batch_for_upload_token</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">upload_token</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">UploadToken</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span><span class="op">&gt;&gt;</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">CreateUploaderResult</span><span class="op">&lt;</span><span class="ident">BatchUploader</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">upload_token</span> <span class="op">=</span> <span class="ident">upload_token</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="ident">upload_token</span>.<span class="ident">access_key</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">policy</span> <span class="op">=</span> <span class="ident">upload_token</span>.<span class="ident">policy</span>()<span class="question-mark">?</span>;
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">bucket_name</span>) <span class="op">=</span> <span class="ident">policy</span>.<span class="ident">bucket</span>() {
+            <span class="prelude-val">Ok</span>(<span class="ident">BatchUploader</span>::<span class="ident">new</span>(
+                <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">for_bucket_name</span>(<span class="ident">bucket_name</span>.<span class="ident">to_owned</span>(), <span class="ident">access_key</span>).<span class="ident">build</span>(),
+                <span class="ident">upload_token</span>.<span class="ident">to_string</span>(),
+            ))
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">CreateUploaderError</span>::<span class="ident">BucketIsMissingInUploadToken</span>)
+        }
+    }
+
+    <span class="doccomment">/// 根据上传策略和认证信息创建批量文件上传器生成器</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">batch_for_upload_policy</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">upload_policy</span>: <span class="ident">UploadPolicy</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span><span class="op">&gt;</span>,
+        <span class="ident">credential</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">Credential</span><span class="op">&gt;</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">CreateUploaderResult</span><span class="op">&lt;</span><span class="ident">BatchUploader</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">batch_for_upload_token</span>(<span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>))
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">config</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Config</span> {

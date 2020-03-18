@@ -23,11 +23,14 @@
 <span id="23">23</span>
 <span id="24">24</span>
 <span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! 上传模块</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! 提供对象上传相关功能</span>
 
+<span class="kw">mod</span> <span class="ident">batch_uploader</span>;
 <span class="kw">mod</span> <span class="ident">bucket_uploader</span>;
 <span class="kw">mod</span> <span class="ident">callback</span>;
 <span class="kw">mod</span> <span class="ident">form_uploader</span>;
@@ -40,6 +43,7 @@
 <span class="kw">mod</span> <span class="ident">upload_response</span>;
 <span class="kw">mod</span> <span class="ident">upload_token</span>;
 
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">batch_uploader</span>::{<span class="ident">BatchUploadJob</span>, <span class="ident">BatchUploadJobBuilder</span>, <span class="ident">BatchUploader</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">bucket_uploader</span>::{<span class="ident">BucketUploader</span>, <span class="ident">BucketUploaderBuilder</span>, <span class="ident">FileUploaderBuilder</span>, <span class="ident">UploadError</span>, <span class="ident">UploadResult</span>};
 <span class="kw">use</span> <span class="ident">callback</span>::<span class="ident">upload_response_callback</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">upload_logger</span>::{<span class="ident">LockPolicy</span> <span class="kw">as</span> <span class="ident">UploadLoggerFileLockPolicy</span>, <span class="ident">UploadLogger</span>, <span class="ident">UploadLoggerBuilder</span>};

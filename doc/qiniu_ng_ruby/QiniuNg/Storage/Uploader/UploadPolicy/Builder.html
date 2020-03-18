@@ -404,7 +404,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#object_deadline-instance_method" title="#object_deadline (instance method)">#<strong>object_deadline</strong>(deadline)  &#x21d2; Object </a>
+      <a href="#object_deadline-instance_method" title="#object_deadline (instance method)">#<strong>object_deadline</strong>(deadline)  &#x21d2; Builder </a>
     
 
     
@@ -428,7 +428,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#object_lifetime-instance_method" title="#object_lifetime (instance method)">#<strong>object_lifetime</strong>(lifetime)  &#x21d2; Object </a>
+      <a href="#object_lifetime-instance_method" title="#object_lifetime (instance method)">#<strong>object_lifetime</strong>(lifetime)  &#x21d2; Builder </a>
     
 
     
@@ -1693,7 +1693,7 @@
       <div class="method_details ">
   <h3 class="signature " id="object_deadline-instance_method">
   
-    #<strong>object_deadline</strong>(deadline)  &#x21d2; <tt>Object</tt> 
+    #<strong>object_deadline</strong>(deadline)  &#x21d2; <tt><span class='object_link'><a href="" title="QiniuNg::Storage::Uploader::UploadPolicy::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -1729,6 +1729,24 @@
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="QiniuNg::Storage::Uploader::UploadPolicy::Builder (class)">Builder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回自身，可以形成链式调用</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1736,13 +1754,13 @@
       <pre class="lines">
 
 
-423
 424
 425
-426</pre>
+426
+427</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 423</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 424</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_object_deadline'>object_deadline</span><span class='lparen'>(</span><span class='id identifier rubyid_deadline'>deadline</span><span class='rparen'>)</span>
   <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_object_deadline'>set_object_deadline</span><span class='lparen'>(</span><span class='id identifier rubyid_deadline'>deadline</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
@@ -1756,7 +1774,7 @@
       <div class="method_details ">
   <h3 class="signature " id="object_lifetime-instance_method">
   
-    #<strong>object_lifetime</strong>(lifetime)  &#x21d2; <tt>Object</tt> 
+    #<strong>object_lifetime</strong>(lifetime)  &#x21d2; <tt><span class='object_link'><a href="" title="QiniuNg::Storage::Uploader::UploadPolicy::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -1792,6 +1810,24 @@
   
 </ul>
 
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="QiniuNg::Storage::Uploader::UploadPolicy::Builder (class)">Builder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回自身，可以形成链式调用</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1799,14 +1835,14 @@
       <pre class="lines">
 
 
-430
-431
 432
 433
-434</pre>
+434
+435
+436</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 430</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/upload_policy.rb', line 432</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_object_lifetime'>object_lifetime</span><span class='lparen'>(</span><span class='id identifier rubyid_lifetime'>lifetime</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lifetime'>lifetime</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Utils.html" title="QiniuNg::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Utils/Duration.html" title="QiniuNg::Utils::Duration (class)">Duration</a></span></span><span class='op'>::</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Utils/Duration.html#initialize-instance_method" title="QiniuNg::Utils::Duration#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_lifetime'>lifetime</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_lifetime'>lifetime</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
@@ -2439,7 +2475,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Mar  6 12:21:41 2020 by
+  Generated on Wed Mar 18 10:36:11 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

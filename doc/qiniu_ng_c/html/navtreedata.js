@@ -22,10 +22,12 @@ var NAVTREE =
           [ "文件上传", "index.html#autotoc_md16", null ],
           [ "输入流上传", "index.html#autotoc_md17", null ],
           [ "自定义数据上传", "index.html#autotoc_md18", null ],
-          [ "文件上传策略", "index.html#autotoc_md19", null ],
-          [ "业务服务器验证七牛回调", "index.html#autotoc_md20", null ]
+          [ "批量上传", "index.html#autotoc_md19", null ],
+          [ "文件上传策略", "index.html#autotoc_md20", null ],
+          [ "业务服务器验证七牛回调", "index.html#autotoc_md21", null ]
         ] ],
-        [ "私有云配置", "index.html#autotoc_md21", null ]
+        [ "HTTP 回调函数", "index.html#autotoc_md22", null ],
+        [ "私有云配置", "index.html#autotoc_md23", null ]
       ] ]
     ] ],
     [ "结构体", "annotated.html", [
@@ -51,8 +53,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"libqiniu__ng_8h.html#a8edd82a7a3f632c7177e870aab903a6b",
-"structqiniu__ng__regions__t.html#a1abc2d2edc6ceb7e13d7e65cfbba479a"
+"libqiniu__ng_8h.html#a852be3755cdd791b276b8bc14776734d",
+"structqiniu__ng__err__kind__unknown__error___body.html"
 ];
 
 var SYNCONMSG = '点击 关闭 面板同步';

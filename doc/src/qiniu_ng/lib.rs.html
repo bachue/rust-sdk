@@ -537,6 +537,89 @@
 <span id="537">537</span>
 <span id="538">538</span>
 <span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_favicon_url</span> <span class="op">=</span> <span class="string">&quot;https://developer.qiniu.com/favicon.ico&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://dn-mars-assets.qbox.me/qiniulogo/img-slogon-horizontal-blue-cn.jpg&quot;</span>)]</span>
@@ -896,9 +979,9 @@
 <span class="doccomment">//! ```rust,no_run</span>
 <span class="doccomment">//! use qiniu_ng::{</span>
 <span class="doccomment">//!     Credential, Client, Config,</span>
-<span class="doccomment">//!     storage::uploader::{UploadPolicyBuilder, UploadPolicy, UploadToken, UploadManager},</span>
+<span class="doccomment">//!     storage::uploader::{UploadPolicyBuilder, UploadToken, UploadManager},</span>
 <span class="doccomment">//! };</span>
-<span class="doccomment">//! # use std::{path::Path, time::Duration, result::Result, error::Error};</span>
+<span class="doccomment">//! # use std::{path::Path, result::Result, error::Error};</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
 <span class="doccomment">//! # let access_key = &quot;[Qiniu Access Key]&quot;;</span>
@@ -979,6 +1062,44 @@
 <span class="doccomment">//! # }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! ### 批量上传</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! SDK 支持将多个文件批量上传，将会尽可能使用线程池并发上传加速上传效率，因此效率将优于串行的上传方法。</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust,no_run</span>
+<span class="doccomment">//! use qiniu_ng::{</span>
+<span class="doccomment">//!     Credential, Client, Config,</span>
+<span class="doccomment">//!     storage::uploader::{BatchUploadJobBuilder, UploadPolicyBuilder, UploadPolicy, UploadToken, UploadManager},</span>
+<span class="doccomment">//! };</span>
+<span class="doccomment">//! # use std::{path::Path, fs::File, io::{Cursor, Read}, time::Duration, result::Result, error::Error};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {</span>
+<span class="doccomment">//! # let access_key = &quot;[Qiniu Access Key]&quot;;</span>
+<span class="doccomment">//! # let secret_key = &quot;[Qiniu Secret Key]&quot;;</span>
+<span class="doccomment">//! # let bucket = &quot;[Bucket Name]&quot;;</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # let credential = Credential::new(access_key, secret_key);</span>
+<span class="doccomment">//! # let config = Config::default();</span>
+<span class="doccomment">//! # let upload_policy = UploadPolicyBuilder::new_policy_for_bucket(bucket, &amp;config)</span>
+<span class="doccomment">//! #                                         .build();</span>
+<span class="doccomment">//! #</span>
+<span class="doccomment">//! # let upload_token = UploadToken::new(upload_policy, &amp;credential);</span>
+<span class="doccomment">//! # let local_file_path = Path::new(&quot;local file path&quot;);</span>
+<span class="doccomment">//! # let mut bytes = Vec::new();</span>
+<span class="doccomment">//! # File::open(&quot;/etc/services&quot;)?.read_to_end(&amp;mut bytes)?;</span>
+<span class="doccomment">//! # let stream_len = bytes.len() as u64;</span>
+<span class="doccomment">//! # let stream = Cursor::new(bytes);</span>
+<span class="doccomment">//! let upload_manager = UploadManager::new(config);</span>
+<span class="doccomment">//! upload_manager.batch_for_upload_token(upload_token)?</span>
+<span class="doccomment">//!               .push_job(BatchUploadJobBuilder::default()</span>
+<span class="doccomment">//!                                               .upload_file(local_file_path, &quot;local file name&quot;, None)?)</span>
+<span class="doccomment">//!               .push_job(BatchUploadJobBuilder::default()</span>
+<span class="doccomment">//!                                               .upload_stream(stream, stream_len, &quot;file name&quot;, None))</span>
+<span class="doccomment">//!               .start();</span>
+<span class="doccomment">//! # Ok(())</span>
+<span class="doccomment">//! # }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! ### 文件上传策略</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! 默认情况下，对于尺寸大于 4 MB 的文件，SDK 默认自动使用分片上传的方式来上传，分片上传通过将一个文件切割为标准的块（默认的固定大小为 4 MB，可以通过修改配置增加尺寸，但必须是 4 MB 的倍数），然后通过上传块的方式来进行文件的上传。一个块中的片和另外一个块中的片是可以并发的。分片上传不等于断点续传，但是分片上传可以支持断点续传。</span>
@@ -1041,6 +1162,50 @@
 <span class="doccomment">//!                                                            .build());</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! ## HTTP 回调函数</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! SDK 支持在发送 HTTP 请求前和收到响应后调用回调函数对 HTTP 请求和响应进行处理，这里给出一个打印 HTTP 请求和响应相关信息的回调函数实现：</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust</span>
+<span class="doccomment">//! use qiniu_http::{Request as HTTPRequest, Response as HTTPResponse, Result as HTTPResult};</span>
+<span class="doccomment">//! use qiniu_ng::http::{HTTPAfterAction, HTTPBeforeAction};</span>
+<span class="doccomment">//! # use qiniu_ng::ConfigBuilder;</span>
+<span class="doccomment">//! # use rand::{thread_rng, Rng};</span>
+<span class="doccomment">//! # use std::{error::Error, ffi::c_void, mem::transmute, result::Result};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! struct HTTPLogger {}</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! impl HTTPBeforeAction for HTTPLogger {</span>
+<span class="doccomment">//!     fn before_call(&amp;self, request: &amp;mut HTTPRequest) -&gt; HTTPResult&lt;()&gt; {</span>
+<span class="doccomment">//!         let request_id: usize = thread_rng().gen();</span>
+<span class="doccomment">//!         println!(&quot;[{}] {} {}&quot;, request_id, request.method().as_str(), request.url());</span>
+<span class="doccomment">//!         for (header_name, header_value) in request.headers().iter() {</span>
+<span class="doccomment">//!             println!(&quot;[{}]   {}: {}&quot;, request_id, header_name, header_value);</span>
+<span class="doccomment">//!         }</span>
+<span class="doccomment">//!         *request.custom_data_mut() = request_id as *mut c_void;</span>
+<span class="doccomment">//!         Ok(())</span>
+<span class="doccomment">//!     }</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! impl HTTPAfterAction for HTTPLogger {</span>
+<span class="doccomment">//!     fn after_call(&amp;self, request: &amp;mut HTTPRequest, response: &amp;mut HTTPResponse) -&gt; HTTPResult&lt;()&gt; {</span>
+<span class="doccomment">//!         let request_id: usize = unsafe { transmute(request.custom_data()) };</span>
+<span class="doccomment">//!         println!(&quot;[{}] {}&quot;, request_id, response.status_code());</span>
+<span class="doccomment">//!         for (header_name, header_value) in response.headers().iter() {</span>
+<span class="doccomment">//!             println!(&quot;[{}]   {}: {}&quot;, request_id, header_name, header_value);</span>
+<span class="doccomment">//!         }</span>
+<span class="doccomment">//!         Ok(())</span>
+<span class="doccomment">//!     }</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! let config = ConfigBuilder::default()</span>
+<span class="doccomment">//!     .append_http_request_before_action_handler(HTTPLogger {})</span>
+<span class="doccomment">//!     .append_http_request_after_action_handler(HTTPLogger {})</span>
+<span class="doccomment">//!     .build();</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! 该实现使用 `request` 的 `custom_data` 字段，该字段是瘦指针类型，支持从请求前回调函数传输数据到响应后回调函数，由于传输的数据比较简单，可以直接填入 `custom_data` 字段。</span>
+<span class="doccomment">//! 如果传输的数据比较复杂，则必须使用 `Box` 将数据封装为指针。</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! ## 私有云配置</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! 默认情况下，Rust SDK 内置了七牛公有云存储的配置。如果需要使用七牛私有云，则需要对 `Config` 中的配置作出必要的调整，这里给出一个例子：</span>
@@ -1063,6 +1228,7 @@
 <span class="doccomment">//!                            .build();</span>
 <span class="doccomment">//! ```</span>
 
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="attribute">#![<span class="ident">recursion_limit</span> <span class="op">=</span> <span class="string">&quot;256&quot;</span>]</span>
 
 <span class="kw">mod</span> <span class="ident">client</span>;

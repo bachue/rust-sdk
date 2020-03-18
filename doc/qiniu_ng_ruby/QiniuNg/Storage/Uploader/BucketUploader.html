@@ -130,6 +130,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#batch-instance_method" title="#batch (instance method)">#<strong>batch</strong>(upload_token:)  &#x21d2; BatchUploader </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>创建批量上传器.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#upload_file-instance_method" title="#upload_file (instance method)">#<strong>upload_file</strong>(file, upload_token:, key: nil, file_name: nil, mime: nil, vars: nil, metadata: nil, checksum_enabled: nil, resumable_policy: nil, on_uploading_progress: nil, upload_threshold: nil, thread_pool_size: nil, max_concurrency: nil)  &#x21d2; UploadResponse </a>
     
 
@@ -181,13 +205,98 @@
   
 
 
+  
+  
+  
+  
+  
+  
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="upload_file-instance_method">
+  <h3 class="signature first" id="batch-instance_method">
+  
+    #<strong>batch</strong>(upload_token:)  &#x21d2; <tt><span class='object_link'><a href="BatchUploader.html" title="QiniuNg::Storage::Uploader::BatchUploader (class)">BatchUploader</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>创建批量上传器</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>upload_token</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="UploadToken.html" title="QiniuNg::Storage::Uploader::UploadToken (class)">UploadToken</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>默认上传凭证</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="BatchUploader.html" title="QiniuNg::Storage::Uploader::BatchUploader (class)">BatchUploader</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>批量上传器</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/bucket_uploader.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_batch'>batch</span><span class='lparen'>(</span><span class='label'>upload_token:</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="BatchUploader.html" title="QiniuNg::Storage::Uploader::BatchUploader (class)">BatchUploader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new_from_bucket_uploader</span><span class='comma'>,</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_normalize_upload_token'>normalize_upload_token</span><span class='lparen'>(</span><span class='id identifier rubyid_upload_token'>upload_token</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="upload_file-instance_method">
   
     #<strong>upload_file</strong>(file, upload_token:, key: nil, file_name: nil, mime: nil, vars: nil, metadata: nil, checksum_enabled: nil, resumable_policy: nil, on_uploading_progress: nil, upload_threshold: nil, thread_pool_size: nil, max_concurrency: nil)  &#x21d2; <tt><span class='object_link'><a href="UploadResponse.html" title="QiniuNg::Storage::Uploader::UploadResponse (class)">UploadResponse</a></span></tt> 
   
@@ -366,7 +475,8 @@
       
         &mdash;
         <div class='inline'>
-<p>上传进度回调，需要提供一个带有两个参数的闭包函数，第一个参数为已经上传的数据量，第二个参数为总数据量（如果总数据量未知，将返回 0），没有返回值</p>
+<p>上传进度回调，需要提供一个带有两个参数的闭包函数，其中第一个参数为已经上传的数据量，单位为字节，第二个参数为需要上传的数据总量，单位为字节。如果无法预期需要上传的数据总量，则第二个参数将总是传入
+0。该函数无需返回任何值。需要注意的是，该回调函数可能会被多个线程并发调用，因此需要保证实现的函数具有可重入性</p>
 </div>
       
     </li>
@@ -501,19 +611,7 @@
 81
 82
 83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96</pre>
+84</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/bucket_uploader.rb', line 53</span>
@@ -541,22 +639,10 @@
                                 <span class='label'>upload_threshold:</span> <span class='id identifier rubyid_upload_threshold'>upload_threshold</span><span class='comma'>,</span>
                                 <span class='label'>thread_pool_size:</span> <span class='id identifier rubyid_thread_pool_size'>thread_pool_size</span><span class='comma'>,</span>
                                 <span class='label'>max_concurrency:</span> <span class='id identifier rubyid_max_concurrency'>max_concurrency</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_reader'>reader</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>QiniuNgReadableT</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='id identifier rubyid_reader'>reader</span><span class='lbracket'>[</span><span class='symbol'>:context</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
-  <span class='id identifier rubyid_reader'>reader</span><span class='lbracket'>[</span><span class='symbol'>:read_func</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__'>_</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_size'>size</span><span class='comma'>,</span> <span class='id identifier rubyid_have_read'>have_read</span><span class='op'>|</span>
-                         <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span>
-                         <span class='kw'>if</span> <span class='id identifier rubyid_content'>content</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-                           <span class='id identifier rubyid_have_read'>have_read</span><span class='period'>.</span><span class='id identifier rubyid_write_ulong'>write_ulong</span><span class='lparen'>(</span><span class='int'>0</span><span class='rparen'>)</span>
-                         <span class='kw'>else</span>
-                           <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_write_string'>write_string</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
-                           <span class='id identifier rubyid_have_read'>have_read</span><span class='period'>.</span><span class='id identifier rubyid_write_ulong'>write_ulong</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span><span class='rparen'>)</span>
-                         <span class='kw'>end</span>
-                         <span class='int'>0</span>
-                       <span class='kw'>end</span>
   <span class='id identifier rubyid_upload_response'>upload_response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
                       <span class='ivar'>@bucket_uploader</span><span class='period'>.</span><span class='id identifier rubyid_upload_reader'>upload_reader</span><span class='lparen'>(</span>
                         <span class='id identifier rubyid_upload_token'>upload_token</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@upload_token</span><span class='rparen'>)</span><span class='comma'>,</span>
-                        <span class='id identifier rubyid_reader'>reader</span><span class='comma'>,</span>
+                        <span class='id identifier rubyid_normalize_io'>normalize_io</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span>
                         <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:size</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>:</span> <span class='int'>0</span><span class='comma'>,</span>
                         <span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
                     <span class='kw'>end</span>
@@ -743,7 +829,8 @@
       
         &mdash;
         <div class='inline'>
-<p>上传进度回调，需要提供一个带有两个参数的闭包函数，第一个参数为已经上传的数据量，第二个参数为总数据量（如果总数据量未知，将返回 0），没有返回值</p>
+<p>上传进度回调，需要提供一个带有两个参数的闭包函数，其中第一个参数为已经上传的数据量，单位为字节，第二个参数为需要上传的数据总量，单位为字节。如果无法预期需要上传的数据总量，则第二个参数将总是传入
+0。该函数无需返回任何值。需要注意的是，该回调函数可能会被多个线程并发调用，因此需要保证实现的函数具有可重入性</p>
 </div>
       
     </li>
@@ -847,6 +934,18 @@
       <pre class="lines">
 
 
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
 116
 117
 118
@@ -865,22 +964,10 @@
 131
 132
 133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146</pre>
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/bucket_uploader.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader/bucket_uploader.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_upload_file_path'>upload_file_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file_path'>file_path</span><span class='comma'>,</span> <span class='label'>upload_token:</span><span class='comma'>,</span> <span class='label'>key:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                                                <span class='label'>file_name:</span> <span class='kw'>nil</span><span class='comma'>,</span>
@@ -908,7 +995,7 @@
   <span class='id identifier rubyid_upload_response'>upload_response</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
                       <span class='ivar'>@bucket_uploader</span><span class='period'>.</span><span class='id identifier rubyid_upload_file_path'>upload_file_path</span><span class='lparen'>(</span>
                         <span class='id identifier rubyid_upload_token'>upload_token</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_get'>instance_variable_get</span><span class='lparen'>(</span><span class='symbol'>:@upload_token</span><span class='rparen'>)</span><span class='comma'>,</span>
-                        <span class='id identifier rubyid_file_path'>file_path</span><span class='comma'>,</span>
+                        <span class='id identifier rubyid_file_path'>file_path</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
                         <span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
                     <span class='kw'>end</span>
   <span class='const'><span class='object_link'><a href="UploadResponse.html" title="QiniuNg::Storage::Uploader::UploadResponse (class)">UploadResponse</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='id identifier rubyid_upload_response'>upload_response</span><span class='rparen'>)</span>
@@ -923,7 +1010,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Mar  6 12:21:42 2020 by
+  Generated on Wed Mar 18 10:36:12 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

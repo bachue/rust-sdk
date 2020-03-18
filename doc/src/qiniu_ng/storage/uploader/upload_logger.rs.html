@@ -783,6 +783,7 @@
 <span id="783">783</span>
 <span id="784">784</span>
 <span id="785">785</span>
+<span id="786">786</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">http</span>::{
@@ -1338,6 +1339,7 @@
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">http_error</span>(<span class="self">self</span>, <span class="ident">err</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">HTTPError</span>) <span class="op">-&gt;</span> <span class="ident">UploadLoggerRecordBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
         <span class="kw">match</span> <span class="ident">err</span>.<span class="ident">error_kind</span>() {
             <span class="ident">HTTPErrorKind</span>::<span class="ident">HTTPCallerError</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
                 <span class="kw">const</span> <span class="ident">NETWORK_ERROR</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>;

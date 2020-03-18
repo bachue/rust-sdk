@@ -534,51 +534,10 @@
 <span id="534">534</span>
 <span id="535">535</span>
 <span id="536">536</span>
-<span id="537">537</span>
-<span id="538">538</span>
-<span id="539">539</span>
-<span id="540">540</span>
-<span id="541">541</span>
-<span id="542">542</span>
-<span id="543">543</span>
-<span id="544">544</span>
-<span id="545">545</span>
-<span id="546">546</span>
-<span id="547">547</span>
-<span id="548">548</span>
-<span id="549">549</span>
-<span id="550">550</span>
-<span id="551">551</span>
-<span id="552">552</span>
-<span id="553">553</span>
-<span id="554">554</span>
-<span id="555">555</span>
-<span id="556">556</span>
-<span id="557">557</span>
-<span id="558">558</span>
-<span id="559">559</span>
-<span id="560">560</span>
-<span id="561">561</span>
-<span id="562">562</span>
-<span id="563">563</span>
-<span id="564">564</span>
-<span id="565">565</span>
-<span id="566">566</span>
-<span id="567">567</span>
-<span id="568">568</span>
-<span id="569">569</span>
-<span id="570">570</span>
-<span id="571">571</span>
-<span id="572">572</span>
-<span id="573">573</span>
-<span id="574">574</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">/// 存储空间上传模块</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// 封装存储空间上传器和文件上传器逻辑。</span>
-<span class="doccomment">/// 需要注意的是，该模块内所有提到的与线程，并发相关的概念仅在分片上传时起效</span>
 <span class="kw">use</span> <span class="kw">super</span>::{
     <span class="kw">super</span>::<span class="ident">uploader</span>::{<span class="ident">UploadPolicy</span>, <span class="ident">UploadToken</span>},
+    <span class="ident">batch_uploader</span>::<span class="ident">BatchUploader</span>,
     <span class="ident">form_uploader</span>::<span class="ident">FormUploaderBuilder</span>,
     <span class="ident">resumable_uploader</span>::{<span class="ident">ResumableUploader</span>, <span class="ident">ResumableUploaderBuilder</span>},
     <span class="ident">upload_recorder</span>::<span class="ident">UploadRecorder</span>,
@@ -713,6 +672,20 @@
         )
     }
 
+    <span class="doccomment">/// 根据上传凭证创建批量文件上传器生成器</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">batch_for_upload_token</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">upload_token</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">BatchUploader</span> {
+        <span class="ident">BatchUploader</span>::<span class="ident">new</span>(<span class="self">self</span>, <span class="ident">upload_token</span>.<span class="ident">into</span>())
+    }
+
+    <span class="doccomment">/// 根据上传策略创建批量文件上传器生成器</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">batch_for_upload_policy</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">upload_policy</span>: <span class="ident">UploadPolicy</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>,
+        <span class="ident">credential</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">Credential</span><span class="op">&gt;&gt;</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">BatchUploader</span> {
+        <span class="self">self</span>.<span class="ident">batch_for_upload_token</span>(<span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>.<span class="ident">into</span>()))
+    }
+
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">BucketUploaderInner</span>) <span class="op">-&gt;</span> <span class="ident">BucketUploader</span> {
         <span class="ident">BucketUploader</span> {
@@ -732,7 +705,7 @@
     }
 }
 
-<span class="kw">enum</span> <span class="ident">ResumablePolicy</span> {
+<span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">enum</span> <span class="ident">ResumablePolicy</span> {
     <span class="ident">Threshold</span>(<span class="ident">u32</span>),
     <span class="ident">Never</span>,
     <span class="ident">Always</span>,
@@ -744,9 +717,9 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
     <span class="ident">bucket_uploader</span>: <span class="ident">Ron</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">BucketUploader</span><span class="op">&gt;</span>,
     <span class="ident">upload_token</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span>,
-    <span class="ident">key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
-    <span class="ident">vars</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
-    <span class="ident">metadata</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">key</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span>,
+    <span class="ident">vars</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">metadata</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
     <span class="ident">checksum_enabled</span>: <span class="ident">bool</span>,
     <span class="ident">resumable_policy</span>: <span class="ident">ResumablePolicy</span>,
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">type_complexity</span>)]</span>
@@ -756,12 +729,12 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bucket_uploader</span>: <span class="ident">Ron</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">BucketUploader</span><span class="op">&gt;</span>, <span class="ident">upload_token</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bucket_uploader</span>: <span class="ident">Ron</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">BucketUploader</span><span class="op">&gt;</span>, <span class="ident">upload_token</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">FileUploaderBuilder</span> {
             <span class="ident">upload_token</span>,
-            <span class="ident">key</span>: <span class="prelude-val">None</span>,
-            <span class="ident">vars</span>: <span class="prelude-val">None</span>,
-            <span class="ident">metadata</span>: <span class="prelude-val">None</span>,
+            <span class="ident">key</span>: <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="string">&quot;&quot;</span>),
+            <span class="ident">vars</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
+            <span class="ident">metadata</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
             <span class="ident">checksum_enabled</span>: <span class="bool-val">true</span>,
             <span class="ident">on_uploading_progress</span>: <span class="prelude-val">None</span>,
             <span class="ident">thread_pool</span>: <span class="prelude-val">None</span>,
@@ -772,13 +745,13 @@
     }
 
     <span class="doccomment">/// 为指定的文件上传指定线程池</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">thread_pool</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">thread_pool</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Ron</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">ThreadPool</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">thread_pool</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">thread_pool</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Ron</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">ThreadPool</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">thread_pool</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">thread_pool</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// 为上传器创建专用线程池指定线程池大小</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">thread_pool_size</span>(<span class="self">self</span>, <span class="ident">num_threads</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">thread_pool_size</span>(<span class="self">self</span>, <span class="ident">num_threads</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">thread_pool</span>(
             <span class="ident">ThreadPoolBuilder</span>::<span class="ident">new</span>()
                 .<span class="ident">num_threads</span>(<span class="ident">num_threads</span>)
@@ -792,60 +765,45 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// 默认情况下，分片上传将采用多线程并发的方式进行上传，最大并发度等于文件上传器内线程池的大小。</span>
     <span class="doccomment">/// 调用该方法可以修改最大并发度</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// `concurrency` 必须大于 0</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_concurrency</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">concurrency</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">concurrency</span> <span class="op">&gt;</span> <span class="number">0</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_concurrency</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">concurrency</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">max_concurrency</span> <span class="op">=</span> <span class="ident">concurrency</span>;
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// 指定上传对象的名称</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">key</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>.<span class="ident">into</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">key</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="ident">key</span>.<span class="ident">into</span>();
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// 为上传对象指定[自定义变量](https://developer.qiniu.com/kodo/manual/1235/vars#xvar)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 可以多次调用以指定多个自定义变量</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">var</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">vars</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">vars</span> {
-            <span class="ident">vars</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">into</span>(), <span class="ident">value</span>.<span class="ident">into</span>());
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vars</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">with_capacity</span>(<span class="number">1</span>);
-            <span class="ident">vars</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">into</span>(), <span class="ident">value</span>.<span class="ident">into</span>());
-            <span class="self">self</span>.<span class="ident">vars</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">vars</span>);
-        }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">var</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">vars</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">into</span>(), <span class="ident">value</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// 为上传对象指定自定义元数据</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 可以多次调用以指定多个自定义元数据</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">metadata</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">metadata</span> {
-            <span class="ident">metadata</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">into</span>(), <span class="ident">value</span>.<span class="ident">into</span>());
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="ident">HashMap</span>::<span class="ident">with_capacity</span>(<span class="number">1</span>);
-            <span class="ident">metadata</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">into</span>(), <span class="ident">value</span>.<span class="ident">into</span>());
-            <span class="self">self</span>.<span class="ident">metadata</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">metadata</span>);
-        }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>, <span class="ident">value</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">into</span>(), <span class="ident">value</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// 禁用文件校验</span>
+    <span class="doccomment">/// 禁用上传数据校验</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// 在任何场景下都不推荐禁用文件校验</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable_checksum</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// 在任何场景下都不推荐禁用上传数据校验</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable_checksum</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">checksum_enabled</span> <span class="op">=</span> <span class="bool-val">false</span>;
         <span class="self">self</span>
     }
 
-    <span class="doccomment">/// 启用文件校验</span>
+    <span class="doccomment">/// 启用上传数据校验</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// 默认总是启用，在任何场景下都不推荐禁用文件校验</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enable_checksum</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// 默认总是启用，在任何场景下都不推荐禁用上传数据校验</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enable_checksum</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">checksum_enabled</span> <span class="op">=</span> <span class="bool-val">true</span>;
         <span class="self">self</span>
     }
@@ -856,13 +814,13 @@
     <span class="doccomment">/// 单位为字节，默认将采用客户端配置中的配置项。</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 对于上传数据流的情况，由于无法预知数据尺寸，将总是使用分片上传</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">upload_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">threshold</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">upload_threshold</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">threshold</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">resumable_policy</span> <span class="op">=</span> <span class="ident">ResumablePolicy</span>::<span class="ident">Threshold</span>(<span class="ident">threshold</span>);
         <span class="self">self</span>
     }
 
     <span class="doccomment">/// 总是使用分片上传</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">always_be_resumable</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">always_be_resumable</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">resumable_policy</span> <span class="op">=</span> <span class="ident">ResumablePolicy</span>::<span class="ident">Always</span>;
         <span class="self">self</span>
     }
@@ -872,7 +830,7 @@
     <span class="doccomment">/// 需要注意的是，虽然表单上传仅需要一次 HTTP 调用，性能优于分片上传，</span>
     <span class="doccomment">/// 但分片上传具有断点续传的特性，以及表单上传会将整个文件内容都加载进内存中，对大文件极不友好。</span>
     <span class="doccomment">/// 因此总是推荐使用默认策略，如果认为默认阙值过小，可以适当提高客户端配置的阙值。</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">never_be_resumable</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">never_be_resumable</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">resumable_policy</span> <span class="op">=</span> <span class="ident">ResumablePolicy</span>::<span class="ident">Never</span>;
         <span class="self">self</span>
     }
@@ -883,10 +841,7 @@
     <span class="doccomment">/// 上传进度闭包的第一个参数为已经上传的数据量，</span>
     <span class="doccomment">/// 第二个参数为数据总量，如果为 `None` 表示数据总量不可预知，</span>
     <span class="doccomment">/// 单位均为字节</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_progress_ref</span>(
-        <span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">callback</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> (<span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="ident">u64</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>) <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>),
-    ) <span class="op">-&gt;</span> <span class="ident">FileUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_progress_ref</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">callback</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> (<span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="ident">u64</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>) <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>)) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">on_uploading_progress</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">callback</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
@@ -920,7 +875,6 @@
     ) <span class="op">-&gt;</span> <span class="ident">UploadResult</span> {
         <span class="kw">let</span> <span class="ident">file_path</span> <span class="op">=</span> <span class="ident">file_path</span>.<span class="ident">as_ref</span>();
         <span class="kw">let</span> <span class="ident">file_name</span> <span class="op">=</span> <span class="ident">file_name</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">file_name</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">file_name</span>.<span class="ident">is_empty</span>() { <span class="prelude-val">None</span> } <span class="kw">else</span> { <span class="prelude-val">Some</span>(<span class="ident">file_name</span>) };
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">resumable_policy</span> {
             <span class="ident">ResumablePolicy</span>::<span class="ident">Threshold</span>(<span class="ident">threshold</span>) <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="ident">file_path</span>.<span class="ident">metadata</span>()<span class="question-mark">?</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">threshold</span>.<span class="ident">into</span>() {
@@ -950,7 +904,6 @@
         <span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>,
     ) <span class="op">-&gt;</span> <span class="ident">UploadResult</span> {
         <span class="kw">let</span> <span class="ident">file_name</span> <span class="op">=</span> <span class="ident">file_name</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">file_name</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">file_name</span>.<span class="ident">is_empty</span>() { <span class="prelude-val">None</span> } <span class="kw">else</span> { <span class="prelude-val">Some</span>(<span class="ident">file_name</span>) };
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">resumable_policy</span> {
             <span class="ident">ResumablePolicy</span>::<span class="ident">Threshold</span>(<span class="ident">threshold</span>) <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="ident">size</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">size</span> <span class="op">&lt;</span> <span class="ident">threshold</span>.<span class="ident">into</span>() {
@@ -964,25 +917,13 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">upload_file_by_form</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span>(
-        <span class="self">self</span>,
-        <span class="ident">file_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>,
-        <span class="ident">file_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
-        <span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">UploadResult</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">FormUploaderBuilder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bucket_uploader</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">upload_token</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">key</span> {
-            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">key</span>(<span class="ident">key</span>);
+    <span class="kw">fn</span> <span class="ident">upload_file_by_form</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">file_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">file_name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">UploadResult</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">FormUploaderBuilder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bucket_uploader</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">upload_token</span>).<span class="ident">key</span>(<span class="self">self</span>.<span class="ident">key</span>);
+        <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">vars</span>.<span class="ident">into_iter</span>() {
+            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">var</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">v</span>);
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">vars</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">vars</span> {
-            <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="ident">vars</span>.<span class="ident">into_iter</span>() {
-                <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">var</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">v</span>);
-            }
-        }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">metadata</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">metadata</span> {
-            <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="ident">metadata</span>.<span class="ident">into_iter</span>() {
-                <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">v</span>);
-            }
+        <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">into_iter</span>() {
+            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">v</span>);
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">callback</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">on_uploading_progress</span> {
             <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">on_uploading_progress</span>(<span class="ident">callback</span>.<span class="ident">as_ref</span>());
@@ -997,23 +938,12 @@
             .<span class="ident">send</span>()<span class="question-mark">?</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">upload_file_by_blocks</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span>(
-        <span class="self">self</span>,
-        <span class="ident">file_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>,
-        <span class="ident">file_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
-        <span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">UploadResult</span> {
+    <span class="kw">fn</span> <span class="ident">upload_file_by_blocks</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">file_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">file_name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">UploadResult</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">ResumableUploaderBuilder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bucket_uploader</span>, <span class="self">self</span>.<span class="ident">upload_token</span>)
-            .<span class="ident">max_concurrency</span>(<span class="self">self</span>.<span class="ident">max_concurrency</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">key</span> {
-            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">key</span>(<span class="ident">key</span>.<span class="ident">to_owned</span>());
-        }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">vars</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">vars</span> {
-            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">vars</span>(<span class="ident">vars</span>);
-        }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">metadata</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">metadata</span> {
-            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">metadata</span>(<span class="ident">metadata</span>);
-        }
+            .<span class="ident">max_concurrency</span>(<span class="self">self</span>.<span class="ident">max_concurrency</span>)
+            .<span class="ident">key</span>(<span class="self">self</span>.<span class="ident">key</span>.<span class="ident">to_owned</span>())
+            .<span class="ident">vars</span>(<span class="self">self</span>.<span class="ident">vars</span>)
+            .<span class="ident">metadata</span>(<span class="self">self</span>.<span class="ident">metadata</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">callback</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">on_uploading_progress</span> {
             <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">on_uploading_progress</span>(<span class="ident">callback</span>.<span class="ident">as_ref</span>());
         }
@@ -1029,7 +959,7 @@
             <span class="self">self</span>.<span class="ident">checksum_enabled</span>,
         )<span class="question-mark">?</span>;
         <span class="self">Self</span>::<span class="ident">prepare_for_resuming</span>(
-            <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">key</span><span class="op">|</span> <span class="ident">key</span>.<span class="ident">as_ref</span>()),
+            <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_ref</span>(),
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bucket_uploader</span>.<span class="ident">recorder</span>(),
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">uploader</span>,
             <span class="ident">file_path</span>,
@@ -1038,7 +968,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">prepare_for_resuming</span>(
-        <span class="ident">key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
+        <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">recorder</span>: <span class="kw-2">&amp;</span><span class="ident">UploadRecorder</span>,
         <span class="ident">uploader</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ResumableUploader</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">File</span><span class="op">&gt;</span>,
         <span class="ident">file_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>,
@@ -1053,27 +983,20 @@
         <span class="self">self</span>,
         <span class="ident">stream</span>: <span class="ident">R</span>,
         <span class="ident">size</span>: <span class="ident">u64</span>,
-        <span class="ident">file_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span>,
+        <span class="ident">file_name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>,
     ) <span class="op">-&gt;</span> <span class="ident">UploadResult</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">FormUploaderBuilder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bucket_uploader</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">upload_token</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">key</span> {
-            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">key</span>(<span class="ident">key</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">FormUploaderBuilder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bucket_uploader</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">upload_token</span>).<span class="ident">key</span>(<span class="self">self</span>.<span class="ident">key</span>);
+        <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">vars</span>.<span class="ident">into_iter</span>() {
+            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">var</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">v</span>);
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">vars</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">vars</span> {
-            <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="ident">vars</span>.<span class="ident">into_iter</span>() {
-                <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">var</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">v</span>);
-            }
-        }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">metadata</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">metadata</span> {
-            <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="ident">metadata</span>.<span class="ident">into_iter</span>() {
-                <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">v</span>);
-            }
+        <span class="kw">for</span> (<span class="ident">k</span>, <span class="ident">v</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">into_iter</span>() {
+            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="ident">k</span>, <span class="ident">v</span>);
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">callback</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">on_uploading_progress</span> {
             <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">on_uploading_progress</span>(<span class="ident">callback</span>.<span class="ident">as_ref</span>());
         }
-        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">guess_mime_from_file_name</span>(<span class="ident">mime</span>, <span class="ident">file_name</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">name</span><span class="op">|</span> <span class="ident">name</span>.<span class="ident">as_ref</span>()));
+        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">guess_mime_from_file_name</span>(<span class="ident">mime</span>, <span class="ident">file_name</span>.<span class="ident">as_ref</span>());
         <span class="kw">let</span> <span class="ident">upload_response</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">size</span> <span class="op">&gt;</span> <span class="number">0</span> {
             <span class="ident">uploader</span>.<span class="ident">stream</span>(<span class="ident">stream</span>.<span class="ident">take</span>(<span class="ident">size</span>), <span class="ident">mime</span>, <span class="ident">file_name</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>.<span class="ident">send</span>()<span class="question-mark">?</span>
         } <span class="kw">else</span> {
@@ -1086,27 +1009,21 @@
         <span class="self">self</span>,
         <span class="ident">stream</span>: <span class="ident">R</span>,
         <span class="ident">size</span>: <span class="ident">u64</span>,
-        <span class="ident">file_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span>,
+        <span class="ident">file_name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>,
     ) <span class="op">-&gt;</span> <span class="ident">UploadResult</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">ResumableUploaderBuilder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bucket_uploader</span>, <span class="self">self</span>.<span class="ident">upload_token</span>)
-            .<span class="ident">max_concurrency</span>(<span class="self">self</span>.<span class="ident">max_concurrency</span>);
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">key</span> {
-            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">key</span>(<span class="ident">key</span>);
-        }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">vars</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">vars</span> {
-            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">vars</span>(<span class="ident">vars</span>);
-        }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">metadata</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">metadata</span> {
-            <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">metadata</span>(<span class="ident">metadata</span>);
-        }
+            .<span class="ident">max_concurrency</span>(<span class="self">self</span>.<span class="ident">max_concurrency</span>)
+            .<span class="ident">key</span>(<span class="self">self</span>.<span class="ident">key</span>)
+            .<span class="ident">vars</span>(<span class="self">self</span>.<span class="ident">vars</span>)
+            .<span class="ident">metadata</span>(<span class="self">self</span>.<span class="ident">metadata</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">callback</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">on_uploading_progress</span> {
             <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">on_uploading_progress</span>(<span class="ident">callback</span>.<span class="ident">as_ref</span>());
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">thread_pool</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">thread_pool</span> {
             <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">thread_pool</span>(<span class="ident">thread_pool</span>);
         }
-        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">guess_mime_from_file_name</span>(<span class="ident">mime</span>, <span class="ident">file_name</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">name</span><span class="op">|</span> <span class="ident">name</span>.<span class="ident">as_ref</span>()));
+        <span class="kw">let</span> <span class="ident">mime</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">guess_mime_from_file_name</span>(<span class="ident">mime</span>, <span class="ident">file_name</span>.<span class="ident">as_ref</span>());
         <span class="kw">let</span> <span class="ident">upload_response</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">size</span> <span class="op">&gt;</span> <span class="number">0</span> {
             <span class="ident">uploader</span>
                 .<span class="ident">stream</span>(<span class="ident">stream</span>.<span class="ident">take</span>(<span class="ident">size</span>), <span class="ident">size</span>, <span class="ident">mime</span>, <span class="ident">file_name</span>, <span class="bool-val">true</span>)<span class="question-mark">?</span>
@@ -1117,21 +1034,28 @@
         <span class="prelude-val">Ok</span>(<span class="ident">upload_response</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">guess_filename</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span>(<span class="ident">file_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">file_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span> {
-        <span class="ident">file_name</span>.<span class="ident">or_else</span>(<span class="op">||</span> {
+    <span class="kw">fn</span> <span class="ident">guess_filename</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span>(<span class="ident">file_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">file_name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">file_name</span>.<span class="ident">is_empty</span>() {
             <span class="ident">file_path</span>
                 .<span class="ident">file_name</span>()
                 .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">name</span><span class="op">|</span> <span class="ident">name</span>.<span class="ident">to_str</span>())
                 .<span class="ident">map</span>(<span class="op">|</span><span class="ident">name</span><span class="op">|</span> <span class="ident">name</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>())
-        })
+                .<span class="ident">unwrap_or_default</span>()
+        } <span class="kw">else</span> {
+            <span class="ident">file_name</span>
+        }
     }
 
     <span class="kw">fn</span> <span class="ident">guess_mime_from_file_path</span>(<span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>, <span class="ident">file_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span> {
         <span class="ident">mime</span>.<span class="ident">or_else</span>(<span class="op">||</span> <span class="ident">mime_guess</span>::<span class="ident">from_path</span>(<span class="ident">file_path</span>).<span class="ident">first</span>())
     }
 
-    <span class="kw">fn</span> <span class="ident">guess_mime_from_file_name</span>(<span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>, <span class="ident">file_name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span> {
-        <span class="ident">mime</span>.<span class="ident">or_else</span>(<span class="op">||</span> <span class="ident">file_name</span>.<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">file_name</span><span class="op">|</span> <span class="ident">mime_guess</span>::<span class="ident">from_path</span>(<span class="ident">file_name</span>).<span class="ident">first</span>()))
+    <span class="kw">fn</span> <span class="ident">guess_mime_from_file_name</span>(<span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>, <span class="ident">file_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span> {
+        <span class="ident">mime</span>.<span class="ident">or_else</span>(<span class="op">||</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">file_name</span>)
+                .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">n</span><span class="op">|</span> <span class="op">!</span><span class="ident">n</span>.<span class="ident">is_empty</span>())
+                .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">file_name</span><span class="op">|</span> <span class="ident">mime_guess</span>::<span class="ident">from_path</span>(<span class="ident">file_name</span>).<span class="ident">first</span>())
+        })
     }
 }
 

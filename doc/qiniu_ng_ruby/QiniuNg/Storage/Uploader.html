@@ -95,7 +95,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/qiniu_ng/storage/uploader.rb<span class="defines">,<br />
-  lib/qiniu_ng/storage/uploader/upload_token.rb,<br /> lib/qiniu_ng/storage/uploader/upload_policy.rb,<br /> lib/qiniu_ng/storage/uploader/bucket_uploader.rb,<br /> lib/qiniu_ng/storage/uploader/upload_response.rb</span>
+  lib/qiniu_ng/storage/uploader/upload_token.rb,<br /> lib/qiniu_ng/storage/uploader/upload_policy.rb,<br /> lib/qiniu_ng/storage/uploader/batch_uploader.rb,<br /> lib/qiniu_ng/storage/uploader/bucket_uploader.rb,<br /> lib/qiniu_ng/storage/uploader/upload_response.rb,<br /> lib/qiniu_ng/storage/uploader/uploader_helper.rb</span>
 </dd>
   </dl>
   
@@ -120,7 +120,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Uploader/BucketUploader.html" title="QiniuNg::Storage::Uploader::BucketUploader (class)">BucketUploader</a></span>, <span class='object_link'><a href="Uploader/UploadPolicy.html" title="QiniuNg::Storage::Uploader::UploadPolicy (class)">UploadPolicy</a></span>, <span class='object_link'><a href="Uploader/UploadResponse.html" title="QiniuNg::Storage::Uploader::UploadResponse (class)">UploadResponse</a></span>, <span class='object_link'><a href="Uploader/UploadToken.html" title="QiniuNg::Storage::Uploader::UploadToken (class)">UploadToken</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Uploader/BatchUploader.html" title="QiniuNg::Storage::Uploader::BatchUploader (class)">BatchUploader</a></span>, <span class='object_link'><a href="Uploader/BucketUploader.html" title="QiniuNg::Storage::Uploader::BucketUploader (class)">BucketUploader</a></span>, <span class='object_link'><a href="Uploader/UploadPolicy.html" title="QiniuNg::Storage::Uploader::UploadPolicy (class)">UploadPolicy</a></span>, <span class='object_link'><a href="Uploader/UploadResponse.html" title="QiniuNg::Storage::Uploader::UploadResponse (class)">UploadResponse</a></span>, <span class='object_link'><a href="Uploader/UploadToken.html" title="QiniuNg::Storage::Uploader::UploadToken (class)">UploadToken</a></span>
     
   
 </p>
@@ -138,6 +138,30 @@
     </h2>
 
     <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#batch_uploader-instance_method" title="#batch_uploader (instance method)">#<strong>batch_uploader</strong>(upload_token, config:)  &#x21d2; BatchUploader </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>创建批量上传器.</p>
+</div></span>
+  
+</li>
+
       
         <li class="public ">
   <span class="summary_signature">
@@ -259,13 +283,13 @@
       <pre class="lines">
 
 
-17
-18
 19
-20</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>config must be instance of Config</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Config.html" title="QiniuNg::Config (class)">Config</a></span></span><span class='rparen'>)</span>
@@ -284,7 +308,120 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="bucket_uploader-instance_method">
+  <h3 class="signature first" id="batch_uploader-instance_method">
+  
+    #<strong>batch_uploader</strong>(upload_token, config:)  &#x21d2; <tt><span class='object_link'><a href="Uploader/BatchUploader.html" title="QiniuNg::Storage::Uploader::BatchUploader (class)">BatchUploader</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>创建批量上传器</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>upload_token</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Uploader/UploadToken.html" title="QiniuNg::Storage::Uploader::UploadToken (class)">UploadToken</a></span></tt>, <tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>默认上传凭证</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Config.html" title="QiniuNg::Config (class)">Config</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>客户端配置实例</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Uploader/BatchUploader.html" title="QiniuNg::Storage::Uploader::BatchUploader (class)">BatchUploader</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回批量上传器</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Error/BucketIsMissingInUploadToken.html" title="QiniuNg::Error::BucketIsMissingInUploadToken (class)">Error::BucketIsMissingInUploadToken</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>上传凭证内没有存储空间相关信息</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_batch_uploader'>batch_uploader</span><span class='lparen'>(</span><span class='id identifier rubyid_upload_token'>upload_token</span><span class='comma'>,</span> <span class='label'>config:</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Storage.html" title="QiniuNg::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="QiniuNg::Storage::Uploader (class)">Uploader</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Uploader/BatchUploader.html" title="QiniuNg::Storage::Uploader::BatchUploader (class)">BatchUploader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new_from_config</span><span class='comma'>,</span> <span class='id identifier rubyid_upload_token'>upload_token</span><span class='comma'>,</span> <span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bucket_uploader-instance_method">
   
     #<strong>bucket_uploader</strong>(bucket_name:, access_key:, thread_pool_size: nil)  &#x21d2; <tt><span class='object_link'><a href="Uploader/BucketUploader.html" title="QiniuNg::Storage::Uploader::BucketUploader (class)">BucketUploader</a></span></tt> 
   
@@ -399,14 +536,14 @@
       <pre class="lines">
 
 
-28
-29
 30
 31
-32</pre>
+32
+33
+34</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/storage/uploader.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bucket_uploader'>bucket_uploader</span><span class='lparen'>(</span><span class='label'>bucket_name:</span><span class='comma'>,</span> <span class='label'>access_key:</span><span class='comma'>,</span> <span class='label'>thread_pool_size:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Uploader/BucketUploader.html" title="QiniuNg::Storage::Uploader::BucketUploader (class)">BucketUploader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new_from_bucket_name</span><span class='comma'>,</span> <span class='kw'>self</span><span class='comma'>,</span>
@@ -423,7 +560,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Mar  6 12:21:41 2020 by
+  Generated on Wed Mar 18 10:36:11 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

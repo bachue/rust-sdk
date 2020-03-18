@@ -1,5 +1,7 @@
 var annotated_dup =
 [
+    [ "qiniu_ng_batch_upload_params_t", "structqiniu__ng__batch__upload__params__t.html", "structqiniu__ng__batch__upload__params__t" ],
+    [ "qiniu_ng_batch_uploader_t", "structqiniu__ng__batch__uploader__t.html", "structqiniu__ng__batch__uploader__t" ],
     [ "qiniu_ng_bucket_builder_t", "structqiniu__ng__bucket__builder__t.html", "structqiniu__ng__bucket__builder__t" ],
     [ "qiniu_ng_bucket_t", "structqiniu__ng__bucket__t.html", "structqiniu__ng__bucket__t" ],
     [ "qiniu_ng_bucket_uploader_t", "structqiniu__ng__bucket__uploader__t.html", "structqiniu__ng__bucket__uploader__t" ],

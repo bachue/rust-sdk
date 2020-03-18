@@ -162,7 +162,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#append_http_request_after_action_handler-instance_method" title="#append_http_request_after_action_handler (instance method)">#<strong>append_http_request_after_action_handler</strong> {|request, response| ... } &#x21d2; Object </a>
+      <a href="#append_http_request_after_action_handler-instance_method" title="#append_http_request_after_action_handler (instance method)">#<strong>append_http_request_after_action_handler</strong> {|request, response| ... } &#x21d2; Builder </a>
     
 
     
@@ -186,7 +186,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#append_http_request_before_action_handler-instance_method" title="#append_http_request_before_action_handler (instance method)">#<strong>append_http_request_before_action_handler</strong> {|request| ... } &#x21d2; Object </a>
+      <a href="#append_http_request_before_action_handler-instance_method" title="#append_http_request_before_action_handler (instance method)">#<strong>append_http_request_before_action_handler</strong> {|request| ... } &#x21d2; Builder </a>
     
 
     
@@ -642,7 +642,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#http_request_handler-instance_method" title="#http_request_handler (instance method)">#<strong>http_request_handler</strong> {|request, response| ... } &#x21d2; Object </a>
+      <a href="#http_request_handler-instance_method" title="#http_request_handler (instance method)">#<strong>http_request_handler</strong> {|request, response| ... } &#x21d2; Builder </a>
     
 
     
@@ -788,7 +788,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#prepend_http_request_after_action_handler-instance_method" title="#prepend_http_request_after_action_handler (instance method)">#<strong>prepend_http_request_after_action_handler</strong> {|request, response| ... } &#x21d2; Object </a>
+      <a href="#prepend_http_request_after_action_handler-instance_method" title="#prepend_http_request_after_action_handler (instance method)">#<strong>prepend_http_request_after_action_handler</strong> {|request, response| ... } &#x21d2; Builder </a>
     
 
     
@@ -812,7 +812,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#prepend_http_request_before_action_handler-instance_method" title="#prepend_http_request_before_action_handler (instance method)">#<strong>prepend_http_request_before_action_handler</strong> {|request| ... } &#x21d2; Object </a>
+      <a href="#prepend_http_request_before_action_handler-instance_method" title="#prepend_http_request_before_action_handler (instance method)">#<strong>prepend_http_request_before_action_handler</strong> {|request| ... } &#x21d2; Builder </a>
     
 
     
@@ -1385,26 +1385,26 @@
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 657</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -1431,7 +1431,7 @@
       <div class="method_details ">
   <h3 class="signature " id="append_http_request_after_action_handler-instance_method">
   
-    #<strong>append_http_request_after_action_handler</strong> {|request, response| ... } &#x21d2; <tt>Object</tt> 
+    #<strong>append_http_request_after_action_handler</strong> {|request, response| ... } &#x21d2; <tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -1520,6 +1520,24 @@
     </li>
   
 </ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回自身，可以形成链式调用</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1527,32 +1545,18 @@
       <pre class="lines">
 
 
-478
 479
 480
 481
 482
-483
-484
-485
-486
-487
-488
-489</pre>
+483</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 478</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 479</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append_http_request_after_action_handler'>append_http_request_after_action_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-        <span class='id identifier rubyid_wrap_action_handler'>wrap_action_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-          <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span>
-            <span class='const'><span class='object_link'><a href="../HTTP.html" title="QiniuNg::HTTP (module)">HTTP</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HTTP/Request.html" title="QiniuNg::HTTP::Request (class)">Request</a></span></span><span class='op'>::</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>HTTPRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
-            <span class='const'><span class='object_link'><a href="../HTTP.html" title="QiniuNg::HTTP (module)">HTTP</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HTTP/Response.html" title="QiniuNg::HTTP::Response (class)">Response</a></span></span><span class='op'>::</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>HTTPResponse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
-          <span class='rparen'>)</span>
-        <span class='kw'>end</span>
-      <span class='kw'>end</span>
-  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_append_http_request_after_action_handler'>append_http_request_after_action_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
+  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_append_http_request_after_action_handler'>append_http_request_after_action_handler</span><span class='lparen'>(</span><span class='const'>HTTPRequestAfterActionHandler</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1563,7 +1567,7 @@
       <div class="method_details ">
   <h3 class="signature " id="append_http_request_before_action_handler-instance_method">
   
-    #<strong>append_http_request_before_action_handler</strong> {|request| ... } &#x21d2; <tt>Object</tt> 
+    #<strong>append_http_request_before_action_handler</strong> {|request| ... } &#x21d2; <tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -1636,6 +1640,24 @@
     </li>
   
 </ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回自身，可以形成链式调用</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1643,26 +1665,18 @@
       <pre class="lines">
 
 
-514
-515
-516
-517
-518
-519
-520
-521
-522</pre>
+509
+510
+511
+512
+513</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 514</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 509</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append_http_request_before_action_handler'>append_http_request_before_action_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-        <span class='id identifier rubyid_wrap_action_handler'>wrap_action_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-          <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../HTTP.html" title="QiniuNg::HTTP (module)">HTTP</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HTTP/Request.html" title="QiniuNg::HTTP::Request (class)">Request</a></span></span><span class='op'>::</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>HTTPRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
-        <span class='kw'>end</span>
-      <span class='kw'>end</span>
-  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_append_http_request_before_action_handler'>append_http_request_before_action_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
+  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_append_http_request_before_action_handler'>append_http_request_before_action_handler</span><span class='lparen'>(</span><span class='const'>HTTPRequestBeforeActionHandler</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1757,7 +1771,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -2059,7 +2073,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -2296,26 +2310,26 @@
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 657</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -2405,26 +2419,26 @@
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 657</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -2535,7 +2549,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -2632,7 +2646,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -2727,7 +2741,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -2824,7 +2838,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -2974,7 +2988,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -3073,7 +3087,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -3171,7 +3185,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -3182,7 +3196,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <div class="method_details ">
   <h3 class="signature " id="http_request_handler-instance_method">
   
-    #<strong>http_request_handler</strong> {|request, response| ... } &#x21d2; <tt>Object</tt> 
+    #<strong>http_request_handler</strong> {|request, response| ... } &#x21d2; <tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -3269,6 +3283,24 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
     </li>
   
 </ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回自身，可以形成链式调用</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -3276,32 +3308,18 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-615
-616
-617
-618
-619
-620
-621
-622
-623
-624
-625
-626</pre>
+598
+599
+600
+601
+602</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 615</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 598</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_http_request_handler'>http_request_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-        <span class='id identifier rubyid_wrap_action_handler'>wrap_action_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-          <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span>
-            <span class='const'><span class='object_link'><a href="../HTTP.html" title="QiniuNg::HTTP (module)">HTTP</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HTTP/Request.html" title="QiniuNg::HTTP::Request (class)">Request</a></span></span><span class='op'>::</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>HTTPRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
-            <span class='const'><span class='object_link'><a href="../HTTP.html" title="QiniuNg::HTTP (module)">HTTP</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HTTP/Response.html" title="QiniuNg::HTTP::Response (class)">Response</a></span></span><span class='op'>::</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>HTTPResponse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
-          <span class='rparen'>)</span>
-        <span class='kw'>end</span>
-      <span class='kw'>end</span>
-  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_http_call_handler'>set_http_call_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
+  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_set_http_call_handler'>set_http_call_handler</span><span class='lparen'>(</span><span class='const'>HTTPRequestAfterActionHandler</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3398,7 +3416,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -3496,7 +3514,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -3591,7 +3609,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -3687,7 +3705,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <div class="method_details ">
   <h3 class="signature " id="prepend_http_request_after_action_handler-instance_method">
   
-    #<strong>prepend_http_request_after_action_handler</strong> {|request, response| ... } &#x21d2; <tt>Object</tt> 
+    #<strong>prepend_http_request_after_action_handler</strong> {|request, response| ... } &#x21d2; <tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -3776,6 +3794,24 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
     </li>
   
 </ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回自身，可以形成链式调用</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -3783,32 +3819,18 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559</pre>
+540
+541
+542
+543
+544</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 548</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 540</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend_http_request_after_action_handler'>prepend_http_request_after_action_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-        <span class='id identifier rubyid_wrap_action_handler'>wrap_action_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-          <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span>
-            <span class='const'><span class='object_link'><a href="../HTTP.html" title="QiniuNg::HTTP (module)">HTTP</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HTTP/Request.html" title="QiniuNg::HTTP::Request (class)">Request</a></span></span><span class='op'>::</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>HTTPRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
-            <span class='const'><span class='object_link'><a href="../HTTP.html" title="QiniuNg::HTTP (module)">HTTP</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HTTP/Response.html" title="QiniuNg::HTTP::Response (class)">Response</a></span></span><span class='op'>::</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>HTTPResponse</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
-          <span class='rparen'>)</span>
-        <span class='kw'>end</span>
-      <span class='kw'>end</span>
-  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_prepend_http_request_after_action_handler'>prepend_http_request_after_action_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
+  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_prepend_http_request_after_action_handler'>prepend_http_request_after_action_handler</span><span class='lparen'>(</span><span class='const'>HTTPRequestAfterActionHandler</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3819,7 +3841,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <div class="method_details ">
   <h3 class="signature " id="prepend_http_request_before_action_handler-instance_method">
   
-    #<strong>prepend_http_request_before_action_handler</strong> {|request| ... } &#x21d2; <tt>Object</tt> 
+    #<strong>prepend_http_request_before_action_handler</strong> {|request| ... } &#x21d2; <tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt> 
   
 
   
@@ -3892,6 +3914,24 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
     </li>
   
 </ul>
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="QiniuNg::Config::Builder (class)">Builder</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回自身，可以形成链式调用</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -3899,26 +3939,18 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-584
-585
-586
-587
-588
-589
-590
-591
-592</pre>
+570
+571
+572
+573
+574</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 584</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 570</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend_http_request_before_action_handler'>prepend_http_request_before_action_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_h'>h</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-        <span class='id identifier rubyid_wrap_action_handler'>wrap_action_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span> <span class='kw'>do</span>
-          <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../HTTP.html" title="QiniuNg::HTTP (module)">HTTP</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../HTTP/Request.html" title="QiniuNg::HTTP::Request (class)">Request</a></span></span><span class='op'>::</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new</span><span class='comma'>,</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>HTTPRequest</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
-        <span class='kw'>end</span>
-      <span class='kw'>end</span>
-  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_prepend_http_request_before_action_handler'>prepend_http_request_before_action_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_h'>h</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
+  <span class='ivar'>@builder</span><span class='period'>.</span><span class='id identifier rubyid_prepend_http_request_before_action_handler'>prepend_http_request_before_action_handler</span><span class='lparen'>(</span><span class='const'>HTTPRequestBeforeActionHandler</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -3990,26 +4022,26 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 657</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -4097,26 +4129,26 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 657</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -4314,7 +4346,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -4409,7 +4441,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -4481,26 +4513,26 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 657</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -4611,7 +4643,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -4761,26 +4793,26 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 657</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -4893,7 +4925,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -4990,7 +5022,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -5085,7 +5117,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -5294,7 +5326,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -5369,26 +5401,26 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 657</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -5501,7 +5533,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 733</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 675</span>
 
 </pre>
     </td>
@@ -5573,26 +5605,26 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
       <pre class="lines">
 
 
-715
-716
-717
-718
-719
-720
-721
-722
-723
-724
-725
-726
-727
-728
-729
-730
-731</pre>
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 715</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 657</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -5696,7 +5728,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </div>
 
       <div id="footer">
-  Generated on Fri Mar  6 12:21:40 2020 by
+  Generated on Wed Mar 18 10:36:10 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

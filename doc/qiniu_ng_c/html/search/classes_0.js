@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['qiniu_5fng_5fbatch_5fupload_5fparams_5ft',['qiniu_ng_batch_upload_params_t',['../structqiniu__ng__batch__upload__params__t.html',1,'']]],
+  ['qiniu_5fng_5fbatch_5fuploader_5ft',['qiniu_ng_batch_uploader_t',['../structqiniu__ng__batch__uploader__t.html',1,'']]],
   ['qiniu_5fng_5fbucket_5fbuilder_5ft',['qiniu_ng_bucket_builder_t',['../structqiniu__ng__bucket__builder__t.html',1,'']]],
   ['qiniu_5fng_5fbucket_5ft',['qiniu_ng_bucket_t',['../structqiniu__ng__bucket__t.html',1,'']]],
   ['qiniu_5fng_5fbucket_5fuploader_5ft',['qiniu_ng_bucket_uploader_t',['../structqiniu__ng__bucket__uploader__t.html',1,'']]],
