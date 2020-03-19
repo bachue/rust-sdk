@@ -123,6 +123,25 @@
   
 </p>
 
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="CallbackExceptionHandler-constant" class="">CallbackExceptionHandler =
+          
+        </dt>
+        <dd><pre class="code"><span class='id identifier rubyid_proc'>proc</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_exception'>exception</span><span class='op'>|</span>
+  <span class='const'>STDERR</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Callback exception: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_exception'>exception</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_exception'>exception</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_trace'>trace</span><span class='op'>|</span> <span class='const'>STDERR</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\t</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_trace'>trace</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre></dd>
+      
+    </dl>
+  
+
 
 
 
@@ -1588,11 +1607,6 @@
       <pre class="lines">
 
 
-12
-13
-14
-15
-16
 17
 18
 19
@@ -1653,10 +1667,15 @@
 74
 75
 76
-77</pre>
+77
+78
+79
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>use_https:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                <span class='label'>api_host:</span> <span class='kw'>nil</span><span class='comma'>,</span>
@@ -1783,7 +1802,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -1838,7 +1857,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -1893,7 +1912,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 144</span>
 
 </pre>
     </td>
@@ -1948,7 +1967,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 117</span>
 
 </pre>
     </td>
@@ -2003,7 +2022,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2058,7 +2077,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2113,7 +2132,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2168,7 +2187,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 117</span>
 
 </pre>
     </td>
@@ -2223,7 +2242,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 144</span>
 
 </pre>
     </td>
@@ -2278,7 +2297,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2333,7 +2352,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2388,7 +2407,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 144</span>
 
 </pre>
     </td>
@@ -2443,7 +2462,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2498,7 +2517,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 144</span>
 
 </pre>
     </td>
@@ -2553,7 +2572,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2608,7 +2627,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2663,7 +2682,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -2718,7 +2737,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -2773,7 +2792,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -2828,7 +2847,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -2883,7 +2902,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2938,7 +2957,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -2993,7 +3012,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -3048,7 +3067,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -3103,7 +3122,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 144</span>
 
 </pre>
     </td>
@@ -3158,7 +3177,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 117</span>
 
 </pre>
     </td>
@@ -3213,7 +3232,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -3268,7 +3287,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -3323,7 +3342,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 144</span>
 
 </pre>
     </td>
@@ -3378,7 +3397,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 236</span>
 
 </pre>
     </td>
@@ -3433,7 +3452,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 117</span>
 
 </pre>
     </td>
@@ -3485,11 +3504,6 @@
       <pre class="lines">
 
 
-288
-289
-290
-291
-292
 293
 294
 295
@@ -3498,10 +3512,15 @@
 298
 299
 300
-301</pre>
+301
+302
+303
+304
+305
+306</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 288</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 293</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uplog_file_lock_policy'>uplog_file_lock_policy</span>
   <span class='id identifier rubyid_policy'>policy</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>QiniuNgUploadLoggerLockPolicyTWrapper</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -3566,14 +3585,14 @@
       <pre class="lines">
 
 
-313
-314
-315
-316
-317</pre>
+318
+319
+320
+321
+322</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 313</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 318</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uplog_file_max_size'>uplog_file_max_size</span>
   <span class='id identifier rubyid_u32'>u32</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>U32</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -3632,7 +3651,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -3684,14 +3703,14 @@
       <pre class="lines">
 
 
-305
-306
-307
-308
-309</pre>
+310
+311
+312
+313
+314</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 305</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 310</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uplog_file_upload_threshold'>uplog_file_upload_threshold</span>
   <span class='id identifier rubyid_u32'>u32</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>U32</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -3750,7 +3769,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -3805,7 +3824,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -3860,7 +3879,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 117</span>
 
 </pre>
     </td>
@@ -3915,7 +3934,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 175</span>
 
 </pre>
     </td>
@@ -3928,7 +3947,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Mar 18 10:36:09 2020 by
+  Generated on Thu Mar 19 06:35:38 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>
