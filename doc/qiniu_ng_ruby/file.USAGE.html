@@ -432,6 +432,34 @@ MB，可以通过修改配置增加尺寸，但必须是 4 MB
                                                                                            <span class='label'>body:</span> <span class='id identifier rubyid_body'>body</span>
 </code></pre>
 
+<h2 id="label-HTTP+-E5-9B-9E-E8-B0-83-E5-87-BD-E6-95-B0">HTTP 回调函数</h2>
+
+<p>SDK 支持在发送 HTTP 请求前和收到响应后调用回调函数对 HTTP 请求和响应进行处理，这里给出一个打印 HTTP
+请求和响应相关信息的回调函数实现：</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>qiniu_ng</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_config_builder'>config_builder</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="QiniuNg/Config.html" title="QiniuNg::Config (class)">Config</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="QiniuNg/Config/Builder.html" title="QiniuNg::Config::Builder (class)">Builder</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="QiniuNg/Config/Builder.html#initialize-instance_method" title="QiniuNg::Config::Builder#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_config_builder'>config_builder</span><span class='period'>.</span><span class='id identifier rubyid_append_http_request_before_action_handler'>append_http_request_before_action_handler</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_request'>request</span><span class='op'>|</span>
+  <span class='id identifier rubyid_request_id'>request_id</span> <span class='op'>=</span> <span class='id identifier rubyid_rand'>rand</span><span class='lparen'>(</span><span class='int'>2</span><span class='op'>**</span><span class='int'>64</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request_id'>request_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>] </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_header_name'>header_name</span><span class='comma'>,</span> <span class='id identifier rubyid_header_value'>header_value</span><span class='op'>|</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request_id'>request_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>]   </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_header_name'>header_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_header_value'>header_value</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_custom_data'>custom_data</span> <span class='op'>=</span> <span class='id identifier rubyid_request_id'>request_id</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_config_builder'>config_builder</span><span class='period'>.</span><span class='id identifier rubyid_append_http_request_after_action_handler'>append_http_request_after_action_handler</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_request'>request</span><span class='comma'>,</span> <span class='id identifier rubyid_response'>response</span><span class='op'>|</span>
+  <span class='id identifier rubyid_request_id'>request_id</span> <span class='op'>=</span> <span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_custom_data'>custom_data</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request_id'>request_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>] </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status_code'>status_code</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_header_name'>header_name</span><span class='comma'>,</span> <span class='id identifier rubyid_header_value'>header_value</span><span class='op'>|</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_request_id'>request_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>]   </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_header_name'>header_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_header_value'>header_value</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_config'>config</span> <span class='op'>=</span> <span class='id identifier rubyid_config_builder'>config_builder</span><span class='period'>.</span><span class='id identifier rubyid_build!'>build!</span>
+</code></pre>
+
+<p>此外，还应当注意，所有回调函数都必须确保线程安全。</p>
+
 <h2 id="label-E7-A7-81-E6-9C-89-E4-BA-91-E9-85-8D-E7-BD-AE">私有云配置</h2>
 
 <p>默认情况下，Ruby SDK 内置了七牛公有云存储的配置。如果需要使用七牛私有云，则需要对
@@ -448,7 +476,7 @@ MB，可以通过修改配置增加尺寸，但必须是 4 MB
 </div></div>
 
       <div id="footer">
-  Generated on Thu Mar 19 06:35:36 2020 by
+  Generated on Fri Mar 20 05:14:49 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

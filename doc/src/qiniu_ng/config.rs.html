@@ -636,6 +636,17 @@
 <span id="636">636</span>
 <span id="637">637</span>
 <span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! 七牛客户端配置模块</span>
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -879,6 +890,11 @@
         <span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;default::http_request_handler()&quot;</span>
     )]</span>
     <span class="ident">http_request_handler</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">HTTPCaller</span><span class="op">&gt;</span>,
+
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">get</span> <span class="op">=</span> <span class="string">&quot;pub&quot;</span>]</span>
+    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">default</span>, <span class="ident">setter</span>(<span class="ident">strip_option</span>))]</span>
+    <span class="ident">http_request_final_handler</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">HTTPAfterAction</span><span class="op">&gt;&gt;</span>,
 
     <span class="doccomment">/// 域名管理器</span>
     <span class="doccomment">///</span>
@@ -1153,6 +1169,12 @@
             <span class="ident">handlers</span>.<span class="ident">push</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">handler</span>));
             <span class="self">self</span>.<span class="ident">http_request_after_action_handlers</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">handlers</span>);
         }
+        <span class="self">self</span>
+    }
+
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_http_request_final_handler</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handler</span>: <span class="kw">impl</span> <span class="ident">HTTPAfterAction</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">http_request_final_handler</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">handler</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">HTTPAfterAction</span><span class="op">&gt;</span>));
         <span class="self">self</span>
     }
 

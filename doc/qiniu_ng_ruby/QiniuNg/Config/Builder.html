@@ -1299,12 +1299,12 @@
       <pre class="lines">
 
 
-332
-333
-334</pre>
+338
+339
+340</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 332</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 338</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@builder</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new_default</span><span class='rparen'>)</span>
@@ -1385,13 +1385,6 @@
       <pre class="lines">
 
 
-662
-663
-664
-665
-666
-667
-668
 669
 670
 671
@@ -1401,10 +1394,17 @@
 675
 676
 677
-678</pre>
+678
+679
+680
+681
+682
+683
+684
+685</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 662</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 669</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -1545,14 +1545,14 @@
       <pre class="lines">
 
 
-484
-485
-486
-487
-488</pre>
+491
+492
+493
+494
+495</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 484</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 491</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append_http_request_after_action_handler'>append_http_request_after_action_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
@@ -1665,14 +1665,14 @@
       <pre class="lines">
 
 
-514
-515
-516
-517
-518</pre>
+521
+522
+523
+524
+525</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 514</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 521</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_append_http_request_before_action_handler'>append_http_request_before_action_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
@@ -1771,7 +1771,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -1823,14 +1823,14 @@
       <pre class="lines">
 
 
-338
-339
-340
-341
-342</pre>
+344
+345
+346
+347
+348</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 338</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 344</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build!'>build!</span>
   <span class='const'><span class='object_link'><a href="../Config.html" title="QiniuNg::Config (class)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Config.html#initialize-instance_method" title="QiniuNg::Config#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>builder:</span> <span class='kw'>self</span><span class='rparen'>)</span>
@@ -1908,15 +1908,15 @@
       <pre class="lines">
 
 
-429
-430
-431
-432
-433
-434</pre>
+436
+437
+438
+439
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 429</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 436</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_new_domains_manager'>create_new_domains_manager</span><span class='lparen'>(</span><span class='id identifier rubyid_persistent_file'>persistent_file</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
@@ -1976,7 +1976,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 359</span>
 
 </pre>
     </td>
@@ -2073,7 +2073,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -2128,7 +2128,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 359</span>
 
 </pre>
     </td>
@@ -2183,7 +2183,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 359</span>
 
 </pre>
     </td>
@@ -2238,7 +2238,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 359</span>
 
 </pre>
     </td>
@@ -2310,13 +2310,6 @@
       <pre class="lines">
 
 
-662
-663
-664
-665
-666
-667
-668
 669
 670
 671
@@ -2326,10 +2319,17 @@
 675
 676
 677
-678</pre>
+678
+679
+680
+681
+682
+683
+684
+685</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 662</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 669</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -2419,13 +2419,6 @@
       <pre class="lines">
 
 
-662
-663
-664
-665
-666
-667
-668
 669
 670
 671
@@ -2435,10 +2428,17 @@
 675
 676
 677
-678</pre>
+678
+679
+680
+681
+682
+683
+684
+685</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 662</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 669</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -2549,7 +2549,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -2646,7 +2646,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -2741,7 +2741,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -2838,7 +2838,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -2893,7 +2893,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 359</span>
 
 </pre>
     </td>
@@ -2988,7 +2988,7 @@
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -3087,7 +3087,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -3185,7 +3185,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -3308,14 +3308,14 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-603
-604
-605
-606
-607</pre>
+610
+611
+612
+613
+614</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 603</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 610</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_http_request_handler'>http_request_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
@@ -3416,7 +3416,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -3514,7 +3514,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -3609,7 +3609,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -3681,15 +3681,15 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-439
-440
-441
-442
-443
-444</pre>
+446
+447
+448
+449
+450
+451</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 439</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 446</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load_domains_manager_from_file'>load_domains_manager_from_file</span><span class='lparen'>(</span><span class='id identifier rubyid_persistent_file'>persistent_file</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
@@ -3819,14 +3819,14 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-545
-546
-547
-548
-549</pre>
+552
+553
+554
+555
+556</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 545</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 552</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend_http_request_after_action_handler'>prepend_http_request_after_action_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
@@ -3939,14 +3939,14 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-575
-576
-577
-578
-579</pre>
+582
+583
+584
+585
+586</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 575</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 582</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_prepend_http_request_before_action_handler'>prepend_http_request_before_action_handler</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
@@ -4022,13 +4022,6 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-662
-663
-664
-665
-666
-667
-668
 669
 670
 671
@@ -4038,10 +4031,17 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 675
 676
 677
-678</pre>
+678
+679
+680
+681
+682
+683
+684
+685</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 662</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 669</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -4129,13 +4129,6 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-662
-663
-664
-665
-666
-667
-668
 669
 670
 671
@@ -4145,10 +4138,17 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 675
 676
 677
-678</pre>
+678
+679
+680
+681
+682
+683
+684
+685</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 662</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 669</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -4238,15 +4238,15 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-452
-453
-454
-455
-456
-457</pre>
+459
+460
+461
+462
+463
+464</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 452</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 459</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_appended_user_agent'>set_appended_user_agent</span><span class='lparen'>(</span><span class='id identifier rubyid_user_agent'>user_agent</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_user_agent'>user_agent</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_user_agent'>user_agent</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_user_agent'>user_agent</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
@@ -4346,7 +4346,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -4441,7 +4441,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -4513,13 +4513,6 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
       <pre class="lines">
 
 
-662
-663
-664
-665
-666
-667
-668
 669
 670
 671
@@ -4529,10 +4522,17 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 675
 676
 677
-678</pre>
+678
+679
+680
+681
+682
+683
+684
+685</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 662</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 669</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -4643,7 +4643,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -4718,7 +4718,7 @@ http_low_transfer_speed 并维持超过 http_low_transfer_speed_timeout 的时�
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 380</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 387</span>
 
 </pre>
     </td>
@@ -4793,13 +4793,6 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
       <pre class="lines">
 
 
-662
-663
-664
-665
-666
-667
-668
 669
 670
 671
@@ -4809,10 +4802,17 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 675
 676
 677
-678</pre>
+678
+679
+680
+681
+682
+683
+684
+685</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 662</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 669</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -4925,7 +4925,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -5022,7 +5022,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -5117,7 +5117,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -5200,23 +5200,23 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
       <pre class="lines">
 
 
-410
-411
-412
-413
-414
-415
-416
 417
 418
 419
 420
 421
 422
-423</pre>
+423
+424
+425
+426
+427
+428
+429
+430</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 410</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 417</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uplog_file_lock_policy'>uplog_file_lock_policy</span><span class='lparen'>(</span><span class='id identifier rubyid_lock_policy'>lock_policy</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lock_policy'>lock_policy</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_lock_policy'>lock_policy</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -5326,7 +5326,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -5401,13 +5401,6 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
       <pre class="lines">
 
 
-662
-663
-664
-665
-666
-667
-668
 669
 670
 671
@@ -5417,10 +5410,17 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 675
 676
 677
-678</pre>
+678
+679
+680
+681
+682
+683
+684
+685</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 662</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 669</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -5533,7 +5533,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 680</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 687</span>
 
 </pre>
     </td>
@@ -5605,13 +5605,6 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
       <pre class="lines">
 
 
-662
-663
-664
-665
-666
-667
-668
 669
 670
 671
@@ -5621,10 +5614,17 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 675
 676
 677
-678</pre>
+678
+679
+680
+681
+682
+683
+684
+685</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 662</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 669</span>
 
 <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>api_host</span><span class='words_sep'>
    </span><span class='tstring_content'>rs_host</span><span class='words_sep'>
@@ -5715,7 +5715,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 380</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/config.rb', line 387</span>
 
 </pre>
     </td>
@@ -5728,7 +5728,7 @@ qiniu_sdk/records 目录。  3. 如果失败，则直接使用临时目录。</p
 </div>
 
       <div id="footer">
-  Generated on Thu Mar 19 06:35:38 2020 by
+  Generated on Fri Mar 20 05:14:51 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

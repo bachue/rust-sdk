@@ -182,6 +182,7 @@ var libqiniu__ng_8h =
     [ "qiniu_ng_config_builder_rsf_host", "libqiniu__ng_8h.html#afbe12df9cb368044762b573206dd92f6", null ],
     [ "qiniu_ng_config_builder_set_appended_user_agent", "libqiniu__ng_8h.html#a6f83f65f3953e29bc66c5b0e05e57464", null ],
     [ "qiniu_ng_config_builder_set_http_call_handler", "libqiniu__ng_8h.html#a93e5c3075ea268a9fe9aa4bf062ea467", null ],
+    [ "qiniu_ng_config_builder_set_http_request_final_handler", "libqiniu__ng_8h.html#a065009e0c7eb64b16656e56c33af53dd", null ],
     [ "qiniu_ng_config_builder_tcp_keepalive_idle_timeout", "libqiniu__ng_8h.html#a6281d54b1293d9c66a2ef283c2ea2721", null ],
     [ "qiniu_ng_config_builder_tcp_keepalive_probe_interval", "libqiniu__ng_8h.html#ac48d7e7b92a403058cacba950f6de352", null ],
     [ "qiniu_ng_config_builder_uc_host", "libqiniu__ng_8h.html#ace126022b06e3f19d0ee618b19c4044a", null ],

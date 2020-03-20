@@ -178,6 +178,54 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#custom_data-instance_method" title="#custom_data (instance method)">#<strong>custom_data</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>获取自定义数据.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#custom_data=-instance_method" title="#custom_data= (instance method)">#<strong>custom_data=</strong>(custom_data)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>设置请求体内容.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#follow_redirection%3F-instance_method" title="#follow_redirection? (instance method)">#<strong>follow_redirection?</strong>  &#x21d2; Boolean </a>
     
 
@@ -529,6 +577,132 @@
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="custom_data-instance_method">
+  
+    #<strong>custom_data</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>获取自定义数据</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>自定义数据</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 90</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_custom_data'>custom_data</span>
+  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_get_custom_data'>get_custom_data</span>
+  <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_idx'>idx</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_idx'>idx</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="custom_data=-instance_method">
+  
+    #<strong>custom_data=</strong>(custom_data)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>设置请求体内容</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>custom_data</span>
+      
+      
+        <span class='type'>(<tt>Object</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>自定义数据</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100
+101
+102</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_custom_data='>custom_data=</span><span class='lparen'>(</span><span class='id identifier rubyid_custom_data'>custom_data</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_get_custom_data'>get_custom_data</span>
+  <span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_idx'>idx</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_idx'>idx</span>
+  <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_set_custom_data'>set_custom_data</span><span class='lparen'>(</span><span class='const'>CallbackData</span><span class='period'>.</span><span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_custom_data'>custom_data</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_custom_data'>custom_data</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="follow_redirection?-instance_method">
   
     #<strong>follow_redirection?</strong>  &#x21d2; <tt>Boolean</tt> 
@@ -572,12 +746,12 @@
       <pre class="lines">
 
 
-90
-91
-92</pre>
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_follow_redirection?'>follow_redirection?</span>
   <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_will_follow_redirection'>will_follow_redirection</span>
@@ -852,13 +1026,13 @@
       <pre class="lines">
 
 
-103
-104
-105
-106</pre>
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolved_socket_addrs'>resolved_socket_addrs</span>
   <span class='ivar'>@cache</span><span class='lbracket'>[</span><span class='symbol'>:addrs</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_get_resolved_socket_addrs_as_str_list'>get_resolved_socket_addrs_as_str_list</span>
@@ -915,17 +1089,17 @@
       <pre class="lines">
 
 
-111
-112
-113
-114
-115
-116
-117
-118</pre>
+127
+128
+129
+130
+131
+132
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 127</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolved_socket_addrs='>resolved_socket_addrs=</span><span class='lparen'>(</span><span class='id identifier rubyid_addrs'>addrs</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_addrs'>addrs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_addrs'>addrs</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -988,12 +1162,12 @@
       <pre class="lines">
 
 
-97
-98
-99</pre>
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_follow_redirection'>set_follow_redirection</span><span class='lparen'>(</span><span class='id identifier rubyid_yes'>yes</span> <span class='op'>=</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_set_follow_redirection'>set_follow_redirection</span><span class='lparen'>(</span><span class='id identifier rubyid_yes'>yes</span><span class='rparen'>)</span>
@@ -1132,7 +1306,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Mar 19 06:35:39 2020 by
+  Generated on Fri Mar 20 05:14:51 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

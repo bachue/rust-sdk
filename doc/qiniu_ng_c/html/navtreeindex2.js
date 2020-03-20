@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"structqiniu__ng__err__kind__t.html#af440b7076c7d94ce231fd2f463f71de4":[1,0,17,7],
 "structqiniu__ng__err__kind__unknown__error___body.html":[1,0,18],
 "structqiniu__ng__err__kind__unknown__error___body.html#aa206151318ca62c506625139c9b52b56":[1,0,18,0],
 "structqiniu__ng__err__t.html":[1,0,19],
