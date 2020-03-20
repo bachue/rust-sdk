@@ -1096,7 +1096,9 @@
 131
 132
 133
-134</pre>
+134
+135
+136</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/request.rb', line 127</span>
@@ -1106,7 +1108,9 @@
   <span class='id identifier rubyid_addrs'>addrs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_addrs'>addrs</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_addrs'>addrs</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
   <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_clear_resolved_socket_addrs'>clear_resolved_socket_addrs</span>
   <span class='id identifier rubyid_addrs'>addrs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_addr'>addr</span><span class='op'>|</span>
-    <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_append_resolved_socket_addr_as_str'>append_resolved_socket_addr_as_str</span><span class='lparen'>(</span><span class='id identifier rubyid_addr'>addr</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+    <span class='kw'>unless</span> <span class='ivar'>@request</span><span class='period'>.</span><span class='id identifier rubyid_append_resolved_socket_addr_as_str'>append_resolved_socket_addr_as_str</span><span class='lparen'>(</span><span class='id identifier rubyid_addr'>addr</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Error/InvalidSocketAddress.html" title="QiniuNg::Error::InvalidSocketAddress (class)">InvalidSocketAddress</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_addr'>addr</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1306,7 +1310,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Mar 20 05:14:51 2020 by
+  Generated on Fri Mar 20 05:57:26 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

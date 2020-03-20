@@ -424,8 +424,6 @@
       <pre class="lines">
 
 
-80
-81
 82
 83
 84
@@ -440,10 +438,12 @@
 93
 94
 95
-96</pre>
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_body'>body</span>
   <span class='id identifier rubyid_body_size'>body_size</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_body_size'>body_size</span>
@@ -515,8 +515,6 @@
       <pre class="lines">
 
 
-105
-106
 107
 108
 109
@@ -526,10 +524,12 @@
 113
 114
 115
-116</pre>
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_body'>body</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:read</span><span class='rparen'>)</span>
@@ -596,16 +596,16 @@
       <pre class="lines">
 
 
-145
-146
 147
 148
 149
 150
-151</pre>
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 147</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_body_length'>body_length</span>
   <span class='id identifier rubyid_length'>length</span> <span class='op'>=</span> <span class='const'>Bindings</span><span class='op'>::</span><span class='const'>CoreFFI</span><span class='op'>::</span><span class='const'>U64</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -801,7 +801,9 @@
 57
 58
 59
-60</pre>
+60
+61
+62</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 54</span>
@@ -810,7 +812,9 @@
   <span class='kw'>if</span> <span class='id identifier rubyid_server_port'>server_port</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
     <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_unset_server_ip'>unset_server_ip</span>
   <span class='kw'>else</span>
-    <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_set_server_ip_as_str'>set_server_ip_as_str</span> <span class='op'>=</span> <span class='id identifier rubyid_server_ip'>server_ip</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='kw'>unless</span> <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_set_server_ip_as_str'>set_server_ip_as_str</span><span class='lparen'>(</span><span class='id identifier rubyid_server_ip'>server_ip</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Error/InvalidIPAddress.html" title="QiniuNg::Error::InvalidIPAddress (class)">InvalidIPAddress</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_server_ip'>server_ip</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -862,12 +866,12 @@
       <pre class="lines">
 
 
-64
-65
-66</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_server_port'>server_port</span>
   <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_get_server_port'>get_server_port</span>
@@ -923,12 +927,12 @@
       <pre class="lines">
 
 
-71
-72
-73</pre>
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/http/response.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_server_port='>server_port=</span><span class='lparen'>(</span><span class='id identifier rubyid_server_port'>server_port</span><span class='rparen'>)</span>
   <span class='ivar'>@response</span><span class='period'>.</span><span class='id identifier rubyid_set_server_port'>set_server_port</span><span class='lparen'>(</span><span class='id identifier rubyid_server_port'>server_port</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
@@ -1063,7 +1067,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Mar 20 05:14:52 2020 by
+  Generated on Fri Mar 20 05:57:26 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>
