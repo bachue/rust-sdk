@@ -76,7 +76,8 @@ var libqiniu__ng_8h =
       [ "qiniu_ng_invalid_upload_token_error_kind_none", "libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852abb56d4af12931d56c977882f16e557e3", null ],
       [ "qiniu_ng_invalid_upload_token_error_kind_invalid_format", "libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852ad4bf4e2fe3dfbb18a2017bf05d396be2", null ],
       [ "qiniu_ng_invalid_upload_token_error_kind_base64_decode_error", "libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852a3266a403cecbeb059334f60d537213ba", null ],
-      [ "qiniu_ng_invalid_upload_token_error_kind_json_decode_error", "libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852ac3507d704f566772331a2d669c3e283c", null ]
+      [ "qiniu_ng_invalid_upload_token_error_kind_json_decode_error", "libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852ac3507d704f566772331a2d669c3e283c", null ],
+      [ "qiniu_ng_invalid_upload_token_error_kind_bucket_is_missing", "libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852a0e74590e31af4d720ad05308480e9564", null ]
     ] ],
     [ "qiniu_ng_region_id_t", "libqiniu__ng_8h.html#a9ae75e3460fff59705952a4c334f8752", [
       [ "qiniu_ng_region_z0", "libqiniu__ng_8h.html#a9ae75e3460fff59705952a4c334f8752abed0d27de2272179066cdd028c917713", null ],
@@ -260,6 +261,7 @@ var libqiniu__ng_8h =
     [ "qiniu_ng_err_fputs", "libqiniu__ng_8h.html#a7d53fccdccb542bff13fe4554d35db03", null ],
     [ "qiniu_ng_err_ignore", "libqiniu__ng_8h.html#a3bbe6d7fe99687f60c39a6e1500040c7", null ],
     [ "qiniu_ng_err_invalid_upload_token_base64_error_extract", "libqiniu__ng_8h.html#a64bd122e28efb393236f3dacd31ef33a", null ],
+    [ "qiniu_ng_err_invalid_upload_token_bucket_is_missing_extract", "libqiniu__ng_8h.html#a9deede90f8e926ef23c6c8f638b407b6", null ],
     [ "qiniu_ng_err_invalid_upload_token_error_ignore", "libqiniu__ng_8h.html#a4bd6e1d8c4e34eb487460be2d649ac80", null ],
     [ "qiniu_ng_err_invalid_upload_token_extract", "libqiniu__ng_8h.html#aa54a460f6248b0d055872268841cbea9", null ],
     [ "qiniu_ng_err_invalid_upload_token_format_extract", "libqiniu__ng_8h.html#a58f8ab5f4ea2426ae3becbfba6a153df", null ],
@@ -388,6 +390,9 @@ var libqiniu__ng_8h =
     [ "qiniu_ng_upload_manager_free", "libqiniu__ng_8h.html#a975e9ae7df454dc0759c44b7dfaebe6b", null ],
     [ "qiniu_ng_upload_manager_is_freed", "libqiniu__ng_8h.html#a7c69139873a7d282f7961bcb7413d90a", null ],
     [ "qiniu_ng_upload_manager_new", "libqiniu__ng_8h.html#a573e2ac2c112067167d9d4122b4e1dfb", null ],
+    [ "qiniu_ng_upload_manager_upload_file", "libqiniu__ng_8h.html#af71d697b672b8184377d18b6c717ef74", null ],
+    [ "qiniu_ng_upload_manager_upload_file_path", "libqiniu__ng_8h.html#afd2ae55bd59ec46ae752a0b10efa52aa", null ],
+    [ "qiniu_ng_upload_manager_upload_reader", "libqiniu__ng_8h.html#a0c40882049f153eb530ba135589de469", null ],
     [ "qiniu_ng_upload_policy_as_json", "libqiniu__ng_8h.html#a90b78290f56f6be36f9197e389fd47af", null ],
     [ "qiniu_ng_upload_policy_build", "libqiniu__ng_8h.html#a6e8c53bb9c0ef1e56c5351b15167b64a", null ],
     [ "qiniu_ng_upload_policy_builder_disable_mime_detection", "libqiniu__ng_8h.html#a8a00612fc5ca76215cab18823bcd8117", null ],

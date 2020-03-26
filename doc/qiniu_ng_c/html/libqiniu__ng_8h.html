@@ -286,10 +286,14 @@ $(document).ready(function(){initNavTree('libqiniu__ng_8h.html','');});
  }<tr class="memdesc:a91ec92f610303b24e1d85f23bf08a2a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">上传日志文件的锁策略  <a href="libqiniu__ng_8h.html#a91ec92f610303b24e1d85f23bf08a2a5">更多...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:a91ec92f610303b24e1d85f23bf08a2a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6c06682e4ece2b7c543b1352ad18852"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852">qiniu_ng_invalid_upload_token_error_kind_t_Tag</a> { <a class="el" href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852abb56d4af12931d56c977882f16e557e3">qiniu_ng_invalid_upload_token_error_kind_none</a>, 
+<tr class="memitem:aa6c06682e4ece2b7c543b1352ad18852"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852">qiniu_ng_invalid_upload_token_error_kind_t_Tag</a> { <br />
+&#160;&#160;<a class="el" href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852abb56d4af12931d56c977882f16e557e3">qiniu_ng_invalid_upload_token_error_kind_none</a>, 
 <a class="el" href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852ad4bf4e2fe3dfbb18a2017bf05d396be2">qiniu_ng_invalid_upload_token_error_kind_invalid_format</a>, 
 <a class="el" href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852a3266a403cecbeb059334f60d537213ba">qiniu_ng_invalid_upload_token_error_kind_base64_decode_error</a>, 
-<a class="el" href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852ac3507d704f566772331a2d669c3e283c">qiniu_ng_invalid_upload_token_error_kind_json_decode_error</a>
+<a class="el" href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852ac3507d704f566772331a2d669c3e283c">qiniu_ng_invalid_upload_token_error_kind_json_decode_error</a>, 
+<br />
+&#160;&#160;<a class="el" href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852a0e74590e31af4d720ad05308480e9564">qiniu_ng_invalid_upload_token_error_kind_bucket_is_missing</a>
+<br />
  }<tr class="memdesc:aa6c06682e4ece2b7c543b1352ad18852"><td class="mdescLeft">&#160;</td><td class="mdescRight">非法的上传凭证错误类型  <a href="libqiniu__ng_8h.html#aa6c06682e4ece2b7c543b1352ad18852">更多...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:aa6c06682e4ece2b7c543b1352ad18852"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -786,6 +790,9 @@ $(document).ready(function(){initNavTree('libqiniu__ng_8h.html','');});
 <tr class="memitem:a64bd122e28efb393236f3dacd31ef33a"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a64bd122e28efb393236f3dacd31ef33a">qiniu_ng_err_invalid_upload_token_base64_error_extract</a> (<a class="el" href="structqiniu__ng__invalid__upload__token__error__t.html">qiniu_ng_invalid_upload_token_error_t</a> *err, <a class="el" href="structqiniu__ng__str__t.html">qiniu_ng_str_t</a> *error)</td></tr>
 <tr class="memdesc:a64bd122e28efb393236f3dacd31ef33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">判定错误是上传凭证 Base64 解码错误，如果是，则释放其内存  <a href="#a64bd122e28efb393236f3dacd31ef33a">更多...</a><br /></td></tr>
 <tr class="separator:a64bd122e28efb393236f3dacd31ef33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9deede90f8e926ef23c6c8f638b407b6"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a9deede90f8e926ef23c6c8f638b407b6">qiniu_ng_err_invalid_upload_token_bucket_is_missing_extract</a> (<a class="el" href="structqiniu__ng__invalid__upload__token__error__t.html">qiniu_ng_invalid_upload_token_error_t</a> *err)</td></tr>
+<tr class="memdesc:a9deede90f8e926ef23c6c8f638b407b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">判定错误是上传凭证中不包含存储空间信息，如果是，则释放其内存  <a href="#a9deede90f8e926ef23c6c8f638b407b6">更多...</a><br /></td></tr>
+<tr class="separator:a9deede90f8e926ef23c6c8f638b407b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bd6e1d8c4e34eb487460be2d649ac80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a4bd6e1d8c4e34eb487460be2d649ac80">qiniu_ng_err_invalid_upload_token_error_ignore</a> (<a class="el" href="structqiniu__ng__invalid__upload__token__error__t.html">qiniu_ng_invalid_upload_token_error_t</a> *err)</td></tr>
 <tr class="memdesc:a4bd6e1d8c4e34eb487460be2d649ac80"><td class="mdescLeft">&#160;</td><td class="mdescRight">忽略非法的上传凭证错误具体类型，释放内存  <a href="#a4bd6e1d8c4e34eb487460be2d649ac80">更多...</a><br /></td></tr>
 <tr class="separator:a4bd6e1d8c4e34eb487460be2d649ac80"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1170,6 +1177,15 @@ $(document).ready(function(){initNavTree('libqiniu__ng_8h.html','');});
 <tr class="memitem:a573e2ac2c112067167d9d4122b4e1dfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structqiniu__ng__upload__manager__t.html">qiniu_ng_upload_manager_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a573e2ac2c112067167d9d4122b4e1dfb">qiniu_ng_upload_manager_new</a> (<a class="el" href="structqiniu__ng__config__t.html">qiniu_ng_config_t</a> config)</td></tr>
 <tr class="memdesc:a573e2ac2c112067167d9d4122b4e1dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">创建上传管理器实例  <a href="#a573e2ac2c112067167d9d4122b4e1dfb">更多...</a><br /></td></tr>
 <tr class="separator:a573e2ac2c112067167d9d4122b4e1dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af71d697b672b8184377d18b6c717ef74"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#af71d697b672b8184377d18b6c717ef74">qiniu_ng_upload_manager_upload_file</a> (<a class="el" href="structqiniu__ng__upload__manager__t.html">qiniu_ng_upload_manager_t</a> upload_manager, <a class="el" href="structqiniu__ng__upload__token__t.html">qiniu_ng_upload_token_t</a> upload_token, FILE *file, const <a class="el" href="structqiniu__ng__upload__params__t.html">qiniu_ng_upload_params_t</a> *params, <a class="el" href="structqiniu__ng__upload__response__t.html">qiniu_ng_upload_response_t</a> *response, <a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *err)</td></tr>
+<tr class="memdesc:af71d697b672b8184377d18b6c717ef74"><td class="mdescLeft">&#160;</td><td class="mdescRight">上传文件  <a href="#af71d697b672b8184377d18b6c717ef74">更多...</a><br /></td></tr>
+<tr class="separator:af71d697b672b8184377d18b6c717ef74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd2ae55bd59ec46ae752a0b10efa52aa"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#afd2ae55bd59ec46ae752a0b10efa52aa">qiniu_ng_upload_manager_upload_file_path</a> (<a class="el" href="structqiniu__ng__upload__manager__t.html">qiniu_ng_upload_manager_t</a> upload_manager, <a class="el" href="structqiniu__ng__upload__token__t.html">qiniu_ng_upload_token_t</a> upload_token, const <a class="el" href="libqiniu__ng_8h.html#aefc35b9037a2f643594316d4872fcd60">qiniu_ng_char_t</a> *file_path, const <a class="el" href="structqiniu__ng__upload__params__t.html">qiniu_ng_upload_params_t</a> *params, <a class="el" href="structqiniu__ng__upload__response__t.html">qiniu_ng_upload_response_t</a> *response, <a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *err)</td></tr>
+<tr class="memdesc:afd2ae55bd59ec46ae752a0b10efa52aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">上传指定路径的文件  <a href="#afd2ae55bd59ec46ae752a0b10efa52aa">更多...</a><br /></td></tr>
+<tr class="separator:afd2ae55bd59ec46ae752a0b10efa52aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c40882049f153eb530ba135589de469"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a0c40882049f153eb530ba135589de469">qiniu_ng_upload_manager_upload_reader</a> (<a class="el" href="structqiniu__ng__upload__manager__t.html">qiniu_ng_upload_manager_t</a> upload_manager, <a class="el" href="structqiniu__ng__upload__token__t.html">qiniu_ng_upload_token_t</a> upload_token, <a class="el" href="structqiniu__ng__readable__t.html">qiniu_ng_readable_t</a> reader, uint64_t len, const <a class="el" href="structqiniu__ng__upload__params__t.html">qiniu_ng_upload_params_t</a> *params, <a class="el" href="structqiniu__ng__upload__response__t.html">qiniu_ng_upload_response_t</a> *response, <a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *err)</td></tr>
+<tr class="memdesc:a0c40882049f153eb530ba135589de469"><td class="mdescLeft">&#160;</td><td class="mdescRight">上传阅读器提供的数据  <a href="#a0c40882049f153eb530ba135589de469">更多...</a><br /></td></tr>
+<tr class="separator:a0c40882049f153eb530ba135589de469"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90b78290f56f6be36f9197e389fd47af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structqiniu__ng__str__t.html">qiniu_ng_str_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a90b78290f56f6be36f9197e389fd47af">qiniu_ng_upload_policy_as_json</a> (<a class="el" href="structqiniu__ng__upload__policy__t.html">qiniu_ng_upload_policy_t</a> upload_policy)</td></tr>
 <tr class="memdesc:a90b78290f56f6be36f9197e389fd47af"><td class="mdescLeft">&#160;</td><td class="mdescRight">以 JSON 格式获取上传策略  <a href="#a90b78290f56f6be36f9197e389fd47af">更多...</a><br /></td></tr>
 <tr class="separator:a90b78290f56f6be36f9197e389fd47af"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1490,6 +1506,8 @@ $(document).ready(function(){initNavTree('libqiniu__ng_8h.html','');});
 <tr><td class="fieldname"><a id="aa6c06682e4ece2b7c543b1352ad18852a3266a403cecbeb059334f60d537213ba"></a>qiniu_ng_invalid_upload_token_error_kind_base64_decode_error&#160;</td><td class="fielddoc"><p>上传凭证 Base64 解码错误 </p>
 </td></tr>
 <tr><td class="fieldname"><a id="aa6c06682e4ece2b7c543b1352ad18852ac3507d704f566772331a2d669c3e283c"></a>qiniu_ng_invalid_upload_token_error_kind_json_decode_error&#160;</td><td class="fielddoc"><p>上传凭证 JSON 解析错误 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa6c06682e4ece2b7c543b1352ad18852a0e74590e31af4d720ad05308480e9564"></a>qiniu_ng_invalid_upload_token_error_kind_bucket_is_missing&#160;</td><td class="fielddoc"><p>上传凭证中不包含存储空间信息 </p>
 </td></tr>
 </table>
 
@@ -7650,6 +7668,38 @@ SDK 会自动重试，或出错退出
 
 </div>
 </div>
+<a id="a9deede90f8e926ef23c6c8f638b407b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9deede90f8e926ef23c6c8f638b407b6">&#9670;&nbsp;</a></span>qiniu_ng_err_invalid_upload_token_bucket_is_missing_extract()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool qiniu_ng_err_invalid_upload_token_bucket_is_missing_extract </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__invalid__upload__token__error__t.html">qiniu_ng_invalid_upload_token_error_t</a> *&#160;</td>
+          <td class="paramname"><em>err</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>判定错误是上传凭证中不包含存储空间信息，如果是，则释放其内存 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">err</td><td>上传凭证错误实例 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>返回值</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">_Bool</td><td>当错误确实是上传凭证中不包含存储空间信息时返回 <code>true</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a4bd6e1d8c4e34eb487460be2d649ac80"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4bd6e1d8c4e34eb487460be2d649ac80">&#9670;&nbsp;</a></span>qiniu_ng_err_invalid_upload_token_error_ignore()</h2>
 
@@ -12501,6 +12551,229 @@ SDK 会自动重试，或出错退出
   </dd>
 </dl>
 <dl class="section warning"><dt>警告</dt><dd>务必在使用完毕后调用 <code><a class="el" href="libqiniu__ng_8h.html#a975e9ae7df454dc0759c44b7dfaebe6b" title="释放上传管理器实例 ">qiniu_ng_upload_manager_free()</a></code> 方法释放 <code><a class="el" href="structqiniu__ng__upload__manager__t.html" title="上传管理器 ">qiniu_ng_upload_manager_t</a></code> </dd></dl>
+
+</div>
+</div>
+<a id="af71d697b672b8184377d18b6c717ef74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af71d697b672b8184377d18b6c717ef74">&#9670;&nbsp;</a></span>qiniu_ng_upload_manager_upload_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool qiniu_ng_upload_manager_upload_file </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__upload__manager__t.html">qiniu_ng_upload_manager_t</a>&#160;</td>
+          <td class="paramname"><em>upload_manager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__upload__token__t.html">qiniu_ng_upload_token_t</a>&#160;</td>
+          <td class="paramname"><em>upload_token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structqiniu__ng__upload__params__t.html">qiniu_ng_upload_params_t</a> *&#160;</td>
+          <td class="paramname"><em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__upload__response__t.html">qiniu_ng_upload_response_t</a> *&#160;</td>
+          <td class="paramname"><em>response</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *&#160;</td>
+          <td class="paramname"><em>err</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>上传文件 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">upload_manager</td><td>上传管理器 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">upload_token</td><td>上传凭证实例 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>文件实例，务必保证文件实例可以读取。上传完毕后，请不要忘记调用 <code>fclose()</code> 关闭文件实例 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">params</td><td>上传参数，如果为 <code>NULL</code>，则使用默认上传参数 </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">response</td><td>用于返回上传响应，如果传入 <code>NULL</code> 表示不获取 <code>response</code>。但如果上传成功，返回值将依然是 <code>true</code> </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">err</td><td>用于返回上传错误，如果传入 <code>NULL</code> 表示不获取 <code>err</code>。但如果上传错误，返回值将依然是 <code>false</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>返回值</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">_Bool</td><td>是否上传成功，如果返回 <code>true</code>，则表示可以读取 <code>response</code> 获得结果，如果返回 <code>false</code>，则表示可以读取 <code>error</code> 获得错误信息 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>警告</dt><dd>对于获取的 <code>response</code> 或 <code>error</code>，一旦使用完毕，应该调用各自的内存释放方法释放内存 </dd></dl>
+
+</div>
+</div>
+<a id="afd2ae55bd59ec46ae752a0b10efa52aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd2ae55bd59ec46ae752a0b10efa52aa">&#9670;&nbsp;</a></span>qiniu_ng_upload_manager_upload_file_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool qiniu_ng_upload_manager_upload_file_path </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__upload__manager__t.html">qiniu_ng_upload_manager_t</a>&#160;</td>
+          <td class="paramname"><em>upload_manager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__upload__token__t.html">qiniu_ng_upload_token_t</a>&#160;</td>
+          <td class="paramname"><em>upload_token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="libqiniu__ng_8h.html#aefc35b9037a2f643594316d4872fcd60">qiniu_ng_char_t</a> *&#160;</td>
+          <td class="paramname"><em>file_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structqiniu__ng__upload__params__t.html">qiniu_ng_upload_params_t</a> *&#160;</td>
+          <td class="paramname"><em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__upload__response__t.html">qiniu_ng_upload_response_t</a> *&#160;</td>
+          <td class="paramname"><em>response</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *&#160;</td>
+          <td class="paramname"><em>err</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>上传指定路径的文件 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">upload_manager</td><td>上传管理器 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">upload_token</td><td>上传凭证实例 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">file_path</td><td>文件路径 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">params</td><td>上传参数，如果为 <code>NULL</code>，则使用默认上传参数 </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">response</td><td>用于返回上传响应，如果传入 <code>NULL</code> 表示不获取 <code>response</code>。但如果上传成功，返回值将依然是 <code>true</code> </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">err</td><td>用于返回上传错误，如果传入 <code>NULL</code> 表示不获取 <code>err</code>。但如果上传错误，返回值将依然是 <code>false</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>返回值</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">_Bool</td><td>是否上传成功，如果返回 <code>true</code>，则表示可以读取 <code>response</code> 获得结果，如果返回 <code>false</code>，则表示可以读取 <code>error</code> 获得错误信息 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>警告</dt><dd>对于获取的 <code>response</code> 或 <code>error</code>，一旦使用完毕，应该调用各自的内存释放方法释放内存 </dd></dl>
+
+</div>
+</div>
+<a id="a0c40882049f153eb530ba135589de469"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c40882049f153eb530ba135589de469">&#9670;&nbsp;</a></span>qiniu_ng_upload_manager_upload_reader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool qiniu_ng_upload_manager_upload_reader </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__upload__manager__t.html">qiniu_ng_upload_manager_t</a>&#160;</td>
+          <td class="paramname"><em>upload_manager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__upload__token__t.html">qiniu_ng_upload_token_t</a>&#160;</td>
+          <td class="paramname"><em>upload_token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__readable__t.html">qiniu_ng_readable_t</a>&#160;</td>
+          <td class="paramname"><em>reader</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname"><em>len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structqiniu__ng__upload__params__t.html">qiniu_ng_upload_params_t</a> *&#160;</td>
+          <td class="paramname"><em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__upload__response__t.html">qiniu_ng_upload_response_t</a> *&#160;</td>
+          <td class="paramname"><em>response</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *&#160;</td>
+          <td class="paramname"><em>err</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>上传阅读器提供的数据 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">upload_manager</td><td>上传管理器 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">upload_token</td><td>上传凭证实例 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reader</td><td>阅读器实例，将不断从阅读器中读取数据并上传 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>阅读器预期将会读到的最大数据量，如果无法预期则传入 <code>0</code>。如果传入的值大于 <code>0</code>，最终读取的数据量将始终不大于该值 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">params</td><td>上传参数，如果为 <code>NULL</code>，则使用默认上传参数 </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">response</td><td>用于返回上传响应，如果传入 <code>NULL</code> 表示不获取 <code>response</code>。但如果上传成功，返回值将依然是 <code>true</code> </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">err</td><td>用于返回上传错误，如果传入 <code>NULL</code> 表示不获取 <code>err</code>。但如果上传错误，返回值将依然是 <code>false</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>返回值</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">_Bool</td><td>是否上传成功，如果返回 <code>true</code>，则表示可以读取 <code>response</code> 获得结果，如果返回 <code>false</code>，则表示可以读取 <code>error</code> 获得错误信息 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>警告</dt><dd>对于获取的 <code>response</code> 或 <code>error</code>，一旦使用完毕，应该调用各自的内存释放方法释放内存 </dd></dl>
 
 </div>
 </div>

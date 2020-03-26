@@ -375,6 +375,30 @@ SecretKey，因此不推荐在客户端应用程序上使用，而应该只在�
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#uploader-instance_method" title="#uploader (instance method)">#<strong>uploader</strong>  &#x21d2; Uploader </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>创建上传管理器.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#uploader_for-instance_method" title="#uploader_for (instance method)">#<strong>uploader_for</strong>(bucket_name, thread_pool_size: nil)  &#x21d2; BucketUploader </a>
     
 
@@ -695,12 +719,12 @@ SecretKey，因此不推荐在客户端应用程序上使用，而应该只在�
       <pre class="lines">
 
 
-76
-77
-78</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_batch_uploader_for'>batch_uploader_for</span><span class='lparen'>(</span><span class='id identifier rubyid_upload_token'>upload_token</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Storage.html" title="QiniuNg::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Uploader.html" title="QiniuNg::Storage::Uploader (class)">Uploader</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Uploader/BatchUploader.html" title="QiniuNg::Storage::Uploader::BatchUploader (class)">BatchUploader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:new_from_config</span><span class='comma'>,</span> <span class='id identifier rubyid_upload_token'>upload_token</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
@@ -774,12 +798,12 @@ SecretKey，因此不推荐在客户端应用程序上使用，而应该只在�
       <pre class="lines">
 
 
-83
-84
-85</pre>
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bucket'>bucket</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="Storage.html" title="QiniuNg::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Bucket.html" title="QiniuNg::Storage::Bucket (class)">Bucket</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Storage/Bucket.html#initialize-instance_method" title="QiniuNg::Storage::Bucket#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>client:</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='label'>bucket_name:</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -833,15 +857,15 @@ SecretKey，因此不推荐在客户端应用程序上使用，而应该只在�
       <pre class="lines">
 
 
-89
-90
-91
-92
-93
-94</pre>
+95
+96
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bucket_names'>bucket_names</span>
   <span class='id identifier rubyid_list'>list</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
@@ -1005,12 +1029,6 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
       <pre class="lines">
 
 
-108
-109
-110
-111
-112
-113
 114
 115
 116
@@ -1024,10 +1042,16 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
 124
 125
 126
-127</pre>
+127
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_bucket'>create_bucket</span><span class='lparen'>(</span><span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='id identifier rubyid_region'>region</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_region'>region</span> <span class='op'>=</span> <span class='id identifier rubyid_region'>region</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='kw'>if</span> <span class='id identifier rubyid_region'>region</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Storage.html" title="QiniuNg::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Region.html" title="QiniuNg::Storage::Region (class)">Region</a></span></span><span class='rparen'>)</span>
@@ -1161,15 +1185,15 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139</pre>
+140
+141
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_drop_bucket'>drop_bucket</span><span class='lparen'>(</span><span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../QiniuNg.html" title="QiniuNg (module)">QiniuNg</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Error.html" title="QiniuNg::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_wrap_ffi_function'>wrap_ffi_function</span> <span class='kw'>do</span>
@@ -1237,6 +1261,65 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
 <span class='kw'>def</span> <span class='id identifier rubyid_secret_key'>secret_key</span>
   <span class='ivar'>@secret_key</span> <span class='op'>||=</span> <span class='ivar'>@client</span><span class='period'>.</span><span class='id identifier rubyid_get_secret_key'>get_secret_key</span>
   <span class='ivar'>@secret_key</span><span class='period'>.</span><span class='id identifier rubyid_get_ptr'>get_ptr</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="uploader-instance_method">
+  
+    #<strong>uploader</strong>  &#x21d2; <tt>Uploader</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>创建上传管理器</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Uploader</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>返回上传管理器</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+65
+66
+67</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 65</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_uploader'>uploader</span>
+  <span class='const'><span class='object_link'><a href="Storage.html" title="QiniuNg::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Uploader.html" title="QiniuNg::Storage::Uploader (class)">Uploader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Storage/Uploader.html#initialize-instance_method" title="QiniuNg::Storage::Uploader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1343,15 +1426,15 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
       <pre class="lines">
 
 
-68
-69
-70</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/qiniu_ng/client.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uploader_for'>uploader_for</span><span class='lparen'>(</span><span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='label'>thread_pool_size:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="Storage.html" title="QiniuNg::Storage (module)">Storage</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Storage/Uploader.html" title="QiniuNg::Storage::Uploader (class)">Uploader</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Storage/Uploader.html#initialize-instance_method" title="QiniuNg::Storage::Uploader#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bucket_uploader'><span class='object_link'><a href="Storage/Uploader.html#bucket_uploader-instance_method" title="QiniuNg::Storage::Uploader#bucket_uploader (method)">bucket_uploader</a></span></span><span class='lparen'>(</span><span class='label'>bucket_name:</span> <span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='label'>access_key:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_access_key'>access_key</span><span class='comma'>,</span> <span class='label'>thread_pool_size:</span> <span class='id identifier rubyid_thread_pool_size'>thread_pool_size</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_uploader'>uploader</span><span class='period'>.</span><span class='id identifier rubyid_bucket_uploader'>bucket_uploader</span><span class='lparen'>(</span><span class='label'>bucket_name:</span> <span class='id identifier rubyid_bucket_name'>bucket_name</span><span class='comma'>,</span> <span class='label'>access_key:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_access_key'>access_key</span><span class='comma'>,</span> <span class='label'>thread_pool_size:</span> <span class='id identifier rubyid_thread_pool_size'>thread_pool_size</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1363,7 +1446,7 @@ href="https://developer.qiniu.com/kodo/manual/1671/region-endpoint">官方文档
 </div>
 
       <div id="footer">
-  Generated on Sat Mar 21 02:03:41 2020 by
+  Generated on Thu Mar 26 03:27:06 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.5.1).
 </div>

@@ -1,5 +1,10 @@
 var NAVTREEINDEX2 =
 {
+"structqiniu__ng__err__kind__t.html#a76039489543ce2ddd48c75d4c4193b0e":[1,0,17,5],
+"structqiniu__ng__err__kind__t.html#a93577a22c5eca07b3d795353c1ac9f6b":[1,0,17,8],
+"structqiniu__ng__err__kind__t.html#aaa3ca4a206e40e7a1e4641f82d07addd":[1,0,17,6],
+"structqiniu__ng__err__kind__t.html#ac24eaac022e26fc2c25eac9e4d0fa023":[1,0,17,2],
+"structqiniu__ng__err__kind__t.html#ac507aba90dc1bf3d91a7619fa6fb4119":[1,0,17,1],
 "structqiniu__ng__err__kind__t.html#af440b7076c7d94ce231fd2f463f71de4":[1,0,17,7],
 "structqiniu__ng__err__kind__unknown__error___body.html":[1,0,18],
 "structqiniu__ng__err__kind__unknown__error___body.html#aa206151318ca62c506625139c9b52b56":[1,0,18,0],

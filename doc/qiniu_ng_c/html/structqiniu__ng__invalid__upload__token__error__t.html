@@ -114,7 +114,8 @@ $(document).ready(function(){initNavTree('structqiniu__ng__invalid__upload__toke
 <dl class="section note"><dt>注解</dt><dd>对于获取了上传凭证错误的情况，可以依次调用<ul>
 <li><code><a class="el" href="libqiniu__ng_8h.html#a58f8ab5f4ea2426ae3becbfba6a153df" title="判定错误是非法的上传凭证格式，如果是，则释放其内存 ">qiniu_ng_err_invalid_upload_token_format_extract()</a></code></li>
 <li><code><a class="el" href="libqiniu__ng_8h.html#a64bd122e28efb393236f3dacd31ef33a" title="判定错误是上传凭证 Base64 解码错误，如果是，则释放其内存 ">qiniu_ng_err_invalid_upload_token_base64_error_extract()</a></code></li>
-<li><code><a class="el" href="libqiniu__ng_8h.html#a2db04eb5ef0b99a335b316de749293f8" title="判定错误是上传凭证 JSON 解析错误，如果是，则释放其内存 ">qiniu_ng_err_invalid_upload_token_json_error_extract()</a></code> 判定错误的类型，并获取详细错误信息，同时释放内存。 如果确定无需判定错误具体类型，则调用 <code><a class="el" href="libqiniu__ng_8h.html#a4bd6e1d8c4e34eb487460be2d649ac80" title="忽略非法的上传凭证错误具体类型，释放内存 ">qiniu_ng_err_invalid_upload_token_error_ignore()</a></code> 直接释放内存 </li>
+<li><code><a class="el" href="libqiniu__ng_8h.html#a2db04eb5ef0b99a335b316de749293f8" title="判定错误是上传凭证 JSON 解析错误，如果是，则释放其内存 ">qiniu_ng_err_invalid_upload_token_json_error_extract()</a></code></li>
+<li><code><a class="el" href="libqiniu__ng_8h.html#a9deede90f8e926ef23c6c8f638b407b6" title="判定错误是上传凭证中不包含存储空间信息，如果是，则释放其内存 ">qiniu_ng_err_invalid_upload_token_bucket_is_missing_extract()</a></code> 判定错误的类型，并获取详细错误信息，同时释放内存。 如果确定无需判定错误具体类型，则调用 <code><a class="el" href="libqiniu__ng_8h.html#a4bd6e1d8c4e34eb487460be2d649ac80" title="忽略非法的上传凭证错误具体类型，释放内存 ">qiniu_ng_err_invalid_upload_token_error_ignore()</a></code> 直接释放内存 </li>
 </ul>
 </dd>
 <dd>
