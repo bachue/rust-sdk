@@ -1713,6 +1713,15 @@
 <span id="1713">1713</span>
 <span id="1714">1714</span>
 <span id="1715">1715</span>
+<span id="1716">1716</span>
+<span id="1717">1717</span>
+<span id="1718">1718</span>
+<span id="1719">1719</span>
+<span id="1720">1720</span>
+<span id="1721">1721</span>
+<span id="1722">1722</span>
+<span id="1723">1723</span>
+<span id="1724">1724</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::{
     <span class="ident">io_status_manager</span>::{<span class="ident">IOStatusManager</span>, <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">IOStatusResult</span>},
@@ -1788,7 +1797,7 @@
 <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">struct</span> <span class="ident">ResumableUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span><span class="op">&gt;</span> {
     <span class="ident">bucket_uploader</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;u</span> <span class="ident">BucketUploader</span>,
     <span class="ident">upload_token</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;</span>,
-    <span class="ident">key</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;</span>,
+    <span class="ident">key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
     <span class="ident">metadata</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
     <span class="ident">custom_vars</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
     <span class="ident">on_uploading_progress</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;u</span> (<span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="ident">u64</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>) <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span>)<span class="op">&gt;</span>,
@@ -1800,7 +1809,7 @@
 <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">struct</span> <span class="ident">ResumableUploader</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">R</span>: <span class="ident">Read</span> <span class="op">+</span> <span class="ident">Seek</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;u</span><span class="op">&gt;</span> {
     <span class="ident">bucket_uploader</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;u</span> <span class="ident">BucketUploader</span>,
     <span class="ident">upload_token</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;</span>,
-    <span class="ident">key</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;</span>,
+    <span class="ident">key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
     <span class="ident">completed_parts</span>: <span class="ident">Mutex</span><span class="op">&lt;</span><span class="ident">CompletedParts</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span><span class="op">&gt;&gt;</span>,
     <span class="ident">checksum_enabled</span>: <span class="ident">bool</span>,
     <span class="ident">is_seekable</span>: <span class="ident">bool</span>,
@@ -1821,7 +1830,7 @@
         <span class="ident">ResumableUploaderBuilder</span> {
             <span class="ident">bucket_uploader</span>,
             <span class="ident">upload_token</span>: <span class="ident">upload_token</span>.<span class="ident">clone</span>(),
-            <span class="ident">key</span>: <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="string">&quot;&quot;</span>),
+            <span class="ident">key</span>: <span class="prelude-val">None</span>,
             <span class="ident">metadata</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
             <span class="ident">custom_vars</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
             <span class="ident">on_uploading_progress</span>: <span class="prelude-val">None</span>,
@@ -1847,7 +1856,7 @@
     }
 
     <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">key</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span>, <span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ResumableUploaderBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;u</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="ident">key</span>;
+        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>);
         <span class="self">self</span>
     }
 
@@ -2072,7 +2081,13 @@
         <span class="kw">let</span> <span class="ident">recorder</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">file_path</span>.<span class="ident">as_ref</span>().<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">file_path</span><span class="op">|</span> {
             <span class="self">self</span>.<span class="ident">bucket_uploader</span>
                 .<span class="ident">recorder</span>()
-                .<span class="ident">open_and_write_metadata</span>(<span class="ident">file_path</span>, <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_ref</span>(), <span class="kw-2">&amp;</span><span class="ident">upload_id</span>, <span class="ident">up_urls</span>, <span class="self">self</span>.<span class="ident">block_size</span>)
+                .<span class="ident">open_and_write_metadata</span>(
+                    <span class="ident">file_path</span>,
+                    <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">key</span><span class="op">|</span> <span class="ident">key</span>.<span class="ident">as_ref</span>()),
+                    <span class="kw-2">&amp;</span><span class="ident">upload_id</span>,
+                    <span class="ident">up_urls</span>,
+                    <span class="self">self</span>.<span class="ident">block_size</span>,
+                )
                 .<span class="ident">ok</span>()
         });
         <span class="self">self</span>.<span class="ident">start_uploading_blocks</span>(
@@ -2176,7 +2191,10 @@
         <span class="kw">match</span> <span class="ident">io_status_manager</span>.<span class="ident">result</span>() {
             <span class="ident">IOStatusResult</span>::<span class="ident">Success</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">complete_parts</span>(<span class="ident">base_path</span>, <span class="ident">up_urls</span>, <span class="ident">authorization</span>).<span class="ident">tap_ok</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
                 <span class="self">self</span>.<span class="ident">file_path</span>.<span class="ident">as_ref</span>().<span class="ident">tap_some</span>(<span class="op">|</span><span class="ident">file_path</span><span class="op">|</span> {
-                    <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">bucket_uploader</span>.<span class="ident">recorder</span>().<span class="ident">drop</span>(<span class="ident">file_path</span>, <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_ref</span>());
+                    <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="self">self</span>
+                        .<span class="ident">bucket_uploader</span>
+                        .<span class="ident">recorder</span>()
+                        .<span class="ident">drop</span>(<span class="ident">file_path</span>, <span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">key</span><span class="op">|</span> <span class="ident">key</span>.<span class="ident">as_ref</span>()));
                 })
             }),
             <span class="ident">IOStatusResult</span>::<span class="ident">IOError</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">HTTPError</span>::<span class="ident">new_unretryable_error</span>(
@@ -2435,7 +2453,7 @@
         <span class="string">&quot;/buckets/&quot;</span>.<span class="ident">to_owned</span>()
             <span class="op">+</span> <span class="self">self</span>.<span class="ident">bucket_uploader</span>.<span class="ident">bucket_name</span>().<span class="ident">as_ref</span>()
             <span class="op">+</span> <span class="string">&quot;/objects/&quot;</span>
-            <span class="op">+</span> <span class="ident">encode_key</span>(<span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_ref</span>()).<span class="ident">as_ref</span>()
+            <span class="op">+</span> <span class="ident">encode_key</span>(<span class="self">self</span>.<span class="ident">key</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">key</span><span class="op">|</span> <span class="ident">key</span>.<span class="ident">as_ref</span>())).<span class="ident">as_ref</span>()
             <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>
     }
 
@@ -2444,11 +2462,11 @@
     }
 }
 
-<span class="kw">fn</span> <span class="ident">encode_key</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">is_empty</span>() {
-        <span class="string">&quot;~&quot;</span>.<span class="ident">into</span>()
-    } <span class="kw">else</span> {
+<span class="kw">fn</span> <span class="ident">encode_key</span>(<span class="ident">key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>) <span class="op">=</span> <span class="ident">key</span> {
         <span class="ident">base64</span>::<span class="ident">urlsafe</span>(<span class="ident">key</span>.<span class="ident">as_bytes</span>()).<span class="ident">into</span>()
+    } <span class="kw">else</span> {
+        <span class="string">&quot;~&quot;</span>.<span class="ident">into</span>()
     }
 }
 
@@ -2508,7 +2526,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2528,7 +2546,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -2552,7 +2570,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2599,7 +2617,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2612,7 +2630,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id/2&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2632,7 +2650,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id/4&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2652,7 +2670,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2681,7 +2699,7 @@
         {
             <span class="kw">let</span> <span class="ident">medium</span> <span class="op">=</span> <span class="ident">bucket_uploader</span>.<span class="ident">recorder</span>().<span class="ident">open_and_write_metadata</span>(
                 <span class="kw-2">&amp;</span><span class="ident">temp_path</span>,
-                <span class="string">&quot;test-key&quot;</span>,
+                <span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>),
                 <span class="string">&quot;test_upload_id&quot;</span>,
                 <span class="kw-2">&amp;</span>[<span class="string">&quot;http://z1h1.com&quot;</span>],
                 <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">22</span>,
@@ -2712,7 +2730,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2732,7 +2750,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -2756,7 +2774,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2806,7 +2824,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2826,7 +2844,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -2856,7 +2874,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h2.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -2880,7 +2898,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h2.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2927,7 +2945,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2946,7 +2964,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z2h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -2966,7 +2984,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z2h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -2990,7 +3008,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z2h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -3042,7 +3060,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -3062,7 +3080,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z2h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -3082,7 +3100,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id_1/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -3112,7 +3130,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z2h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id_2/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -3136,7 +3154,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z2h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id_2&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -3187,7 +3205,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -3207,7 +3225,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -3238,7 +3256,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -3301,7 +3319,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,
@@ -3321,7 +3339,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id_1/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -3350,7 +3368,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id_2/&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;\\d&quot;</span>
@@ -3374,7 +3392,7 @@
                     <span class="string">&quot;^&quot;</span>.<span class="ident">to_owned</span>()
                         <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">regex</span>::<span class="ident">escape</span>(
                             <span class="kw-2">&amp;</span>(<span class="string">&quot;http://z1h1.com/buckets/test_bucket/objects/&quot;</span>.<span class="ident">to_owned</span>()
-                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="string">&quot;test-key&quot;</span>)
+                                <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">encode_key</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;test-key&quot;</span>))
                                 <span class="op">+</span> <span class="string">&quot;/uploads/test_upload_id_2&quot;</span>),
                         )
                         <span class="op">+</span> <span class="string">&quot;$&quot;</span>,

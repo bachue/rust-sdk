@@ -377,6 +377,8 @@
 <span id="377">377</span>
 <span id="378">378</span>
 <span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">bucket_uploader</span>::<span class="ident">ResumablePolicy</span>, <span class="ident">BucketUploader</span>, <span class="ident">FileUploaderBuilder</span>, <span class="ident">UploadResult</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utils</span>::<span class="ident">ron</span>::<span class="ident">Ron</span>;
@@ -402,7 +404,7 @@
 <span class="doccomment">/// 批量上传任务，包装一个上传任务供批量上传器负责上传</span>
 <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;创建上传任务并不会真正上传文件，您需要将当前任务提交到批量上传器后，调用 `start` 方法执行上传任务&quot;</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BatchUploadJob</span> {
-    <span class="ident">key</span>: <span class="ident">String</span>,
+    <span class="ident">key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">upload_token</span>: <span class="ident">String</span>,
     <span class="ident">vars</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">metadata</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
@@ -418,7 +420,7 @@
 
 <span class="doccomment">/// 批量上传任务生成器，提供上传数据所需的多个参数</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BatchUploadJobBuilder</span> {
-    <span class="ident">key</span>: <span class="ident">String</span>,
+    <span class="ident">key</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">upload_token</span>: <span class="ident">String</span>,
     <span class="ident">vars</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">metadata</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span>,
@@ -557,8 +559,10 @@
         },
     )
     .<span class="ident">thread_pool</span>(<span class="ident">thread_pool</span>)
-    .<span class="ident">max_concurrency</span>(<span class="ident">context</span>.<span class="ident">max_concurrency</span>)
-    .<span class="ident">key</span>(<span class="ident">key</span>);
+    .<span class="ident">max_concurrency</span>(<span class="ident">context</span>.<span class="ident">max_concurrency</span>);
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>) <span class="op">=</span> <span class="ident">key</span> {
+        <span class="ident">builder</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">key</span>(<span class="ident">key</span>);
+    }
     <span class="kw">for</span> (<span class="ident">var_name</span>, <span class="ident">var_value</span>) <span class="kw">in</span> <span class="ident">vars</span>.<span class="ident">into_iter</span>() {
         <span class="ident">builder</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">var</span>(<span class="ident">var_name</span>, <span class="ident">var_value</span>);
     }
@@ -598,7 +602,7 @@
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">BatchUploadJobBuilder</span> {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
-            <span class="ident">key</span>: <span class="ident">String</span>::<span class="ident">new</span>(),
+            <span class="ident">key</span>: <span class="prelude-val">None</span>,
             <span class="ident">upload_token</span>: <span class="ident">String</span>::<span class="ident">new</span>(),
             <span class="ident">vars</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
             <span class="ident">metadata</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
@@ -613,7 +617,7 @@
 <span class="kw">impl</span> <span class="ident">BatchUploadJobBuilder</span> {
     <span class="doccomment">/// 指定上传对象的名称</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">key</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="ident">key</span>.<span class="ident">into</span>();
+        <span class="self">self</span>.<span class="ident">key</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">key</span>.<span class="ident">into</span>());
         <span class="self">self</span>
     }
 
