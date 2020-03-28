@@ -594,7 +594,7 @@
             .<span class="ident">accept_json</span>()
             .<span class="ident">raw_body</span>(<span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">to_owned</span>(), <span class="self">self</span>.<span class="ident">body</span>.<span class="ident">as_slice</span>())
             .<span class="ident">send</span>()<span class="question-mark">?</span>
-            .<span class="ident">try_parse_json</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>();
+            .<span class="ident">try_parse_json</span>::<span class="op">&lt;</span><span class="ident">Value</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
         <span class="kw">match</span> <span class="ident">upload_result</span> {
             <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">value</span>.<span class="ident">into</span>()),
             <span class="prelude-val">Err</span>(<span class="ident">bytes</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">bytes</span>.<span class="ident">into</span>()),

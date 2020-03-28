@@ -764,6 +764,42 @@
 <span id="764">764</span>
 <span id="765">765</span>
 <span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
+<span id="802">802</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! 区域模块</span>
 <span class="doccomment">//!</span>
@@ -771,13 +807,18 @@
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">config</span>::<span class="ident">Config</span>,
     <span class="ident">http</span>::{<span class="ident">Client</span>, <span class="prelude-ty">Result</span>},
+    <span class="ident">utils</span>::<span class="ident">cache_map</span>::<span class="ident">CacheMap</span>,
 };
 <span class="kw">use</span> <span class="ident">assert_impl</span>::<span class="ident">assert_impl</span>;
 <span class="kw">use</span> <span class="ident">derive_builder</span>::<span class="ident">Builder</span>;
 <span class="kw">use</span> <span class="ident">getset</span>::{<span class="ident">CopyGetters</span>, <span class="ident">Getters</span>};
 <span class="kw">use</span> <span class="ident">lazy_static</span>::<span class="ident">lazy_static</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">borrow</span>::<span class="ident">Cow</span>, <span class="ident">convert</span>::<span class="ident">AsRef</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{
+    <span class="ident">borrow</span>::<span class="ident">Cow</span>,
+    <span class="ident">convert</span>::<span class="ident">AsRef</span>,
+    <span class="ident">time</span>::{<span class="ident">Duration</span>, <span class="ident">SystemTime</span>},
+};
 
 <span class="doccomment">/// 存储区域 ID</span>
 <span class="doccomment">///</span>
@@ -1150,22 +1191,33 @@
     }
 
     <span class="doccomment">/// 查询七牛服务器，根据存储空间名称获取区域列表</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// 需要注意的是，当前方法具有缓存机制，对同一 Access Key 和存储空间多次调用时，将会返回缓存结果而不会发送 HTTP 请求</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">query</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(
         <span class="ident">bucket</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
         <span class="ident">access_key</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span>,
         <span class="ident">config</span>: <span class="ident">Config</span>,
     ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">Region</span>]<span class="op">&gt;&gt;</span> {
-        <span class="comment">// TODO: 缓存结果</span>
-        <span class="kw">let</span> <span class="ident">uc_url</span> <span class="op">=</span> <span class="ident">config</span>.<span class="ident">uc_url</span>();
-        <span class="kw">let</span> <span class="ident">result</span>: <span class="ident">RegionQueryResults</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>(<span class="ident">config</span>)
-            .<span class="ident">get</span>(<span class="string">&quot;/v3/query&quot;</span>, <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">uc_url</span>])
-            .<span class="ident">query</span>(<span class="string">&quot;ak&quot;</span>, <span class="ident">access_key</span>.<span class="ident">into</span>())
-            .<span class="ident">query</span>(<span class="string">&quot;bucket&quot;</span>, <span class="ident">bucket</span>.<span class="ident">into</span>())
-            .<span class="ident">accept_json</span>()
-            .<span class="ident">no_body</span>()
-            .<span class="ident">send</span>()<span class="question-mark">?</span>
-            .<span class="ident">parse_json</span>()<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">result</span>.<span class="ident">into_regions</span>())
+        <span class="kw">let</span> <span class="ident">bucket</span> <span class="op">=</span> <span class="ident">bucket</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="ident">access_key</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> (<span class="ident">regions</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">QUERY_CACHE</span>
+            .<span class="ident">try_get_or_insert</span>(<span class="ident">QueryCacheKey</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">access_key</span>, <span class="kw-2">&amp;</span><span class="ident">bucket</span>), <span class="op">||</span> {
+                <span class="kw">let</span> <span class="ident">uc_url</span> <span class="op">=</span> <span class="ident">config</span>.<span class="ident">uc_url</span>();
+                <span class="kw">let</span> <span class="ident">result</span>: <span class="ident">RegionQueryResults</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>(<span class="ident">config</span>)
+                    .<span class="ident">get</span>(<span class="string">&quot;/v3/query&quot;</span>, <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">uc_url</span>])
+                    .<span class="ident">query</span>(<span class="string">&quot;ak&quot;</span>, <span class="ident">access_key</span>)
+                    .<span class="ident">query</span>(<span class="string">&quot;bucket&quot;</span>, <span class="ident">bucket</span>)
+                    .<span class="ident">accept_json</span>()
+                    .<span class="ident">no_body</span>()
+                    .<span class="ident">send</span>()<span class="question-mark">?</span>
+                    .<span class="ident">parse_json</span>()<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>((
+                    <span class="ident">result</span>.<span class="ident">into_regions</span>(),
+                    <span class="ident">SystemTime</span>::<span class="ident">now</span>() <span class="op">+</span> <span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">24</span> <span class="op">*</span> <span class="number">60</span> <span class="op">*</span> <span class="number">60</span>),
+                )))
+            })<span class="question-mark">?</span>
+            .<span class="ident">unwrap</span>();
+        <span class="prelude-val">Ok</span>(<span class="ident">regions</span>)
     }
 
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
@@ -1173,6 +1225,22 @@
         <span class="macro">assert_impl</span><span class="macro">!</span>(<span class="ident">Send</span>: <span class="self">Self</span>);
         <span class="macro">assert_impl</span><span class="macro">!</span>(<span class="ident">Sync</span>: <span class="self">Self</span>);
     }
+}
+
+<span class="macro">lazy_static</span><span class="macro">!</span> {
+    <span class="kw">static</span> <span class="kw-2">ref</span> <span class="ident">QUERY_CACHE</span>: <span class="ident">CacheMap</span><span class="op">&lt;</span><span class="ident">QueryCacheKey</span>, <span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">Region</span>]<span class="op">&gt;&gt;</span> <span class="op">=</span> <span class="ident">CacheMap</span>::<span class="ident">new</span>(<span class="bool-val">true</span>);
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">struct</span> <span class="ident">QueryCacheKey</span>(<span class="ident">String</span>);
+
+<span class="kw">impl</span> <span class="ident">QueryCacheKey</span> {
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">access_key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">bucket_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>(<span class="ident">access_key</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="string">&quot;:&quot;</span> <span class="op">+</span> <span class="ident">bucket_name</span>)
+    }
+}
+
+<span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">clear_query_cache</span>() {
+    <span class="ident">QUERY_CACHE</span>.<span class="ident">clear</span>();
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Region</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">Region</span><span class="op">&gt;</span> {
@@ -1412,6 +1480,8 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_query_region_by_expected_domain</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">clear_query_cache</span>();
+
         <span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">ConfigBuilder</span>::<span class="ident">default</span>()
             .<span class="ident">domains_manager</span>(<span class="ident">DomainsManagerBuilder</span>::<span class="ident">default</span>().<span class="ident">disable_url_resolution</span>().<span class="ident">build</span>())
             .<span class="ident">http_request_handler</span>(<span class="ident">JSONCallMock</span>::<span class="ident">new</span>(
@@ -1470,6 +1540,8 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_query_region_by_unexpected_domain</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Error</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">clear_query_cache</span>();
+
         <span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">ConfigBuilder</span>::<span class="ident">default</span>()
             .<span class="ident">domains_manager</span>(<span class="ident">DomainsManagerBuilder</span>::<span class="ident">default</span>().<span class="ident">disable_url_resolution</span>().<span class="ident">build</span>())
             .<span class="ident">http_request_handler</span>(<span class="ident">JSONCallMock</span>::<span class="ident">new</span>(
