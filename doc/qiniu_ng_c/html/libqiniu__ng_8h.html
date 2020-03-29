@@ -304,14 +304,16 @@ $(document).ready(function(){initNavTree('libqiniu__ng_8h.html','');});
 <a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da927e93ed5ab7c091e6c070132f474a4c">qiniu_ng_err_kind_unexpected_redirect_error</a>, 
 <br />
 &#160;&#160;<a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da3f7d9ad4b36f1eb0ea2689f5c4148104">qiniu_ng_err_kind_user_canceled</a>, 
+<a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1dace7c4ceee4d8af57cc4e6afadbd912d3">qiniu_ng_err_kind_empty_file</a>, 
 <a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da16cf614c8edd5a36299f6eda329104c1">qiniu_ng_err_kind_json_error</a>, 
 <a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da81013e89df0d79da4c3db428c91a8a02">qiniu_ng_err_kind_response_status_code_error</a>, 
-<a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da171e27b964b455cb6a7e924814dc397d">qiniu_ng_err_kind_unknown_error</a>, 
 <br />
-&#160;&#160;<a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da268e8f6a143a930ab02589fcf80e5120">qiniu_ng_err_kind_curl_error</a>, 
+&#160;&#160;<a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da171e27b964b455cb6a7e924814dc397d">qiniu_ng_err_kind_unknown_error</a>, 
+<a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da268e8f6a143a930ab02589fcf80e5120">qiniu_ng_err_kind_curl_error</a>, 
 <a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1dac645c67f76d4298f8d481d615187e345">qiniu_ng_err_kind_drop_non_empty_bucket_error</a>, 
 <a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da1c0af0fcb848736057397b862f28d782">qiniu_ng_err_kind_invalid_upload_token_error</a>, 
-<a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da4f2e4af2a0d76a98ca67743817670831">qiniu_ng_err_kind_bad_mime_type</a>
+<br />
+&#160;&#160;<a class="el" href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1da4f2e4af2a0d76a98ca67743817670831">qiniu_ng_err_kind_bad_mime_type</a>
 <br />
  }<tr class="memdesc:a1d855d17f69dc7c7ca396c977ac2aa1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDK 错误类型  <a href="libqiniu__ng_8h.html#a1d855d17f69dc7c7ca396c977ac2aa1d">更多...</a><br /></td></tr>
 </td></tr>
@@ -778,6 +780,9 @@ $(document).ready(function(){initNavTree('libqiniu__ng_8h.html','');});
 <tr class="memitem:a7985b8b3f9384f902c26b46757899efa"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a7985b8b3f9384f902c26b46757899efa">qiniu_ng_err_drop_non_empty_bucket_error_extract</a> (<a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *err)</td></tr>
 <tr class="memdesc:a7985b8b3f9384f902c26b46757899efa"><td class="mdescLeft">&#160;</td><td class="mdescRight">判定错误是否是删除非空存储空间，如果是，则释放其内存  <a href="#a7985b8b3f9384f902c26b46757899efa">更多...</a><br /></td></tr>
 <tr class="separator:a7985b8b3f9384f902c26b46757899efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a946c29c3bab02e544e7bd77ec97fce72"><td class="memItemLeft" align="right" valign="top">_Bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a946c29c3bab02e544e7bd77ec97fce72">qiniu_ng_err_empty_file_error_extract</a> (<a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *err)</td></tr>
+<tr class="memdesc:a946c29c3bab02e544e7bd77ec97fce72"><td class="mdescLeft">&#160;</td><td class="mdescRight">判定错误是否是用户取消错误，如果是，则释放其内存  <a href="#a946c29c3bab02e544e7bd77ec97fce72">更多...</a><br /></td></tr>
+<tr class="separator:a946c29c3bab02e544e7bd77ec97fce72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6654a5a1f8a8f506f5d2ee3226749a6a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="libqiniu__ng_8h.html#a6654a5a1f8a8f506f5d2ee3226749a6a">qiniu_ng_err_fprintf</a> (FILE *stream, const char *format, <a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> err)</td></tr>
 <tr class="memdesc:a6654a5a1f8a8f506f5d2ee3226749a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">当错误存在时，调用 <code>fprintf()</code> 输出错误信息  <a href="#a6654a5a1f8a8f506f5d2ee3226749a6a">更多...</a><br /></td></tr>
 <tr class="separator:a6654a5a1f8a8f506f5d2ee3226749a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1439,6 +1444,8 @@ $(document).ready(function(){initNavTree('libqiniu__ng_8h.html','');});
 <tr><td class="fieldname"><a id="a1d855d17f69dc7c7ca396c977ac2aa1da927e93ed5ab7c091e6c070132f474a4c"></a>qiniu_ng_err_kind_unexpected_redirect_error&#160;</td><td class="fielddoc"><p>未预期的重定向错误 </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a1d855d17f69dc7c7ca396c977ac2aa1da3f7d9ad4b36f1eb0ea2689f5c4148104"></a>qiniu_ng_err_kind_user_canceled&#160;</td><td class="fielddoc"><p>用户取消 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a1d855d17f69dc7c7ca396c977ac2aa1dace7c4ceee4d8af57cc4e6afadbd912d3"></a>qiniu_ng_err_kind_empty_file&#160;</td><td class="fielddoc"><p>上传空文件错误 </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a1d855d17f69dc7c7ca396c977ac2aa1da16cf614c8edd5a36299f6eda329104c1"></a>qiniu_ng_err_kind_json_error&#160;</td><td class="fielddoc"><p>JSON 错误 </p>
 </td></tr>
@@ -7511,6 +7518,38 @@ SDK 会自动重试，或出错退出
 <dl class="retval"><dt>返回值</dt><dd>
   <table class="retval">
     <tr><td class="paramname">_Bool</td><td>当错误确实是删除非空存储空间时返回 <code>true</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a946c29c3bab02e544e7bd77ec97fce72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a946c29c3bab02e544e7bd77ec97fce72">&#9670;&nbsp;</a></span>qiniu_ng_err_empty_file_error_extract()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">_Bool qiniu_ng_err_empty_file_error_extract </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structqiniu__ng__err__t.html">qiniu_ng_err_t</a> *&#160;</td>
+          <td class="paramname"><em>err</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>判定错误是否是用户取消错误，如果是，则释放其内存 </p>
+<dl class="params"><dt>参数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">err</td><td>SDK 错误实例 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>返回值</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">_Bool</td><td>当错误确实是用户取消错误时返回 <code>true</code> </td></tr>
   </table>
   </dd>
 </dl>

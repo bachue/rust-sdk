@@ -784,7 +784,21 @@
 <span id="784">784</span>
 <span id="785">785</span>
 <span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">UploadError</span> <span class="kw">as</span> <span class="ident">UploadFileError</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">http</span>::{
         <span class="ident">Client</span>, <span class="ident">Error</span> <span class="kw">as</span> <span class="ident">HTTPError</span>, <span class="ident">ErrorKind</span> <span class="kw">as</span> <span class="ident">HTTPErrorKind</span>, <span class="ident">HTTPCallerErrorKind</span>, <span class="ident">Response</span>, <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">HTTPResult</span>,
@@ -805,12 +819,23 @@
     <span class="ident">io</span>::{<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">IOError</span>, <span class="ident">Read</span>, <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">IOResult</span>, <span class="ident">Seek</span>, <span class="ident">SeekFrom</span>, <span class="ident">Write</span>},
     <span class="ident">net</span>::<span class="ident">IpAddr</span>,
     <span class="ident">path</span>::<span class="ident">Path</span>,
+    <span class="ident">result</span>::<span class="prelude-ty">Result</span>,
     <span class="ident">sync</span>::{<span class="ident">Arc</span>, <span class="ident">RwLock</span>},
     <span class="ident">time</span>::{<span class="ident">Duration</span>, <span class="ident">SystemTime</span>},
 };
 <span class="kw">use</span> <span class="ident">tap</span>::<span class="ident">TapOps</span>;
 <span class="kw">use</span> <span class="ident">thiserror</span>::<span class="ident">Error</span>;
 <span class="kw">use</span> <span class="ident">url</span>::<span class="ident">Url</span>;
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Error</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">enum</span> <span class="ident">UploadError</span> {
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Qiniu API call error: {0}&quot;</span>)]</span>
+    <span class="ident">QiniuAPIError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">HTTPError</span>),
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed to do io operation for log file: {0}&quot;</span>)]</span>
+    <span class="ident">IOError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">IOError</span>),
+}
+
+<span class="kw">type</span> <span class="ident">UploadResult</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">UploadError</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// 上传日志文件的锁策略</span>
 <span class="doccomment">///</span>
@@ -1267,16 +1292,6 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Error</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">enum</span> <span class="ident">UploadError</span> {
-    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Qiniu API call error: {0}&quot;</span>)]</span>
-    <span class="ident">QiniuAPIError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">HTTPError</span>),
-    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed to do io operation for log file: {0}&quot;</span>)]</span>
-    <span class="ident">IOError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">IOError</span>),
-}
-
-<span class="kw">type</span> <span class="ident">UploadResult</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">UploadError</span><span class="op">&gt;</span>;
-
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum</span> <span class="ident">UpType</span> {
     <span class="ident">Form</span>,
@@ -1336,6 +1351,17 @@
             <span class="ident">builder</span> <span class="op">=</span> <span class="ident">builder</span>.<span class="ident">server_ip</span>(<span class="ident">server_ip</span>);
         }
         <span class="ident">builder</span>
+    }
+
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">upload_error</span>(<span class="self">self</span>, <span class="ident">err</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">UploadFileError</span>) <span class="op">-&gt;</span> <span class="ident">UploadLoggerRecordBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="kw">const</span> <span class="ident">ZERO_SIZE_FILE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="op">-</span><span class="number">6</span>;
+        <span class="kw">const</span> <span class="ident">INVALID_FILE</span>: <span class="ident">i32</span> <span class="op">=</span> <span class="op">-</span><span class="number">3</span>;
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
+        <span class="kw">match</span> <span class="ident">err</span> {
+            <span class="ident">UploadFileError</span>::<span class="ident">QiniuError</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">http_error</span>(<span class="ident">err</span>),
+            <span class="ident">UploadFileError</span>::<span class="ident">IOError</span>(<span class="kw-2">ref</span> <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">status_code</span>(<span class="ident">INVALID_FILE</span>).<span class="ident">error_message</span>(<span class="ident">err</span>.<span class="ident">description</span>()),
+            <span class="ident">UploadFileError</span>::<span class="ident">EmptyFileError</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">status_code</span>(<span class="ident">ZERO_SIZE_FILE</span>).<span class="ident">error_message</span>(<span class="ident">err</span>.<span class="ident">description</span>()),
+        }
     }
 
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">http_error</span>(<span class="self">self</span>, <span class="ident">err</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">HTTPError</span>) <span class="op">-&gt;</span> <span class="ident">UploadLoggerRecordBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {

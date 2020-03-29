@@ -544,6 +544,15 @@
 <span id="544">544</span>
 <span id="545">545</span>
 <span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::{
     <span class="kw">super</span>::<span class="ident">uploader</span>::{<span class="ident">UploadPolicy</span>, <span class="ident">UploadToken</span>},
@@ -952,6 +961,12 @@
     }
 
     <span class="kw">fn</span> <span class="ident">upload_file_by_blocks</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">file_path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>, <span class="ident">file_name</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">mime</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">UploadResult</span> {
+        <span class="kw">let</span> <span class="ident">file</span> <span class="op">=</span> <span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">file_path</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">file_size</span> <span class="op">=</span> <span class="ident">file</span>.<span class="ident">metadata</span>()<span class="question-mark">?</span>.<span class="ident">len</span>();
+        <span class="kw">if</span> <span class="ident">file_size</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">UploadError</span>::<span class="ident">EmptyFileError</span>);
+        }
+
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">ResumableUploaderBuilder</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bucket_uploader</span>, <span class="self">self</span>.<span class="ident">upload_token</span>)
             .<span class="ident">max_concurrency</span>(<span class="self">self</span>.<span class="ident">max_concurrency</span>)
             .<span class="ident">vars</span>(<span class="self">self</span>.<span class="ident">vars</span>)
@@ -966,10 +981,10 @@
             <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">thread_pool</span>(<span class="ident">thread_pool</span>);
         }
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">uploader</span> <span class="op">=</span> <span class="ident">uploader</span>.<span class="ident">file</span>(
-            <span class="ident">File</span>::<span class="ident">open</span>(<span class="ident">file_path</span>)<span class="question-mark">?</span>,
+            <span class="ident">file</span>,
             <span class="ident">file_path</span>.<span class="ident">into</span>(),
             <span class="self">Self</span>::<span class="ident">guess_filename</span>(<span class="ident">file_path</span>, <span class="ident">file_name</span>),
-            <span class="ident">file_path</span>.<span class="ident">metadata</span>()<span class="question-mark">?</span>.<span class="ident">len</span>(),
+            <span class="ident">file_size</span>,
             <span class="self">Self</span>::<span class="ident">guess_mime_from_file_path</span>(<span class="ident">mime</span>, <span class="ident">file_path</span>),
             <span class="self">self</span>.<span class="ident">checksum_enabled</span>,
         )<span class="question-mark">?</span>;
@@ -1085,6 +1100,9 @@
     <span class="doccomment">/// 读取数据发送 IO 错误</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed to do local io operation during uploading: {0}&quot;</span>)]</span>
     <span class="ident">IOError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">IOError</span>),
+    <span class="doccomment">/// 读取数据发送 IO 错误</span>
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Should not upload empty file&quot;</span>)]</span>
+    <span class="ident">EmptyFileError</span>,
     <span class="doccomment">/// 调用七牛 API 上传时发送错误</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Qiniu API call error: {0}&quot;</span>)]</span>
     <span class="ident">QiniuError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="kw">crate</span>::<span class="ident">http</span>::<span class="ident">Error</span>),
