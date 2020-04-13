@@ -2,7 +2,7 @@
 
 use super::{
     bucket::Bucket,
-    resource::{Delete, Stat, ToURI},
+    resource::{Copy, Delete, Move, Stat, ToURI},
     uploader::{ObjectUploader, UploadPolicyBuilder, UploadToken},
 };
 use crate::{
@@ -63,7 +63,34 @@ impl Object {
         self.bucket
             .http_client()
             .post(&Delete::new(self).to_uri(), &self.bucket.rs_urls())
-            .idempotent()
+            .token(TokenVersion::V2, self.bucket.credential().into())
+            .no_body()
+            .send()?
+            .ignore_body();
+        Ok(())
+    }
+
+    /// 移动当前对象到指定的目标对象
+    pub fn move_to(&self, target_object: &Object, force: bool) -> HTTPResult<()> {
+        self.bucket
+            .http_client()
+            .post(&Move::new(self, target_object, force).to_uri(), &self.bucket.rs_urls())
+            .token(TokenVersion::V2, self.bucket.credential().into())
+            .no_body()
+            .send()?
+            .ignore_body();
+        Ok(())
+    }
+
+    /// 复制当前对象到指定的目标对象
+    pub fn copy_to(&self, target_object: &Object, force: bool) -> HTTPResult<()> {
+        let op = Copy::new(self, target_object, force).to_uri();
+        let rs_urls = self.bucket.rs_urls();
+        let mut request_builder = self.bucket.http_client().post(&op, &rs_urls);
+        if force {
+            request_builder = request_builder.idempotent();
+        }
+        request_builder
             .token(TokenVersion::V2, self.bucket.credential().into())
             .no_body()
             .send()?
