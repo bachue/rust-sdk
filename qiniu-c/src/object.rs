@@ -1,18 +1,20 @@
 use crate::{
     bucket::qiniu_ng_bucket_t,
+    header_info::qiniu_ng_header_info_t,
     result::qiniu_ng_err_t,
     string::{qiniu_ng_char_t, ucstr},
     utils::qiniu_ng_str_t,
 };
 use libc::{c_void, size_t};
 use qiniu_ng::storage::{
-    bucket::Bucket,
+    bucket::{Bucket, DomainsResult},
     object::{Object, ObjectInfo},
+    url::URL,
 };
 use std::{
     mem::transmute,
     ptr::{copy_nonoverlapping, null_mut},
-    time::SystemTime,
+    time::{Duration, SystemTime},
 };
 use tap::TapOps;
 
@@ -123,6 +125,165 @@ pub extern "C" fn qiniu_ng_object_get_key(object: qiniu_ng_object_t) -> qiniu_ng
     unsafe { qiniu_ng_str_t::from_str_unchecked(object.key()) }.tap(|_| {
         let _ = qiniu_ng_object_t::from(object);
     })
+}
+
+/// @brief 按照指定的生命周期生成对象下载 URL
+/// @param[in] object 对象实例
+/// @param[in] lifetime URL 生命周期，单位为秒
+/// @param[out] url 用于返回下载 URL。如果传入 `NULL` 表示不获取 `url`。但如果运行正常，返回值将依然是 `true`
+/// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
+/// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
+/// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+#[no_mangle]
+pub extern "C" fn qiniu_ng_object_get_url_with_lifetime(
+    object: qiniu_ng_object_t,
+    lifetime: u64,
+    url: *mut qiniu_ng_str_t,
+    error: *mut qiniu_ng_err_t,
+) -> bool {
+    qiniu_ng_object_get_url(
+        object,
+        |obj| obj.url_with_lifetime(Duration::from_secs(lifetime)),
+        url,
+        error,
+    )
+}
+
+/// @brief 按照指定的过期时间生成对象下载 URL
+/// @param[in] object 对象实例
+/// @param[in] deadline 过期时间，使用以秒为单位的 UNIX 时间戳表示
+/// @param[out] url 用于返回下载 URL。如果传入 `NULL` 表示不获取 `url`。但如果运行正常，返回值将依然是 `true`
+/// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
+/// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
+/// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+#[no_mangle]
+pub extern "C" fn qiniu_ng_object_get_url_with_deadline(
+    object: qiniu_ng_object_t,
+    deadline: u64,
+    url: *mut qiniu_ng_str_t,
+    error: *mut qiniu_ng_err_t,
+) -> bool {
+    qiniu_ng_object_get_url(
+        object,
+        |obj| obj.url_with_deadline(SystemTime::now().checked_add(Duration::from_secs(deadline)).unwrap()),
+        url,
+        error,
+    )
+}
+
+/// @brief 生成公开空间的对象下载 URL
+/// @param[in] object 对象实例
+/// @param[out] url 用于返回下载 URL。如果传入 `NULL` 表示不获取 `url`。但如果运行正常，返回值将依然是 `true`
+/// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
+/// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
+/// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+#[no_mangle]
+pub extern "C" fn qiniu_ng_object_get_public_url(
+    object: qiniu_ng_object_t,
+    url: *mut qiniu_ng_str_t,
+    error: *mut qiniu_ng_err_t,
+) -> bool {
+    qiniu_ng_object_get_url(object, |obj| obj.public_url(), url, error)
+}
+
+/// @brief 按照指定的生命周期生成私有空间的对象下载 URL
+/// @param[in] object 对象实例
+/// @param[in] lifetime URL 生命周期，单位为秒
+/// @param[out] url 用于返回下载 URL。如果传入 `NULL` 表示不获取 `url`。但如果运行正常，返回值将依然是 `true`
+/// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
+/// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
+/// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+#[no_mangle]
+pub extern "C" fn qiniu_ng_object_get_private_url_with_lifetime(
+    object: qiniu_ng_object_t,
+    lifetime: u64,
+    url: *mut qiniu_ng_str_t,
+    error: *mut qiniu_ng_err_t,
+) -> bool {
+    qiniu_ng_object_get_url(
+        object,
+        |obj| obj.private_url_with_lifetime(Duration::from_secs(lifetime)),
+        url,
+        error,
+    )
+}
+
+/// @brief 按照指定的过期时间生成私有空间的对象下载 URL
+/// @param[in] object 对象实例
+/// @param[in] deadline 过期时间，使用以秒为单位的 UNIX 时间戳表示
+/// @param[out] url 用于返回下载 URL。如果传入 `NULL` 表示不获取 `url`。但如果运行正常，返回值将依然是 `true`
+/// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
+/// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
+/// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+#[no_mangle]
+pub extern "C" fn qiniu_ng_object_get_private_url_with_deadline(
+    object: qiniu_ng_object_t,
+    deadline: u64,
+    url: *mut qiniu_ng_str_t,
+    error: *mut qiniu_ng_err_t,
+) -> bool {
+    qiniu_ng_object_get_url(
+        object,
+        |obj| obj.private_url_with_deadline(SystemTime::now().checked_add(Duration::from_secs(deadline)).unwrap()),
+        url,
+        error,
+    )
+}
+
+fn qiniu_ng_object_get_url(
+    object: qiniu_ng_object_t,
+    generate_url: impl Fn(&Object) -> DomainsResult<URL>,
+    url: *mut qiniu_ng_str_t,
+    error: *mut qiniu_ng_err_t,
+) -> bool {
+    let object = Option::<Box<Object>>::from(object).unwrap();
+    match generate_url(&object).tap(|_| {
+        let _ = qiniu_ng_object_t::from(object);
+    }) {
+        Ok(u) => {
+            if let Some(url) = unsafe { url.as_mut() } {
+                *url = unsafe { qiniu_ng_str_t::from_string_unchecked(u.to_string()) };
+            }
+            true
+        }
+        Err(ref err) => {
+            if let Some(error) = unsafe { error.as_mut() } {
+                *error = err.into();
+            }
+            false
+        }
+    }
+}
+
+/// @brief 获取对象下载 URL 的元信息
+/// @param[in] object 对象实例
+/// @param[out] header_info 用于返回元信息。如果传入 `NULL` 表示不获取 `header_info`。但如果运行正常，返回值将依然是 `true`
+/// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
+/// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `header_info` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
+/// @warning 对于获取的 `header_info` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+#[no_mangle]
+pub extern "C" fn qiniu_ng_object_head(
+    object: qiniu_ng_object_t,
+    header_info: *mut qiniu_ng_header_info_t,
+    error: *mut qiniu_ng_err_t,
+) -> bool {
+    let object = Option::<Box<Object>>::from(object).unwrap();
+    match object.head().tap(|_| {
+        let _ = qiniu_ng_object_t::from(object);
+    }) {
+        Ok(h) => {
+            if let Some(header_info) = unsafe { header_info.as_mut() } {
+                *header_info = Box::new(h).into();
+            }
+            true
+        }
+        Err(ref err) => {
+            if let Some(error) = unsafe { error.as_mut() } {
+                *error = err.into();
+            }
+            false
+        }
+    }
 }
 
 /// @brief 对象详细信息

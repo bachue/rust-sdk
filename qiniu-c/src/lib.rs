@@ -4,6 +4,7 @@ mod client;
 mod config;
 mod credential;
 mod etag;
+mod header_info;
 mod http;
 mod object;
 mod region;

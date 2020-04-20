@@ -61,9 +61,13 @@ void test_qiniu_ng_storage_bucket_create_and_drop(void) {
         }
     }
     qiniu_ng_str_list_free(&bucket_names);
-    TEST_ASSERT_TRUE_MESSAGE(
-        found_new_bucket,
-        "found_new_bucket != true");
+    TEST_ASSERT_TRUE_MESSAGE(found_new_bucket, "found_new_bucket != true");
+
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, new_bucket_name);
+    bool is_private;
+    TEST_ASSERT_TRUE_MESSAGE(qiniu_ng_bucket_is_private(bucket, &is_private, NULL), "qiniu_ng_bucket_is_private() returns unexpected value");
+    TEST_ASSERT_FALSE_MESSAGE(is_private, "bucket.is_private == true");
+    qiniu_ng_bucket_free(&bucket);
 
     TEST_ASSERT_TRUE_MESSAGE(
         qiniu_ng_storage_drop_bucket(client, new_bucket_name, NULL),
@@ -101,8 +105,8 @@ void test_qiniu_ng_storage_bucket_create_duplicated(void) {
         code, 614,
         "code != 614");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(error_message), QINIU_NG_CHARS("the bucket already exists and you own it."),
-        "qiniu_ng_str_get_ptr(error_message) != \"the bucket already exists and you own it.\"");
+        qiniu_ng_str_get_cstr(error_message), QINIU_NG_CHARS("the bucket already exists and you own it."),
+        "qiniu_ng_str_get_cstr(error_message) != \"the bucket already exists and you own it.\"");
     TEST_ASSERT_FALSE_MESSAGE(
         qiniu_ng_err_response_status_code_error_extract(&err, NULL, NULL),
         "qiniu_ng_err_response_status_code_error_extract() returns unexpected value");

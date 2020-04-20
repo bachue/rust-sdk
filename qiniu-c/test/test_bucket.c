@@ -10,16 +10,16 @@ void test_qiniu_ng_bucket_get_name(void) {
     qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z0-bucket"));
     qiniu_ng_str_t bucket_name = qiniu_ng_bucket_get_name(bucket);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(bucket_name), QINIU_NG_CHARS("z0-bucket"),
-        "qiniu_ng_str_get_ptr(bucket_name) != \"z0-bucket\"");
+        qiniu_ng_str_get_cstr(bucket_name), QINIU_NG_CHARS("z0-bucket"),
+        "qiniu_ng_str_get_cstr(bucket_name) != \"z0-bucket\"");
     qiniu_ng_str_free(&bucket_name);
     qiniu_ng_bucket_free(&bucket);
 
     qiniu_ng_bucket_t bucket_2 = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z1-bucket"));
     qiniu_ng_str_t bucket_name_2 = qiniu_ng_bucket_get_name(bucket_2);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(bucket_name_2), QINIU_NG_CHARS("z1-bucket"),
-        "qiniu_ng_str_get_ptr(bucket_name_2) != \"z1-bucket\"");
+        qiniu_ng_str_get_cstr(bucket_name_2), QINIU_NG_CHARS("z1-bucket"),
+        "qiniu_ng_str_get_cstr(bucket_name_2) != \"z1-bucket\"");
     qiniu_ng_str_free(&bucket_name_2);
     qiniu_ng_bucket_free(&bucket_2);
 
@@ -86,8 +86,8 @@ void test_qiniu_ng_bucket_get_unexisted_region(void) {
         code, 631,
         "code != 631");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(error_message), QINIU_NG_CHARS("no such bucket"),
-        "qiniu_ng_str_get_ptr(error_message) != \"no such bucket\"");
+        qiniu_ng_str_get_cstr(error_message), QINIU_NG_CHARS("no such bucket"),
+        "qiniu_ng_str_get_cstr(error_message) != \"no such bucket\"");
     TEST_ASSERT_FALSE_MESSAGE(
         qiniu_ng_err_response_status_code_error_extract(&err, NULL, NULL),
         "qiniu_ng_err_response_status_code_error_extract returns unexpected value");
@@ -311,7 +311,7 @@ void test_qiniu_ng_bucket_upload_files(void) {
 
     qiniu_ng_str_t key = qiniu_ng_upload_response_get_key(upload_response);
     TEST_ASSERT_FALSE_MESSAGE(qiniu_ng_str_is_null(key), "qiniu_ng_str_is_null(key) != false");
-    qiniu_ng_object_t object = qiniu_ng_object_new(bucket, qiniu_ng_str_get_ptr(key));
+    qiniu_ng_object_t object = qiniu_ng_object_new(bucket, qiniu_ng_str_get_cstr(key));
     qiniu_ng_str_free(&key);
 
     char hash[ETAG_SIZE + 1];
@@ -340,7 +340,7 @@ void test_qiniu_ng_bucket_upload_files(void) {
     TEST_ASSERT_FALSE_MESSAGE(
         qiniu_ng_str_is_null(key),
         "qiniu_ng_str_is_null(key) != false");
-    object = qiniu_ng_object_new(bucket, qiniu_ng_str_get_ptr(key));
+    object = qiniu_ng_object_new(bucket, qiniu_ng_str_get_cstr(key));
     qiniu_ng_str_free(&key);
 
     memset(hash, 0, ETAG_SIZE + 1);

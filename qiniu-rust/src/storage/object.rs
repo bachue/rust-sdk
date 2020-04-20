@@ -99,16 +99,29 @@ impl Object {
 
     /// 获取下载 URL 元信息
     pub fn head(&self) -> DomainsResult<HeaderInfo> {
-        let header_info = self.url(Duration::from_secs(60))?.head(self.bucket().http_client())?;
+        let header_info = self
+            .url_with_lifetime(Duration::from_secs(60))?
+            .head(self.bucket().http_client())?;
         Ok(header_info)
     }
 
-    /// 获取下载 URL
+    /// 按照指定的生命周期生成下载 URL
     ///
     /// 该 API 将会根据当前存储空间是否私有，来决定生成的 URL
-    pub fn url(&self, lifetime: Duration) -> DomainsResult<URL> {
+    pub fn url_with_lifetime(&self, lifetime: Duration) -> DomainsResult<URL> {
         if self.bucket().is_private()? {
-            self.private_url(lifetime)
+            self.private_url_with_lifetime(lifetime)
+        } else {
+            self.public_url()
+        }
+    }
+
+    /// 按照指定的过期时间生成下载 URL
+    ///
+    /// 该 API 将会根据当前存储空间是否私有，来决定生成的 URL
+    pub fn url_with_deadline(&self, deadline: SystemTime) -> DomainsResult<URL> {
+        if self.bucket().is_private()? {
+            self.private_url_with_deadline(deadline)
         } else {
             self.public_url()
         }
@@ -130,10 +143,14 @@ impl Object {
         ))
     }
 
-    /// 获取私有空间的下载 URL
-    pub fn private_url(&self, lifetime: Duration) -> DomainsResult<URL> {
+    /// 按照指定的生命周期获取私有空间的下载 URL
+    pub fn private_url_with_lifetime(&self, lifetime: Duration) -> DomainsResult<URL> {
+        self.private_url_with_deadline(SystemTime::now() + lifetime)
+    }
+
+    /// 按照指定的过期时间获取私有空间的下载 URL
+    pub fn private_url_with_deadline(&self, deadline: SystemTime) -> DomainsResult<URL> {
         let (domain, backup_domains) = self.bucket.get_domain_and_backup_domains()?;
-        let deadline = SystemTime::now() + lifetime;
         let deadline = deadline
             .duration_since(SystemTime::UNIX_EPOCH)
             .expect("Deadline is earlier than UNIX EPOCH");
@@ -193,7 +210,9 @@ impl ObjectInfo {
     /// 获取对象的创建时间
     #[inline]
     pub fn uploaded_at(&self) -> SystemTime {
-        SystemTime::UNIX_EPOCH + Duration::from_nanos(self.put_time * 100)
+        SystemTime::UNIX_EPOCH
+            .checked_add(Duration::from_nanos(self.put_time * 100))
+            .unwrap()
     }
 
     /// 获取对象的创建时间

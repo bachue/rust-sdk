@@ -439,3 +439,34 @@ pub extern "C" fn qiniu_ng_bucket_get_domains(
         }
     }
 }
+
+/// @brief 存储空间是否是私有空间
+/// @param[in] bucket 存储空间实例
+/// @param[out] is_private 用于返回存储空间是否私有。如果传入 `NULL` 表示不获取 `is_private`。但如果运行正常，返回值将依然是 `true`
+/// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
+/// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `is_private` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
+/// @warning 对于运行错误的情况，需要调用 `qiniu_ng_err_t` 系列的函数判定具体错误并释放其内存
+#[no_mangle]
+pub extern "C" fn qiniu_ng_bucket_is_private(
+    bucket: qiniu_ng_bucket_t,
+    is_private: *mut bool,
+    error: *mut qiniu_ng_err_t,
+) -> bool {
+    let bucket = Option::<Bucket>::from(bucket).unwrap();
+    match bucket.is_private().tap(|_| {
+        let _ = qiniu_ng_bucket_t::from(bucket);
+    }) {
+        Ok(result) => {
+            if let Some(is_private) = unsafe { is_private.as_mut() } {
+                *is_private = result;
+            }
+            true
+        }
+        Err(ref err) => {
+            if let Some(error) = unsafe { error.as_mut() } {
+                *error = err.into();
+            }
+            false
+        }
+    }
+}

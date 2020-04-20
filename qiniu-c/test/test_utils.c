@@ -8,8 +8,8 @@ void test_qiniu_ng_str(void) {
     size_t len = QINIU_NG_CHARS_LEN(str);
     qiniu_ng_str_t qiniu_str = qiniu_ng_str_new(str);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(qiniu_str), str,
-        "qiniu_ng_str_get_ptr(qiniu_str) != \"你好，世界\"");
+        qiniu_ng_str_get_cstr(qiniu_str), str,
+        "qiniu_ng_str_get_cstr(qiniu_str) != \"你好，世界\"");
     TEST_ASSERT_EQUAL_INT_MESSAGE(
         qiniu_ng_str_get_len(qiniu_str), len,
         "qiniu_ng_str_get_len(qiniu_str) != len(\"你好，世界\")");

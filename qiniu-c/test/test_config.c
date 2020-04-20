@@ -31,27 +31,27 @@ void test_qiniu_ng_config_new(void) {
 
     qiniu_ng_str_t user_agent = qiniu_ng_config_get_user_agent(config);
     TEST_ASSERT_EQUAL_INT_MESSAGE(
-        QINIU_NG_CHARS_NCMP(qiniu_ng_str_get_ptr(user_agent), QINIU_NG_CHARS("QiniuRust/qiniu-ng-"), QINIU_NG_CHARS_LEN(QINIU_NG_CHARS("QiniuRust/qiniu-ng-"))),
+        QINIU_NG_CHARS_NCMP(qiniu_ng_str_get_cstr(user_agent), QINIU_NG_CHARS("QiniuRust/qiniu-ng-"), QINIU_NG_CHARS_LEN(QINIU_NG_CHARS("QiniuRust/qiniu-ng-"))),
         0,
-        "qiniu_ng_str_get_ptr(user_agent) has not prefix \"QiniuRust/qiniu-ng-\"");
+        "qiniu_ng_str_get_cstr(user_agent) has not prefix \"QiniuRust/qiniu-ng-\"");
     qiniu_ng_str_free(&user_agent);
 
     qiniu_ng_str_t rs_url = qiniu_ng_config_get_rs_url(config);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(rs_url), QINIU_NG_CHARS("https://rs.qbox.me"),
-        "qiniu_ng_str_get_ptr(rs_url) != \"https://rs.qbox.me\"");
+        qiniu_ng_str_get_cstr(rs_url), QINIU_NG_CHARS("https://rs.qbox.me"),
+        "qiniu_ng_str_get_cstr(rs_url) != \"https://rs.qbox.me\"");
     qiniu_ng_str_free(&rs_url);
 
     qiniu_ng_str_t uc_url = qiniu_ng_config_get_uc_url(config);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(uc_url), QINIU_NG_CHARS("https://uc.qbox.me"),
-        "qiniu_ng_str_get_ptr(uc_url) != \"https://uc.qbox.me\"");
+        qiniu_ng_str_get_cstr(uc_url), QINIU_NG_CHARS("https://uc.qbox.me"),
+        "qiniu_ng_str_get_cstr(uc_url) != \"https://uc.qbox.me\"");
     qiniu_ng_str_free(&uc_url);
 
     qiniu_ng_str_t uplog_url = qiniu_ng_config_get_uplog_url(config);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(uplog_url), QINIU_NG_CHARS("https://uplog.qbox.me"),
-        "qiniu_ng_str_get_ptr(uplog_url) != \"https://uplog.qbox.me\"");
+        qiniu_ng_str_get_cstr(uplog_url), QINIU_NG_CHARS("https://uplog.qbox.me"),
+        "qiniu_ng_str_get_cstr(uplog_url) != \"https://uplog.qbox.me\"");
     qiniu_ng_str_free(&uplog_url);
 
     TEST_ASSERT_TRUE_MESSAGE(
@@ -130,30 +130,30 @@ void test_qiniu_ng_config_new2(void) {
 
     qiniu_ng_str_t user_agent = qiniu_ng_config_get_user_agent(config);
     TEST_ASSERT_EQUAL_INT_MESSAGE(
-        QINIU_NG_CHARS_NCMP(qiniu_ng_str_get_ptr(user_agent), QINIU_NG_CHARS("QiniuRust/qiniu-ng-"), QINIU_NG_CHARS_LEN(QINIU_NG_CHARS("QiniuRust/qiniu-ng-"))),
+        QINIU_NG_CHARS_NCMP(qiniu_ng_str_get_cstr(user_agent), QINIU_NG_CHARS("QiniuRust/qiniu-ng-"), QINIU_NG_CHARS_LEN(QINIU_NG_CHARS("QiniuRust/qiniu-ng-"))),
         0,
-        "qiniu_ng_str_get_ptr(user_agent) has not prefix \"QiniuRust/qiniu-ng-\"");
+        "qiniu_ng_str_get_cstr(user_agent) has not prefix \"QiniuRust/qiniu-ng-\"");
     TEST_ASSERT_NOT_NULL_MESSAGE(
-        QINIU_NG_CHARS_STR(qiniu_ng_str_get_ptr(user_agent), QINIU_NG_CHARS("test-user-agent")),
-        "qiniu_ng_str_get_ptr(user_agent) does not contain \"test-user-agent\"");
+        QINIU_NG_CHARS_STR(qiniu_ng_str_get_cstr(user_agent), QINIU_NG_CHARS("test-user-agent")),
+        "qiniu_ng_str_get_cstr(user_agent) does not contain \"test-user-agent\"");
     qiniu_ng_str_free(&user_agent);
 
     qiniu_ng_str_t rs_url = qiniu_ng_config_get_rs_url(config);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(rs_url), QINIU_NG_CHARS("http://rs.qbox.me"),
-        "qiniu_ng_str_get_ptr(rs_url) != \"http://rs.qbox.me\"");
+        qiniu_ng_str_get_cstr(rs_url), QINIU_NG_CHARS("http://rs.qbox.me"),
+        "qiniu_ng_str_get_cstr(rs_url) != \"http://rs.qbox.me\"");
     qiniu_ng_str_free(&rs_url);
 
     qiniu_ng_str_t uc_url = qiniu_ng_config_get_uc_url(config);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(uc_url), QINIU_NG_CHARS("http://uc.qiniu.com"),
-        "qiniu_ng_str_get_ptr(uc_url) != \"http://uc.qiniu.com\"");
+        qiniu_ng_str_get_cstr(uc_url), QINIU_NG_CHARS("http://uc.qiniu.com"),
+        "qiniu_ng_str_get_cstr(uc_url) != \"http://uc.qiniu.com\"");
     qiniu_ng_str_free(&uc_url);
 
     qiniu_ng_str_t uplog_url = qiniu_ng_config_get_uplog_url(config);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(uplog_url), QINIU_NG_CHARS("http://uplog.qbox.me"),
-        "qiniu_ng_str_get_ptr(uplog_url) != \"http://uplog.qbox.me\"");
+        qiniu_ng_str_get_cstr(uplog_url), QINIU_NG_CHARS("http://uplog.qbox.me"),
+        "qiniu_ng_str_get_cstr(uplog_url) != \"http://uplog.qbox.me\"");
     qiniu_ng_str_free(&uplog_url);
 
     TEST_ASSERT_FALSE_MESSAGE(
@@ -165,8 +165,8 @@ void test_qiniu_ng_config_new2(void) {
         qiniu_ng_str_is_null(root_directory),
         "qiniu_ng_str_is_null(root_directory) returns unexpected value");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(root_directory), home_directory,
-        "qiniu_ng_str_get_ptr(root_directory) != home_directory");
+        qiniu_ng_str_get_cstr(root_directory), home_directory,
+        "qiniu_ng_str_get_cstr(root_directory) != home_directory");
     qiniu_ng_str_free(&root_directory);
 
     TEST_ASSERT_EQUAL_UINT_MESSAGE(
@@ -460,7 +460,7 @@ void test_qiniu_ng_config_bad_http_request_handlers_4(void) {
         qiniu_ng_err_response_status_code_error_extract(&err, &code, &message),
         "qiniu_ng_err_response_status_code_error_extract() returns unexpected value");
     TEST_ASSERT_EQUAL_INT_MESSAGE(code, 500, "code != 500");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(qiniu_ng_str_get_ptr(message), QINIU_NG_CHARS("Internal Server Error"), "message != \"Internal Server Error\"");
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(qiniu_ng_str_get_cstr(message), QINIU_NG_CHARS("Internal Server Error"), "message != \"Internal Server Error\"");
     qiniu_ng_str_free(&message);
     qiniu_ng_upload_manager_free(&upload_manager);
     qiniu_ng_credential_free(&credential);

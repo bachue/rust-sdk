@@ -107,7 +107,7 @@ void test_qiniu_ng_upload_manager_upload_files(void) {
 
     qiniu_ng_str_t key = qiniu_ng_upload_response_get_key(upload_response);
     TEST_ASSERT_FALSE_MESSAGE(qiniu_ng_str_is_null(key), "qiniu_ng_str_is_null(key) != false");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(params.key, qiniu_ng_str_get_ptr(key), "params.key != key");
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(params.key, qiniu_ng_str_get_cstr(key), "params.key != key");
     qiniu_ng_str_free(&key);
 
     char hash[ETAG_SIZE + 1];
@@ -149,7 +149,7 @@ void test_qiniu_ng_upload_manager_upload_files(void) {
     TEST_ASSERT_FALSE_MESSAGE(
         qiniu_ng_str_is_null(key),
         "qiniu_ng_str_is_null(key) != false");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(params.key, qiniu_ng_str_get_ptr(key), "params.key != key");
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(params.key, qiniu_ng_str_get_cstr(key), "params.key != key");
     qiniu_ng_str_free(&key);
 
     memset(hash, 0, ETAG_SIZE + 1);
@@ -215,7 +215,7 @@ void *thread_of_upload_file(void* data) {
 
     qiniu_ng_str_t key = qiniu_ng_upload_response_get_key(upload_response);
     TEST_ASSERT_FALSE_MESSAGE(qiniu_ng_str_is_null(key), "qiniu_ng_str_is_null(key) != false");
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(params.key, qiniu_ng_str_get_ptr(key), "params.key != key");
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(params.key, qiniu_ng_str_get_cstr(key), "params.key != key");
     qiniu_ng_str_free(&key);
 
     char hash[ETAG_SIZE + 1];
@@ -441,7 +441,7 @@ void test_qiniu_ng_upload_manager_upload_file_with_null_key(void) {
         "qiniu_ng_str_is_null(key) != false");
     TEST_ASSERT_TRUE_MESSAGE(qiniu_ng_str_get_len(key) > 0, "qiniu_ng_str_get_len(key) == 0");
 
-    qiniu_ng_object_t object = qiniu_ng_object_new(bucket, qiniu_ng_str_get_ptr(key));
+    qiniu_ng_object_t object = qiniu_ng_object_new(bucket, qiniu_ng_str_get_cstr(key));
     qiniu_ng_str_free(&key);
 
     char hash[ETAG_SIZE + 1];

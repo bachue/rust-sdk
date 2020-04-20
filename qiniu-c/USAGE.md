@@ -254,7 +254,7 @@ int main() {
     }
 
     qiniu_ng_str_t upload_response_string = qiniu_ng_upload_response_get_string(upload_response);
-    printf("%s\n", qiniu_ng_str_get_ptr(upload_response_string));
+    printf("%s\n", qiniu_ng_str_get_cstr(upload_response_string));
     qiniu_ng_str_free(&upload_response_string);
     qiniu_ng_upload_response_free(&upload_response);
     qiniu_ng_upload_token_free(&upload_token);
@@ -567,7 +567,7 @@ static void log_http_request(qiniu_ng_http_request_t request, qiniu_ng_callback_
     long request_id = (long) rand();
     qiniu_ng_http_method_t method = qiniu_ng_http_request_get_method(request);
     qiniu_ng_str_t url = qiniu_ng_http_request_get_url(request);
-    printf("[%ld] %s %s\n", request_id, qiniu_ng_http_method_get_str(method), qiniu_ng_str_get_ptr(url));
+    printf("[%ld] %s %s\n", request_id, qiniu_ng_http_method_get_str(method), qiniu_ng_str_get_cstr(url));
     qiniu_ng_str_free(&url);
     qiniu_ng_str_map_t headers = qiniu_ng_http_request_get_headers(request);
     qiniu_ng_str_map_each_entry(headers, print_header, (void *) request_id);

@@ -30,8 +30,8 @@ void test_qiniu_ng_make_upload_token(void) {
         qiniu_ng_str_is_null(bucket_name),
         "qiniu_ng_str_is_null(bucket_name) != false");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(bucket_name), QINIU_NG_CHARS("test-bucket"),
-        "qiniu_ng_str_get_ptr(bucket_name) != \"test-bucket\"");
+        qiniu_ng_str_get_cstr(bucket_name), QINIU_NG_CHARS("test-bucket"),
+        "qiniu_ng_str_get_cstr(bucket_name) != \"test-bucket\"");
     qiniu_ng_str_free(&bucket_name);
 
     TEST_ASSERT_TRUE_MESSAGE(
@@ -75,8 +75,8 @@ void test_qiniu_ng_make_upload_token(void) {
         qiniu_ng_str_is_null(callback_body),
         "qiniu_ng_str_is_null(callback_body) != false");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(callback_body), QINIU_NG_CHARS("key=$(key)"),
-        "qiniu_ng_str_get_ptr(callback_body) != \"key=$(key)\"");
+        qiniu_ng_str_get_cstr(callback_body), QINIU_NG_CHARS("key=$(key)"),
+        "qiniu_ng_str_get_cstr(callback_body) != \"key=$(key)\"");
     qiniu_ng_str_free(&callback_body);
 
     qiniu_ng_str_t callback_body_type = qiniu_ng_upload_policy_get_callback_body_type(upload_policy);
@@ -93,14 +93,14 @@ void test_qiniu_ng_make_upload_token(void) {
         qiniu_ng_upload_token_get_access_key(upload_token, &access_key, NULL),
         "qiniu_ng_upload_token_get_access_key() failed");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(access_key), GETENV(QINIU_NG_CHARS("access_key")),
-        "qiniu_ng_str_get_ptr(access_key) != getenv(\"access_key\")");
+        qiniu_ng_str_get_cstr(access_key), GETENV(QINIU_NG_CHARS("access_key")),
+        "qiniu_ng_str_get_cstr(access_key) != getenv(\"access_key\")");
     qiniu_ng_str_free(&access_key);
 
     qiniu_ng_str_t token = qiniu_ng_upload_token_get_string(upload_token);
     TEST_ASSERT_EQUAL_INT_MESSAGE(
-        QINIU_NG_CHARS_NCMP(qiniu_ng_str_get_ptr(token), GETENV(QINIU_NG_CHARS("access_key")), QINIU_NG_CHARS_LEN(GETENV(QINIU_NG_CHARS("access_key")))), 0,
-        "qiniu_ng_str_get_ptr(token) does not have prefix getenv(\"access_key\")");
+        QINIU_NG_CHARS_NCMP(qiniu_ng_str_get_cstr(token), GETENV(QINIU_NG_CHARS("access_key")), QINIU_NG_CHARS_LEN(GETENV(QINIU_NG_CHARS("access_key")))), 0,
+        "qiniu_ng_str_get_cstr(token) does not have prefix getenv(\"access_key\")");
     qiniu_ng_str_free(&token);
 
     qiniu_ng_upload_policy_t upload_policy_2;
@@ -113,8 +113,8 @@ void test_qiniu_ng_make_upload_token(void) {
         qiniu_ng_str_is_null(bucket_name),
         "qiniu_ng_str_is_null(bucket_name) != false");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(bucket_name), QINIU_NG_CHARS("test-bucket"),
-        "qiniu_ng_str_get_ptr(bucket_name) != \"test-bucket\"");
+        qiniu_ng_str_get_cstr(bucket_name), QINIU_NG_CHARS("test-bucket"),
+        "qiniu_ng_str_get_cstr(bucket_name) != \"test-bucket\"");
     qiniu_ng_str_free(&bucket_name);
 
     TEST_ASSERT_TRUE_MESSAGE(
@@ -159,8 +159,8 @@ void test_qiniu_ng_make_upload_token(void) {
         qiniu_ng_str_is_null(callback_body),
         "qiniu_ng_str_is_null(callback_body) != false");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(callback_body), QINIU_NG_CHARS("key=$(key)"),
-        "qiniu_ng_str_get_ptr(callback_body) != \"key=$(key)\"");
+        qiniu_ng_str_get_cstr(callback_body), QINIU_NG_CHARS("key=$(key)"),
+        "qiniu_ng_str_get_cstr(callback_body) != \"key=$(key)\"");
     qiniu_ng_str_free(&callback_body);
 
     callback_body_type = qiniu_ng_upload_policy_get_callback_body_type(upload_policy_2);
@@ -173,7 +173,7 @@ void test_qiniu_ng_make_upload_token(void) {
 
     token = qiniu_ng_upload_token_get_string(upload_token);
     qiniu_ng_upload_token_free(&upload_token);
-    qiniu_ng_upload_token_t upload_token_2 = qiniu_ng_upload_token_new_from(qiniu_ng_str_get_ptr(token));
+    qiniu_ng_upload_token_t upload_token_2 = qiniu_ng_upload_token_new_from(qiniu_ng_str_get_cstr(token));
     qiniu_ng_str_free(&token);
 
     qiniu_ng_upload_policy_t upload_policy_3;
@@ -187,8 +187,8 @@ void test_qiniu_ng_make_upload_token(void) {
         qiniu_ng_str_is_null(bucket_name),
         "qiniu_ng_str_is_null(bucket_name) != false");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(bucket_name), QINIU_NG_CHARS("test-bucket"),
-        "qiniu_ng_str_get_ptr(bucket_name) != \"test-bucket\"");
+        qiniu_ng_str_get_cstr(bucket_name), QINIU_NG_CHARS("test-bucket"),
+        "qiniu_ng_str_get_cstr(bucket_name) != \"test-bucket\"");
     qiniu_ng_str_free(&bucket_name);
 
     TEST_ASSERT_TRUE_MESSAGE(
@@ -232,8 +232,8 @@ void test_qiniu_ng_make_upload_token(void) {
         qiniu_ng_str_is_null(callback_body),
         "qiniu_ng_str_is_null(callback_body) != false");
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_ptr(callback_body), QINIU_NG_CHARS("key=$(key)"),
-        "qiniu_ng_str_get_ptr(callback_body) != \"key=$(key)\"");
+        qiniu_ng_str_get_cstr(callback_body), QINIU_NG_CHARS("key=$(key)"),
+        "qiniu_ng_str_get_cstr(callback_body) != \"key=$(key)\"");
     qiniu_ng_str_free(&callback_body);
 
     callback_body_type = qiniu_ng_upload_policy_get_callback_body_type(upload_policy_3);

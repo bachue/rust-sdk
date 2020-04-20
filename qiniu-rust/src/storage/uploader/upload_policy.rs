@@ -103,8 +103,11 @@ impl UploadPolicy {
 
     /// 上传凭证过期时间
     pub fn token_deadline(&self) -> Option<SystemTime> {
-        self.deadline
-            .map(|t| SystemTime::UNIX_EPOCH + Duration::from_secs(t.into()))
+        self.deadline.map(|t| {
+            SystemTime::UNIX_EPOCH
+                .checked_add(Duration::from_secs(t.into()))
+                .unwrap()
+        })
     }
 
     /// 上传凭证有效期

@@ -13,6 +13,7 @@ use qiniu_ng::{
         RetryKind as HTTPRetryKind,
     },
     storage::{
+        bucket::DomainsError,
         manager::DropBucketError,
         uploader::{CreateUploaderError, UploadError, UploadTokenParseError},
     },
@@ -146,6 +147,8 @@ pub enum qiniu_ng_err_kind_t {
     qiniu_ng_err_kind_os_error(i32),
     /// IO 异常
     qiniu_ng_err_kind_io_error(qiniu_ng_str_t),
+    /// 存储空间上未绑定域名错误
+    qiniu_ng_err_kind_no_domains_bound_error,
     /// 未预期的重定向错误
     qiniu_ng_err_kind_unexpected_redirect_error,
     /// 用户取消
@@ -180,13 +183,14 @@ impl Default for qiniu_ng_err_kind_t {
 
 /// @brief SDK 错误
 /// @note
-///     对于获取了上传凭证错误的情况，可以依次调用
+///     对于获取了错误的情况，可以依次调用
 ///         - `qiniu_ng_err_os_error_extract()`
 ///         - `qiniu_ng_err_io_error_extract()`
 ///         - `qiniu_ng_err_response_status_code_error_extract()`
 ///         - `qiniu_ng_err_json_error_extract()`
 ///         - `qiniu_ng_err_bad_mime_type_error_extract()`
 ///         - `qiniu_ng_err_curl_error_extract()`
+///         - `qiniu_ng_err_no_domains_bound_error_extract()`
 ///         - `qiniu_ng_err_unexpected_redirect_error_extract()`
 ///         - `qiniu_ng_err_drop_non_empty_bucket_error_extract()`
 ///         - `qiniu_ng_err_user_canceled_error_extract()`
@@ -286,6 +290,20 @@ pub extern "C" fn qiniu_ng_err_unknown_error_extract(
             } else {
                 qiniu_ng_str_free(&mut error_description);
             }
+            err.0 = qiniu_ng_err_kind_t::qiniu_ng_err_kind_none;
+            true
+        }
+        _ => false,
+    }
+}
+
+/// @brief 判定错误是否是存储空间上未绑定域名错误，如果是，则释放其内存
+/// @param[in] err SDK 错误实例
+/// @retval bool 当错误确实是未预期的重定向错误时返回 `true`
+#[no_mangle]
+pub extern "C" fn qiniu_ng_err_no_domains_bound_error_extract(err: &mut qiniu_ng_err_t) -> bool {
+    match err.0 {
+        qiniu_ng_err_kind_t::qiniu_ng_err_kind_no_domains_bound_error => {
             err.0 = qiniu_ng_err_kind_t::qiniu_ng_err_kind_none;
             true
         }
@@ -776,9 +794,9 @@ impl From<&UploadTokenParseError> for qiniu_ng_err_t {
 }
 
 impl From<&mime::FromStrError> for qiniu_ng_err_t {
-    fn from(e: &mime::FromStrError) -> Self {
+    fn from(err: &mime::FromStrError) -> Self {
         Self(qiniu_ng_err_kind_t::qiniu_ng_err_kind_bad_mime_type(unsafe {
-            qiniu_ng_str_t::from_string_unchecked(e.to_string())
+            qiniu_ng_str_t::from_string_unchecked(err.to_string())
         }))
     }
 }
@@ -791,6 +809,12 @@ impl From<&PersistentError> for qiniu_ng_err_t {
             })),
             PersistentError::IOError(ref err) => err.into(),
         }
+    }
+}
+
+impl From<&DomainsError> for qiniu_ng_err_t {
+    fn from(_err: &DomainsError) -> Self {
+        Self(qiniu_ng_err_kind_t::qiniu_ng_err_kind_no_domains_bound_error)
     }
 }
 
