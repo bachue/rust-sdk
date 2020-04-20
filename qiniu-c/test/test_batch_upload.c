@@ -62,7 +62,9 @@ static void on_completed(qiniu_ng_upload_response_t upload_response, qiniu_ng_er
     size_t hash_size;
     memset(hash, 0, ETAG_SIZE + 1);
     struct callback_context *context = (struct callback_context *) data;
-    qiniu_ng_upload_response_get_hash(upload_response, (char *) &hash[0], &hash_size);
+    qiniu_ng_str_t hashstr = qiniu_ng_upload_response_get_hash(upload_response);
+    TEST_ASSERT_TRUE_MESSAGE(qiniu_ng_str_get_bytes(hashstr, ETAG_SIZE, &hash[0], &hash_size), "qiniu_ng_str_get_bytes() returns unexpected value");
+    qiniu_ng_str_free(&hashstr);
     TEST_ASSERT_EQUAL_INT_MESSAGE(
         hash_size, ETAG_SIZE,
         "hash_size != ETAG_SIZE");

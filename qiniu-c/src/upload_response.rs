@@ -1,10 +1,7 @@
 use crate::utils::qiniu_ng_str_t;
-use libc::{c_void, size_t};
+use libc::c_void;
 use qiniu_ng::storage::uploader::UploadResponse;
-use std::{
-    mem::transmute,
-    ptr::{copy_nonoverlapping, null_mut},
-};
+use std::{mem::transmute, ptr::null_mut};
 use tap::TapOps;
 
 /// @brief 上传响应
@@ -67,28 +64,17 @@ pub extern "C" fn qiniu_ng_upload_response_get_key(upload_response: qiniu_ng_upl
     })
 }
 
-/// @brief 获取上传响应中的校验和字段
+/// @brief 获取上传响应中的校验和
 /// @param[in] upload_response 上传响应实例
-/// @param[out] result_ptr 提供内存地址用于返回校验和字段，如果传入 `NULL` 表示不获取 `result_ptr`。且不影响其他字段的获取
-/// @param[out] result_size 用于返回校验和字段长度，如果传入 `NULL` 表示不获取 `result_size`。且不影响其他字段的获取。该字段一般返回的是 Etag，因此长度一般会等于 `ETAG_SIZE`。如果返回 `0`，则表明该校验和字段并不存在
+/// @retval qiniu_ng_str_t 校验和，该校验和一般是 Etag
+/// @note 这里返回的 `qiniu_ng_str_t` 有可能封装的是 `NULL`，请调用 `qiniu_ng_str_is_null()` 进行判断
+/// @warning 当 `qiniu_ng_str_t` 使用完毕后，请务必调用 `qiniu_ng_str_free()` 方法释放内存
 #[no_mangle]
-pub extern "C" fn qiniu_ng_upload_response_get_hash(
-    upload_response: qiniu_ng_upload_response_t,
-    result_ptr: *mut c_void,
-    result_size: *mut size_t,
-) {
+pub extern "C" fn qiniu_ng_upload_response_get_hash(upload_response: qiniu_ng_upload_response_t) -> qiniu_ng_str_t {
     let upload_response = Option::<Box<UploadResponse>>::from(upload_response).unwrap();
-    if let Some(hash) = upload_response.hash().map(|hash| hash.as_bytes()) {
-        if let Some(result_size) = unsafe { result_size.as_mut() } {
-            *result_size = hash.len();
-        }
-        if let Some(result_ptr) = unsafe { result_ptr.as_mut() } {
-            unsafe { copy_nonoverlapping(hash.as_ptr(), result_ptr as *mut c_void as *mut u8, hash.len()) };
-        }
-    } else if let Some(result_size) = unsafe { result_size.as_mut() } {
-        *result_size = 0;
-    }
-    let _ = qiniu_ng_upload_response_t::from(upload_response);
+    unsafe { qiniu_ng_str_t::from_optional_str_unchecked(upload_response.hash()) }.tap(|_| {
+        let _ = qiniu_ng_upload_response_t::from(upload_response);
+    })
 }
 
 /// @brief 获取上传响应的字符串
