@@ -69,7 +69,7 @@ void test_qiniu_ng_upload_manager_upload_huge_number_of_files(void);
 void test_qiniu_ng_upload_manager_upload_file_path_failed_by_mime(void);
 void test_qiniu_ng_upload_manager_upload_file_path_failed_by_non_existed_path(void);
 void test_qiniu_ng_upload_manager_upload_file_with_null_key(void);
-// void test_qiniu_ng_upload_manager_upload_file_with_empty_key(void);
+void test_qiniu_ng_upload_manager_upload_file_with_empty_key(void);
 void test_qiniu_ng_batch_upload_files(void);
 void test_qiniu_ng_batch_upload_file_paths(void);
 void test_qiniu_ng_batch_upload_file_path_failed_by_mime(void);

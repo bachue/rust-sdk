@@ -55,9 +55,7 @@ impl<'u> FormUploaderBuilder<'u> {
     }
 
     pub(super) fn key(mut self, key: Cow<'u, str>) -> FormUploaderBuilder<'u> {
-        if !key.is_empty() {
-            self.multipart.add_text("key", key);
-        }
+        self.multipart.add_text("key", key);
         self
     }
 

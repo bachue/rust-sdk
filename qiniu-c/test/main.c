@@ -56,7 +56,7 @@ int main(void) {
     RUN_TEST(test_qiniu_ng_upload_manager_upload_huge_number_of_files);
     RUN_TEST(test_qiniu_ng_upload_manager_upload_files);
     RUN_TEST(test_qiniu_ng_upload_manager_upload_file_with_null_key);
-    // RUN_TEST(test_qiniu_ng_upload_manager_upload_file_with_empty_key);
+    RUN_TEST(test_qiniu_ng_upload_manager_upload_file_with_empty_key);
     RUN_TEST(test_qiniu_ng_batch_upload_files);
     RUN_TEST(test_qiniu_ng_batch_upload_file_paths);
     RUN_TEST(test_qiniu_ng_batch_upload_file_path_failed_by_mime);
