@@ -17,7 +17,7 @@ module QiniuNg
       # @return [String] 请求 URL
       def url
         @cache[:url] ||= @request.get_url
-        @cache[:url].get_ptr
+        @cache[:url].get_cstr
       end
 
       # 设置请求 URL

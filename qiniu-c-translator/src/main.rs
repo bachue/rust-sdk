@@ -270,6 +270,15 @@ fn make_classifier(source_file: &SourceFile) -> Classifier {
             vec![],
         ));
         classifier.add_class(Class::new(
+            "HeaderInfo",
+            Some("qiniu_ng_header_info_t"),
+            Regex::new("^qiniu_ng_header_info_(\\w+)").unwrap(),
+            None,
+            source_file.function_declarations().iter(),
+            None,
+            vec![],
+        ));
+        classifier.add_class(Class::new(
             "UploadPolicyBuilder",
             Some("qiniu_ng_upload_policy_builder_t"),
             Regex::new("^qiniu_ng_upload_policy_builder_(\\w+)").unwrap(),

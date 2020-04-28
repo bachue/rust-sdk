@@ -24,28 +24,28 @@ module QiniuNg
     # @return [String] 返回 Access Key
     def access_key
       @cache[:access_key] ||= @credential.get_access_key
-      @cache[:access_key].get_ptr
+      @cache[:access_key].get_cstr
     end
 
     # 获取 Secret Key
     # @return [String] 返回 Secret Key
     def secret_key
       @cache[:secret_key] ||= @credential.get_secret_key
-      @cache[:secret_key].get_ptr
+      @cache[:secret_key].get_cstr
     end
 
     # 使用七牛签名算法对数据进行签名
     # @param [String] data 输入数据
     # @return [String] 返回签名结果
     def sign(data)
-      Signature.new(@credential.sign(data))
+      StringWrapper.new(@credential.sign(data))
     end
 
     # 使用七牛签名算法对数据进行签名，并同时给出签名和原数据
     # @param [String] data 输入数据
     # @return [String] 返回签名结果，并附带原数据
     def sign_with_data(data)
-      Signature.new(@credential.sign_with_data(data))
+      StringWrapper.new(@credential.sign_with_data(data))
     end
 
     # 验证七牛回调请求
@@ -56,20 +56,6 @@ module QiniuNg
     # @return [Boolean] 是否确实是七牛回调请求
     def validate_qiniu_callback_request(url:, authorization:, content_type:, body:)
       @credential.validate_qiniu_callback_request(url.to_s, authorization.to_s, content_type.to_s, body.to_s)
-    end
-
-    # @!visibility private
-    # TODO: 考虑将该类通用化
-    class Signature < String
-      def initialize(str)
-        @str = str
-        super(@str.get_ptr)
-      end
-    end
-
-    # @!visibility private
-    def inspect
-      "#<#{self.class.name}>"
     end
   end
 end

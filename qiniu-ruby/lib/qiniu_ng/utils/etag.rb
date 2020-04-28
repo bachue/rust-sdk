@@ -25,7 +25,7 @@ module QiniuNg
         # @return [String] 计算得到的 Etag
         def from_file_path(path)
           etag_result = FFI::MemoryPointer::new(ETAG_SIZE)
-          QiniuNg::Error.wrap_ffi_function do
+          Error.wrap_ffi_function do
             Bindings::Etag.from_file_path(path, etag_result)
           end
           etag_result.read_bytes(ETAG_SIZE)

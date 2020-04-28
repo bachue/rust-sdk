@@ -180,7 +180,7 @@ module QiniuNg
         builder.uplog_file_upload_threshold = uplog_file_upload_threshold
         generate_default = false
       end
-      config_ffi = QiniuNg::Error.wrap_ffi_function do
+      config_ffi = Error.wrap_ffi_function do
                      if generate_default
                        Bindings::Config.new_default
                      else
@@ -310,7 +310,7 @@ module QiniuNg
       define_method(method) do
         @cache[method] ||= @config.public_send(:"get_#{method}")
         return nil if @cache[method].is_null
-        @cache[method].get_ptr
+        @cache[method].get_cstr
       end
     end
 
@@ -417,7 +417,7 @@ module QiniuNg
       # 生成客户端配置
       # @return [Config] 返回新建的客户端配置实例
       def build!
-        config_ffi = QiniuNg::Error.wrap_ffi_function do
+        config_ffi = Error.wrap_ffi_function do
                        Bindings::Config.build(@builder)
                      end
         Config.send(:new, config_ffi)
@@ -512,7 +512,7 @@ module QiniuNg
       # @param [String] persistent_file 新的域名管理器的持久化路径，如果传入 nil 则表示禁止持久化
       # @return [Builder] 返回自身，可以形成链式调用
       def create_new_domains_manager(persistent_file = nil)
-        QiniuNg::Error.wrap_ffi_function do
+        Error.wrap_ffi_function do
           @builder.create_new_domains_manager(persistent_file&.to_s)
         end
         self
@@ -522,7 +522,7 @@ module QiniuNg
       # @param [String] persistent_file 持久化路径
       # @return [Builder] 返回自身，可以形成链式调用
       def load_domains_manager_from_file(persistent_file)
-        QiniuNg::Error.wrap_ffi_function do
+        Error.wrap_ffi_function do
           @builder.create_new_domains_manager(persistent_file.to_s)
         end
         self
@@ -754,7 +754,7 @@ module QiniuNg
          upload_recorder_root_directory
          uplog_file_path].each do |method|
         define_method(method) do |arg|
-          QiniuNg::Error.wrap_ffi_function do
+          Error.wrap_ffi_function do
             @builder.public_send(method, arg.to_s)
           end
           self

@@ -76,7 +76,7 @@ module QiniuNg
       # @param [Bindings::QiniuNgStr] reason 错误描述信息
       def initialize(reason)
         @reason = reason
-        super(@reason.get_ptr)
+        super(@reason.get_cstr)
       end
     end
 
@@ -168,6 +168,14 @@ module QiniuNg
       end
     end
 
+    # 存储空间没有绑定任何域名
+    class NoDomainsBoundError < Error
+      # 创建存储空间没有绑定任何域名
+      def initialize
+        super('No domains bound on the bucket')
+      end
+    end
+
     # JSON 错误
     class JSONError < Error
       # 创建 JSON 错误
@@ -175,7 +183,7 @@ module QiniuNg
       # @param [Bindings::QiniuNgStr] reason 错误描述信息
       def initialize(reason)
         @reason = reason
-        super(@reason.get_ptr)
+        super(@reason.get_cstr)
       end
     end
 
@@ -204,7 +212,7 @@ module QiniuNg
       def initialize(code, reason)
         @code = code
         @message = reason
-        super(@message.get_ptr)
+        super(@message.get_cstr)
       end
     end
 
@@ -228,7 +236,7 @@ module QiniuNg
       # @param [Bindings::QiniuNgStr] reason 错误描述信息
       def initialize(reason)
         @reason = reason
-        super(@reason.get_ptr)
+        super(@reason.get_cstr)
       end
     end
 
@@ -304,7 +312,7 @@ module QiniuNg
       # @param [Bindings::QiniuNgStr] reason 错误描述信息
       def initialize(reason)
         @reason = reason
-        super(@reason.get_ptr)
+        super(@reason.get_cstr)
       end
     end
 
@@ -329,7 +337,7 @@ module QiniuNg
       # @param [Bindings::QiniuNgStr] reason 错误描述信息
       def initialize(reason)
         @reason = reason
-        super(@reason.get_ptr)
+        super(@reason.get_cstr)
       end
     end
 
@@ -340,7 +348,7 @@ module QiniuNg
       # @param [Bindings::QiniuNgStr] reason 错误描述信息
       def initialize(reason)
         @reason = reason
-        super(@reason.get_ptr)
+        super(@reason.get_cstr)
       end
     end
 
@@ -383,6 +391,7 @@ module QiniuNg
         return Error::UnknownError.new(Bindings::Str.new(msg)) if Bindings::CoreFFI::qiniu_ng_err_unknown_error_extract(err, msg)
         curl_kind = Bindings::CoreFFI::QiniuNgCurlErrorKindTWrapper.new
         return Error::CurlError.new(code.read_int, curl_kind[:inner]) if Bindings::CoreFFI::qiniu_ng_err_curl_error_extract(err, code, curl_kind)
+        return Error::NoDomainsBoundError if Bindings::CoreFFI::qiniu_ng_err_no_domains_bound_error_extract(err)
         return Error::CannotDropNonEmptyBucketError if Bindings::CoreFFI::qiniu_ng_err_drop_non_empty_bucket_error_extract(err)
         return Error::BadMIMEError.new(Bindings::Str.new(msg)) if Bindings::CoreFFI::qiniu_ng_err_bad_mime_type_error_extract(err, msg)
         err2 = Bindings::CoreFFI::QiniuNgInvalidUploadTokenErrorT.new

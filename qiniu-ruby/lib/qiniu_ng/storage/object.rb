@@ -30,13 +30,13 @@ module QiniuNg
       # @return [String] 返回对象名称
       def key
         @key ||= @object.get_key
-        @key.get_ptr
+        @key.get_cstr
       end
 
       # 获得对象详细信息
       # @return [Object::Info] 返回对象详细信息
       def stat
-        info = QiniuNg::Error.wrap_ffi_function do
+        info = Error.wrap_ffi_function do
                  @object.get_info
                end
         Info.send(:new, info)
@@ -45,7 +45,7 @@ module QiniuNg
       # 删除对象
       # @return [void]
       def delete!
-        QiniuNg::Error.wrap_ffi_function do
+        Error.wrap_ffi_function do
           @object.delete
         end
         nil
@@ -69,19 +69,17 @@ module QiniuNg
         # 获取对象校验和
         # @return [String] 返回对象校验和
         def hash
-          @cache[:hash] ||= begin
-                              data = FFI::MemoryPointer.new(256)
-                              data_len = Bindings::CoreFFI::Size.new
-                              @info.get_hash(data, data_len)
-                              data.read_string(data_len[:value]) unless data_len[:value].zero?
-                            end
+          @cache[:hash] ||= @info.get_hash
+          return nil if @cache[:hash].is_null
+          @cache[:hash].get_cstr
         end
 
         # 获取对象 MIME 类型
         # @return [String] 返回对象 MIME 类型
         def mime_type
           @cache[:mime_type] ||= @info.get_mime_type
-          @cache[:mime_type].get_ptr
+          return nil if @cache[:mime_type].is_null
+          @cache[:mime_type].get_cstr
         end
 
         # 获取对象上传时间
@@ -132,7 +130,7 @@ module QiniuNg
                                       upload_threshold: upload_threshold,
                                       thread_pool_size: thread_pool_size,
                                       max_concurrency: max_concurrency)
-        upload_response = QiniuNg::Error.wrap_ffi_function do
+        upload_response = Error.wrap_ffi_function do
                             @object.upload_reader(normalize_io(file),
                                                   file.respond_to?(:size) ? file.size : 0,
                                                   params)
@@ -176,10 +174,77 @@ module QiniuNg
                                       upload_threshold: upload_threshold,
                                       thread_pool_size: thread_pool_size,
                                       max_concurrency: max_concurrency)
-        upload_response = QiniuNg::Error.wrap_ffi_function do
+        upload_response = Error.wrap_ffi_function do
                             @object.upload_file_path(file_path.to_s, params)
                           end
         Uploader::UploadResponse.send(:new, upload_response)
+      end
+
+      # 生成对象下载 URL
+      #
+      # 需要确保存储空间已经绑定了下载域名
+      #
+      # @param [Utils::Duration] lifetime URL 生命周期，与 `deadline` 二选一即可
+      # @param [Time] deadline URL 过期时间，与 `lifetime` 二选一即可
+      # @return [String] 返回生成的 URL
+      def url(lifetime: nil, deadline: nil)
+        if lifetime
+          url = Error.wrap_ffi_function do
+                  @object.get_url_with_lifetime(lifetime.to_i)
+                end
+          StringWrapper.new(url)
+        elsif deadline
+          url = Error.wrap_ffi_function do
+                  @object.get_url_with_deadline(deadline.to_i)
+                end
+          StringWrapper.new(url)
+        else
+          raise ArgumentError, "either lifetime or deadline must be specified"
+        end
+      end
+
+      # 生成公开空间的对象下载 URL
+      #
+      # 需要确保存储空间已经绑定了下载域名
+      #
+      # @return [String] 返回生成的 URL
+      def public_url
+        url = Error.wrap_ffi_function do
+                @object.get_public_url
+              end
+        StringWrapper.new(url)
+      end
+
+      # 生成私有空间的对象下载 URL
+      #
+      # 需要确保存储空间已经绑定了下载域名
+      #
+      # @param [Utils::Duration] lifetime URL 生命周期，与 `deadline` 二选一即可
+      # @param [Time] deadline URL 过期时间，与 `lifetime` 二选一即可
+      # @return [String] 返回生成的 URL
+      def private_url(lifetime: nil, deadline: nil)
+        if lifetime
+          url = Error.wrap_ffi_function do
+                  @object.get_private_url_with_lifetime(lifetime.to_i)
+                end
+          StringWrapper.new(url)
+        elsif deadline
+          url = Error.wrap_ffi_function do
+                  @object.get_private_url_with_deadline(deadline.to_i)
+                end
+          StringWrapper.new(url)
+        else
+          raise ArgumentError, "either lifetime or deadline must be specified"
+        end
+      end
+
+      # 获取对象下载 URL 的元信息
+      # @return [HeaderInfo] 返回 URL 的元信息
+      def head
+        header_info = Error.wrap_ffi_function do
+                        @object.head
+                      end
+        HeaderInfo.send(:new, header_info)
       end
 
       # @!visibility private

@@ -5,7 +5,7 @@ use crate::{
     string::{qiniu_ng_char_t, ucstr},
     utils::qiniu_ng_str_t,
 };
-use libc::{c_void, size_t};
+use libc::c_void;
 use qiniu_ng::storage::{
     bucket::{Bucket, DomainsResult},
     object::{Object, ObjectInfo},
@@ -13,7 +13,7 @@ use qiniu_ng::storage::{
 };
 use std::{
     mem::transmute,
-    ptr::{copy_nonoverlapping, null_mut},
+    ptr::null_mut,
     time::{Duration, SystemTime},
 };
 use tap::TapOps;
@@ -134,6 +134,7 @@ pub extern "C" fn qiniu_ng_object_get_key(object: qiniu_ng_object_t) -> qiniu_ng
 /// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
 /// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
 /// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+/// @note 需要确保存储空间已经绑定了下载域名
 #[no_mangle]
 pub extern "C" fn qiniu_ng_object_get_url_with_lifetime(
     object: qiniu_ng_object_t,
@@ -156,6 +157,7 @@ pub extern "C" fn qiniu_ng_object_get_url_with_lifetime(
 /// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
 /// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
 /// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+/// @note 需要确保存储空间已经绑定了下载域名
 #[no_mangle]
 pub extern "C" fn qiniu_ng_object_get_url_with_deadline(
     object: qiniu_ng_object_t,
@@ -165,7 +167,13 @@ pub extern "C" fn qiniu_ng_object_get_url_with_deadline(
 ) -> bool {
     qiniu_ng_object_get_url(
         object,
-        |obj| obj.url_with_deadline(SystemTime::now().checked_add(Duration::from_secs(deadline)).unwrap()),
+        |obj| {
+            obj.url_with_deadline(
+                SystemTime::UNIX_EPOCH
+                    .checked_add(Duration::from_secs(deadline))
+                    .unwrap(),
+            )
+        },
         url,
         error,
     )
@@ -177,6 +185,7 @@ pub extern "C" fn qiniu_ng_object_get_url_with_deadline(
 /// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
 /// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
 /// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+/// @note 需要确保存储空间已经绑定了下载域名
 #[no_mangle]
 pub extern "C" fn qiniu_ng_object_get_public_url(
     object: qiniu_ng_object_t,
@@ -193,6 +202,7 @@ pub extern "C" fn qiniu_ng_object_get_public_url(
 /// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
 /// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
 /// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+/// @note 需要确保存储空间已经绑定了下载域名
 #[no_mangle]
 pub extern "C" fn qiniu_ng_object_get_private_url_with_lifetime(
     object: qiniu_ng_object_t,
@@ -215,6 +225,7 @@ pub extern "C" fn qiniu_ng_object_get_private_url_with_lifetime(
 /// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
 /// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `url` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
 /// @warning 对于获取的 `url` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+/// @note 需要确保存储空间已经绑定了下载域名
 #[no_mangle]
 pub extern "C" fn qiniu_ng_object_get_private_url_with_deadline(
     object: qiniu_ng_object_t,
@@ -224,7 +235,13 @@ pub extern "C" fn qiniu_ng_object_get_private_url_with_deadline(
 ) -> bool {
     qiniu_ng_object_get_url(
         object,
-        |obj| obj.private_url_with_deadline(SystemTime::now().checked_add(Duration::from_secs(deadline)).unwrap()),
+        |obj| {
+            obj.private_url_with_deadline(
+                SystemTime::UNIX_EPOCH
+                    .checked_add(Duration::from_secs(deadline))
+                    .unwrap(),
+            )
+        },
         url,
         error,
     )
@@ -261,6 +278,7 @@ fn qiniu_ng_object_get_url(
 /// @param[out] error 用于返回错误，如果传入 `NULL` 表示不获取 `error`。但如果运行发生错误，返回值将依然是 `false`
 /// @retval bool 是否运行正常，如果返回 `true`，则表示可以读取 `header_info` 获得结果，如果返回 `false`，则表示可以读取 `error` 获得错误信息
 /// @warning 对于获取的 `header_info` 或 `error`，一旦使用完毕，应该调用各自的内存释放方法释放内存
+/// @note 需要确保存储空间已经绑定了下载域名
 #[no_mangle]
 pub extern "C" fn qiniu_ng_object_head(
     object: qiniu_ng_object_t,
@@ -375,31 +393,17 @@ pub extern "C" fn qiniu_ng_object_info_get_size(object_info: qiniu_ng_object_inf
     })
 }
 
-/// @brief 获取对象信息中的校验和字段
+/// @brief 获取对象信息中的校验和
 /// @param[in] object_info 对象详细信息
-/// @param[out] hash_ptr 提供内存地址用于返回校验和字段，如果传入 `NULL` 表示不获取 `hash_ptr`。且不影响其他字段的获取
-/// @param[out] hash_size 用于返回校验和字段长度，如果传入 `NULL` 表示不获取 `hash_size`。且不影响其他字段的获取。该字段一般返回的是 Etag，因此长度一般会等于 `ETAG_SIZE`
+/// @retval qiniu_ng_str_t 校验和
+/// @note 这里返回的 `qiniu_ng_str_t` 有可能封装的是 `NULL`，请调用 `qiniu_ng_str_is_null()` 进行判断
+/// @warning 当 `qiniu_ng_str_t` 使用完毕后，请务必调用 `qiniu_ng_str_free()` 方法释放内存
 #[no_mangle]
-pub extern "C" fn qiniu_ng_object_info_get_hash(
-    object_info: qiniu_ng_object_info_t,
-    hash_ptr: *mut c_void,
-    hash_size: *mut size_t,
-) {
+pub extern "C" fn qiniu_ng_object_info_get_hash(object_info: qiniu_ng_object_info_t) -> qiniu_ng_str_t {
     let object_info = Option::<Box<ObjectInfo>>::from(object_info).unwrap();
-    let object_hash = object_info.hash();
-    if let Some(hash_size) = unsafe { hash_size.as_mut() } {
-        *hash_size = object_hash.len();
-    }
-    if let Some(hash_ptr) = unsafe { hash_ptr.as_mut() } {
-        unsafe {
-            copy_nonoverlapping(
-                object_hash.as_ptr(),
-                hash_ptr as *mut c_void as *mut u8,
-                object_hash.len(),
-            )
-        };
-    }
-    let _ = qiniu_ng_object_info_t::from(object_info);
+    unsafe { qiniu_ng_str_t::from_str_unchecked(object_info.hash()) }.tap(|_| {
+        let _ = qiniu_ng_object_info_t::from(object_info);
+    })
 }
 
 /// @brief 获取对象信息中的 MIME 类型

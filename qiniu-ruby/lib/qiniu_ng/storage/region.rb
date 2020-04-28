@@ -62,7 +62,7 @@ module QiniuNg
       # @raise [ArgumentError] config 参数错误
       def self.query(access_key:, bucket_name:, config: Config.create)
         raise ArgumentError, 'config must be instance of Config' unless config.is_a?(Config)
-        regions = QiniuNg::Error.wrap_ffi_function do
+        regions = Error.wrap_ffi_function do
                     Bindings::Region.query(bucket_name.to_s, access_key.to_s, config.instance_variable_get(:@config))
                   end
         (0...regions.len).map { |i| new(regions.get(i)) }

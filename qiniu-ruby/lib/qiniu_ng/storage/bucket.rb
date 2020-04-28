@@ -47,8 +47,8 @@ module QiniuNg
       # 存储空间名称
       # @return [String] 存储空间名称
       def name
-        @bucket_name ||= @bucket.get_name
-        @bucket_name.get_ptr
+        @cache[:bucket_name] ||= @bucket.get_name
+        @cache[:bucket_name].get_cstr
       end
 
       # 存储空间所在区域
@@ -63,27 +63,38 @@ module QiniuNg
       #
       # @return [Array<Region>] 返回存储空间区域列表
       def regions
-        @regions ||= begin
-                       regions = QiniuNg::Error.wrap_ffi_function do
-                                   @bucket.get_regions
-                                 end
-                       (0...regions.len).map { |i| Region.send(:new, regions.get(i)) }
-                     end
+        @cache[:regions] ||= begin
+                               regions = Error.wrap_ffi_function do
+                                           @bucket.get_regions
+                                         end
+                               (0...regions.len).map { |i| Region.send(:new, regions.get(i)) }
+                             end
       end
 
       # 存储空间下载域名列表
       # @return [Array<String>] 返回存储空间存储空间下载域名列表
       def domains
-        @domains ||= QiniuNg::Error.wrap_ffi_function do
-                       @bucket.get_domains
-                     end
-        (0...@domains.len).map { |i| @domains.get(i) }
+        @cache[:domains] ||= Error.wrap_ffi_function do
+                               @bucket.get_domains
+                             end
+        domains = @cache[:domains]
+        (0...domains.len).map { |i| domains.get(i) }
+      end
+
+      # 存储空间是否是私有空间
+      # @return [Boolean] 如果存储空间为私有空间，则返回 true
+      def private?
+        @cache[:is_private] ||= Error.wrap_ffi_function do
+                                  is_private = FFI::MemoryPointer.new(:bool)
+                                  @bucket.is_private(is_private)
+                                  is_private.read_uint8 > 1
+                                end
       end
 
       # 删除存储空间
       # @return [void]
       def drop!
-        QiniuNg::Error.wrap_ffi_function do
+        Error.wrap_ffi_function do
           Bindings::Storage.drop_bucket(@client.instance_variable_get(:@client), name)
         end
         nil
@@ -141,7 +152,7 @@ module QiniuNg
                                       upload_threshold: upload_threshold,
                                       thread_pool_size: thread_pool_size,
                                       max_concurrency: max_concurrency)
-        upload_response = QiniuNg::Error.wrap_ffi_function do
+        upload_response = Error.wrap_ffi_function do
                             @bucket.upload_reader(normalize_io(file),
                                                   file.respond_to?(:size) ? file.size : 0,
                                                   params)
@@ -188,7 +199,7 @@ module QiniuNg
                                       upload_threshold: upload_threshold,
                                       thread_pool_size: thread_pool_size,
                                       max_concurrency: max_concurrency)
-        upload_response = QiniuNg::Error.wrap_ffi_function do
+        upload_response = Error.wrap_ffi_function do
                             @bucket.upload_file_path(file_path.to_s, params)
                           end
         Uploader::UploadResponse.send(:new, upload_response)

@@ -18,12 +18,9 @@ module QiniuNg
         # 上传响应中的校验和字段
         # @return [String,nil] 返回上传响应中的校验和字段
         def hash
-          @cache[:hash] ||= begin
-                              data = FFI::MemoryPointer.new(256)
-                              data_len = Bindings::CoreFFI::Size.new
-                              @upload_response.get_hash(data, data_len)
-                              data.read_string(data_len[:value]) unless data_len[:value].zero?
-                            end
+          @cache[:hash] ||= @upload_response.get_hash
+          return nil if @cache[:hash].is_null
+          @cache[:hash].get_cstr
         end
 
         # 上传响应中的对象名称字段
@@ -31,17 +28,17 @@ module QiniuNg
         def key
           @cache[:key] ||= @upload_response.get_key
           return nil if @cache[:key].is_null
-          @cache[:key].get_ptr
+          @cache[:key].get_cstr
         end
 
         # 获取 JSON 格式的上传响应
         # @return [String] 返回 JSON 格式的上传响应
         def as_json
-          @cache[:json] ||= QiniuNg::Error.wrap_ffi_function do
+          @cache[:json] ||= Error.wrap_ffi_function do
                               @upload_response.get_string
                             end
           return nil if @cache[:json].is_null
-          @cache[:json].get_ptr
+          @cache[:json].get_cstr
         end
 
         # @!visibility private

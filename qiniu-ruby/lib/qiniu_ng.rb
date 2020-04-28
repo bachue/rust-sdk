@@ -11,6 +11,7 @@ module QiniuNg
   autoload :Client, 'qiniu_ng/client'
   autoload :Credential, 'qiniu_ng/credential'
   autoload :Storage, 'qiniu_ng/storage'
+  autoload :StringWrapper, 'qiniu_ng/string_wrapper'
   autoload :Utils, 'qiniu_ng/utils'
   autoload :Error, 'qiniu_ng/error'
   autoload :HTTP, 'qiniu_ng/http'

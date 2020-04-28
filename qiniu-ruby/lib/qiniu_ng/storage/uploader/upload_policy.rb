@@ -83,14 +83,14 @@ module QiniuNg
         def as_json
           @cache[:as_json] ||= @upload_policy.as_json
           return nil if @cache[:as_json].is_null
-          @cache[:as_json].get_ptr
+          @cache[:as_json].get_cstr
         end
 
         # 从 JSON 中解析出上传凭证
         # @param [String] json JSON 格式的上传凭证
         # @return [UploadToken] 上传凭证
         def self.from_json(json)
-          policy = QiniuNg::Error.wrap_ffi_function do
+          policy = Error.wrap_ffi_function do
                      Bindings::UploadPolicy.from_json(json)
                    end
           new(policy)
@@ -149,7 +149,7 @@ module QiniuNg
           define_method(method) do
             @cache[method] ||= @upload_policy.public_send(:"get_#{method}")
             return nil if @cache[method].is_null
-            @cache[method].get_ptr
+            @cache[method].get_cstr
           end
         end
 

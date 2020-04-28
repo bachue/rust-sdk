@@ -64,13 +64,13 @@ module QiniuNg
       private def batch_uploader_from_upload_policy_and_credential(upload_policy, credential)
         raise ArgumentError, 'upload_policy must be instance of UploadPolicy' unless upload_policy.is_a?(UploadPolicy)
         raise ArgumentError, 'credential must be instance of Credential' unless credential.is_a?(Credential)
-        QiniuNg::Error.wrap_ffi_function do
+        Error.wrap_ffi_function do
           Bindings::BatchUploader.new_for_upload_policy(@upload_manager, upload_policy.instance_variable_get(:@upload_policy), credential.instance_variable_get(:@credential))
         end
       end
 
       private def batch_uploader_from_upload_token(upload_token)
-        QiniuNg::Error.wrap_ffi_function do
+        Error.wrap_ffi_function do
           Bindings::BatchUploader.new_for_upload_token(@upload_manager, normalize_upload_token(upload_token))
         end
       end
@@ -131,7 +131,7 @@ module QiniuNg
         file_size = file.respond_to?(:size) ? file.size : 0
         args += [reader, file_size, params]
         begin
-          upload_response = QiniuNg::Error.wrap_ffi_function do
+          upload_response = Error.wrap_ffi_function do
                               @upload_manager.public_send(*args)
                             end
           UploadResponse.send(:new, upload_response)
@@ -189,7 +189,7 @@ module QiniuNg
                                       thread_pool_size: thread_pool_size,
                                       max_concurrency: max_concurrency)
         args += [file_path.to_s, params]
-        upload_response = QiniuNg::Error.wrap_ffi_function do
+        upload_response = Error.wrap_ffi_function do
                             @upload_manager.public_send(*args)
                           end
         UploadResponse.send(:new, upload_response)

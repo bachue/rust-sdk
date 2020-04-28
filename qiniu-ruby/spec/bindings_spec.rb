@@ -5,8 +5,8 @@ RSpec.describe QiniuNg::Bindings do
     it 'should be ok to initialize string' do
       str1 = QiniuNg::Bindings::Str.new! '你好'
       str2 = QiniuNg::Bindings::Str.new! '七牛'
-      expect(str1.get_ptr).to eq('你好')
-      expect(str2.get_ptr).to eq('七牛')
+      expect(str1.get_cstr).to eq('你好')
+      expect(str2.get_cstr).to eq('七牛')
       expect(str1.get_len).to eq('你好'.bytesize)
       expect(str2.get_len).to eq('七牛'.bytesize)
       expect(str1.is_freed).to be false
@@ -116,9 +116,9 @@ RSpec.describe QiniuNg::Bindings do
       it 'should be ok to build default config' do
         config = QiniuNg::Bindings::Config.new_default
         expect(config.get_use_https).to be true
-        expect(config.get_uc_url&.get_ptr).to eq "https://uc.qbox.me"
-        expect(config.get_rs_url&.get_ptr).to eq "https://rs.qbox.me"
-        expect(config.get_uplog_file_path&.get_ptr).to be_end_with('qiniu_sdk/upload.log')
+        expect(config.get_uc_url&.get_cstr).to eq "https://uc.qbox.me"
+        expect(config.get_rs_url&.get_cstr).to eq "https://rs.qbox.me"
+        expect(config.get_uplog_file_path&.get_cstr).to be_end_with('qiniu_sdk/upload.log')
       end
     end
 
@@ -133,9 +133,9 @@ RSpec.describe QiniuNg::Bindings do
                    QiniuNg::Bindings::Config.build(config_builder)
                  end
         expect(config.get_use_https).to be false
-        expect(config.get_uc_url&.get_ptr).to eq "http://uc.fake.com"
-        expect(config.get_rs_url&.get_ptr).to eq "http://rs.qbox.me"
-        expect(config.get_uplog_file_path&.get_ptr).to be_nil
+        expect(config.get_uc_url&.get_cstr).to eq "http://uc.fake.com"
+        expect(config.get_rs_url&.get_cstr).to eq "http://rs.qbox.me"
+        expect(config.get_uplog_file_path&.get_cstr).to be_nil
       end
     end
   end

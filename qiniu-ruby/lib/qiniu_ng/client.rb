@@ -50,14 +50,14 @@ module QiniuNg
     # @return [String] 返回 Access Key
     def access_key
       @access_key ||= @client.get_access_key
-      @access_key.get_ptr
+      @access_key.get_cstr
     end
 
     # 获取 Secret Key
     # @return [String] 返回 Secret Key
     def secret_key
       @secret_key ||= @client.get_secret_key
-      @secret_key.get_ptr
+      @secret_key.get_cstr
     end
 
     # 获取认证信息
@@ -101,7 +101,7 @@ module QiniuNg
     # 列出所有存储空间名称
     # @return [Array<String>] 返回所有存储空间名称
     def bucket_names
-      list = QiniuNg::Error.wrap_ffi_function do
+      list = Error.wrap_ffi_function do
                Bindings::Storage.bucket_names(@client)
              end
       (0...list.len).map { |i| list.get(i) }
@@ -130,7 +130,7 @@ module QiniuNg
                   else
                     region.to_s
                   end
-      QiniuNg::Error.wrap_ffi_function do
+      Error.wrap_ffi_function do
         if region_id.is_a?(Symbol)
           Bindings::Storage.create_bucket(@client, bucket_name.to_s, region_id)
         else
@@ -146,7 +146,7 @@ module QiniuNg
     #
     # @param [String] bucket_name 存储空间名称
     def drop_bucket(bucket_name)
-      QiniuNg::Error.wrap_ffi_function do
+      Error.wrap_ffi_function do
         Bindings::Storage.drop_bucket(@client, bucket_name.to_s)
       end
       nil

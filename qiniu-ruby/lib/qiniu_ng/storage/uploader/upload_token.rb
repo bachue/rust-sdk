@@ -53,17 +53,17 @@ module QiniuNg
         # 获取上传凭证中的 Access Key
         # @return [String] 返回 Access Key
         def access_key
-          @cache[:access_key] ||= QiniuNg::Error.wrap_ffi_function do
+          @cache[:access_key] ||= Error.wrap_ffi_function do
                                     @upload_token.get_access_key
                                   end
-          @cache[:access_key].get_ptr
+          @cache[:access_key].get_cstr
         end
 
         # 获取上传凭证中的上传策略部分
         # @return [UploadPolicy] 返回上传策略
         def policy
           @cache[:policy] ||= begin
-                                policy = QiniuNg::Error.wrap_ffi_function do
+                                policy = Error.wrap_ffi_function do
                                            @upload_token.get_policy
                                          end
                                 UploadPolicy.send(:new, policy)
@@ -74,10 +74,10 @@ module QiniuNg
         # 返回上传凭证字符串
         # @return [String] 返回上传凭证字符串
         def to_s
-          @cache[:token] ||= QiniuNg::Error.wrap_ffi_function do
+          @cache[:token] ||= Error.wrap_ffi_function do
                                @upload_token.get_string
                              end
-          @cache[:token].get_ptr
+          @cache[:token].get_cstr
         end
         alias token to_s
       end
