@@ -5,10 +5,9 @@
 void test_qiniu_ng_region_query(void) {
     qiniu_ng_config_t config = qiniu_ng_config_new_default();
 
-    env_load("..", false);
     qiniu_ng_regions_t regions;
     TEST_ASSERT_TRUE_MESSAGE(
-        qiniu_ng_region_query(QINIU_NG_CHARS("z0-bucket"), GETENV(QINIU_NG_CHARS("access_key")), config, &regions, NULL),
+        qiniu_ng_region_query(GETENV(QINIU_NG_CHARS("dual_regions_bucket_huadong")), GETENV(QINIU_NG_CHARS("access_key")), config, &regions, NULL),
         "qiniu_ng_region_query() failed");
     TEST_ASSERT_EQUAL_INT_MESSAGE(
         qiniu_ng_regions_len(regions), 2,

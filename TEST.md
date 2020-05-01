@@ -9,27 +9,28 @@
 ```bash
 access_key=[access_key]
 secret_key=[secret_key]
-z2_encrypt_key=[z2_encrypt_key]
+public_bucket=[public_bucket]
+private_bucket=[private_bucket]
+huadong_bucket=[huadong_bucket]
+huabei_bucket=[huabei_bucket]
+huanan_bucket=[huanan_bucket]
+upload_bucket=[upload_bucket]
+dual_regions_bucket_huadong=[dual_regions_bucket_huadong]
+dual_regions_bucket_huabei=[dual_regions_bucket_huabei]
 ```
-
-其中 `z2_encrypt_key` 为 z2-bucket 的时间戳鉴权密钥（见 2.5）
 
 ### 方法二
 
-设置环境变量 `access_key`，`secret_key` 和 `z2_encrypt_key`。
+设置环境变量 `access_key`，`secret_key`，`public_bucket`，`private_bucket`，`huadong_bucket`，`huabei_bucket`，`huanan_bucket`，`upload_bucket`，`dual_regions_bucket_huadong` 和 `dual_regions_bucket_huabei`。
 
 ## 2. 配置七牛账户
 
-1. 创建以下存储空间
+1. 按需要创建测试用存储空间
 
-- 华东区 `z0-bucket`，公开空间。
-- 华北区 `z1-bucket`，私有空间。
-- 华北区 `z0-bucket-bind`，公开空间。
-- 华南区 `z2-bucket`，公开空间。
-- 新加坡地区 `as-bucket`，公开空间。
-- 北美地区 `na-bucket`，公开空间。
-
-2. 将存储空间 `z0-bucket-bind` 配置为 `z0-bucket` 的双活空间。
-3. 为 z0-bucket 绑定至少一个 CDN 域名
-4. 为 z1-bucket 绑定至少一个 CDN 域名，并且设置回源鉴权
-5. 为 z2-bucket 绑定至少一个 CDN 域名，并且设置时间戳鉴权
+- 一个公开访问的存储空间，赋值给 `public_bucket`
+- 一个私有访问的存储空间，赋值给 `private_bucket`
+- 一个华东区存储空间，赋值给 `huadong_bucket`
+- 一个华北区存储空间，赋值给 `huabei_bucket`
+- 一个华南区存储空间，赋值给 `huanan_bucket`
+- 一个上传专用存储空间，赋值给 `upload_bucket`
+- 两个个双活区域的存储空间，华东区赋值给 `dual_regions_bucket_huadong`，华北区赋值给 `dual_regions_bucket_huabei`

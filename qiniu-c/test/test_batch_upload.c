@@ -4,12 +4,6 @@
 #include <stdio.h>
 #include "test.h"
 
-#ifdef USE_NA_BUCKET
-#define BUCKET_NAME (QINIU_NG_CHARS("na-bucket"))
-#else
-#define BUCKET_NAME (QINIU_NG_CHARS("z0-bucket"))
-#endif
-
 struct callback_context {
     int file_index;
     char *etag;
@@ -117,13 +111,12 @@ static void upload_done(void) {
 
 void test_qiniu_ng_batch_upload_file_paths(void) {
 #define FILES_COUNT (16)
-    env_load("..", false);
     qiniu_ng_config_t config = qiniu_ng_config_new_default();
     qiniu_ng_upload_manager_t upload_manager = qiniu_ng_upload_manager_new(config);
     qiniu_ng_client_t client = qiniu_ng_client_new(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")), config);
-    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, BUCKET_NAME);
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("upload_bucket")));
 
-    qiniu_ng_upload_policy_builder_t policy_builder = qiniu_ng_upload_policy_builder_new_for_bucket(BUCKET_NAME, config);
+    qiniu_ng_upload_policy_builder_t policy_builder = qiniu_ng_upload_policy_builder_new_for_bucket(GETENV(QINIU_NG_CHARS("upload_bucket")), config);
     qiniu_ng_upload_policy_builder_set_insert_only(policy_builder);
     qiniu_ng_upload_token_t token = qiniu_ng_upload_token_new_from_policy_builder(policy_builder, GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
     qiniu_ng_upload_policy_builder_free(&policy_builder);
@@ -187,13 +180,12 @@ void test_qiniu_ng_batch_upload_file_paths(void) {
 
 void test_qiniu_ng_batch_upload_files(void) {
 #define FILES_COUNT (16)
-    env_load("..", false);
     qiniu_ng_config_t config = qiniu_ng_config_new_default();
     qiniu_ng_upload_manager_t upload_manager = qiniu_ng_upload_manager_new(config);
     qiniu_ng_client_t client = qiniu_ng_client_new(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")), config);
-    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, BUCKET_NAME);
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("upload_bucket")));
 
-    qiniu_ng_upload_policy_builder_t policy_builder = qiniu_ng_upload_policy_builder_new_for_bucket(BUCKET_NAME, config);
+    qiniu_ng_upload_policy_builder_t policy_builder = qiniu_ng_upload_policy_builder_new_for_bucket(GETENV(QINIU_NG_CHARS("upload_bucket")), config);
     qiniu_ng_upload_policy_builder_set_insert_only(policy_builder);
     qiniu_ng_upload_token_t token = qiniu_ng_upload_token_new_from_policy_builder(policy_builder, GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
     qiniu_ng_upload_policy_builder_free(&policy_builder);
@@ -263,10 +255,9 @@ void test_qiniu_ng_batch_upload_files(void) {
 }
 
 void test_qiniu_ng_batch_upload_file_path_failed_by_mime(void) {
-    env_load("..", false);
     qiniu_ng_upload_manager_t upload_manager = qiniu_ng_upload_manager_new_default();
     qiniu_ng_credential_t credential = qiniu_ng_credential_new(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
-    qiniu_ng_batch_uploader_t batch_uploader = qiniu_ng_batch_uploader_new(upload_manager, BUCKET_NAME, credential);
+    qiniu_ng_batch_uploader_t batch_uploader = qiniu_ng_batch_uploader_new(upload_manager, GETENV(QINIU_NG_CHARS("upload_bucket")), credential);
 
     qiniu_ng_char_t *file_path = create_temp_file(0);
     qiniu_ng_batch_upload_params_t params = {
@@ -294,10 +285,9 @@ void test_qiniu_ng_batch_upload_file_path_failed_by_mime(void) {
 }
 
 void test_qiniu_ng_batch_upload_file_path_failed_by_non_existed_path(void) {
-    env_load("..", false);
     qiniu_ng_upload_manager_t upload_manager = qiniu_ng_upload_manager_new_default();
     qiniu_ng_credential_t credential = qiniu_ng_credential_new(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
-    qiniu_ng_batch_uploader_t batch_uploader = qiniu_ng_batch_uploader_new(upload_manager, BUCKET_NAME, credential);
+    qiniu_ng_batch_uploader_t batch_uploader = qiniu_ng_batch_uploader_new(upload_manager, GETENV(QINIU_NG_CHARS("upload_bucket")), credential);
 
     qiniu_ng_err_t err;
     int32_t code;

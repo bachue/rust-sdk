@@ -4,22 +4,21 @@
 #include "test.h"
 
 void test_qiniu_ng_bucket_get_name(void) {
-    env_load("..", false);
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
 
-    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z0-bucket"));
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("huadong_bucket")));
     qiniu_ng_str_t bucket_name = qiniu_ng_bucket_get_name(bucket);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_cstr(bucket_name), QINIU_NG_CHARS("z0-bucket"),
-        "qiniu_ng_str_get_cstr(bucket_name) != \"z0-bucket\"");
+        qiniu_ng_str_get_cstr(bucket_name), GETENV(QINIU_NG_CHARS("huadong_bucket")),
+        "qiniu_ng_str_get_cstr(bucket_name) != huadong_bucket");
     qiniu_ng_str_free(&bucket_name);
     qiniu_ng_bucket_free(&bucket);
 
-    qiniu_ng_bucket_t bucket_2 = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z1-bucket"));
+    qiniu_ng_bucket_t bucket_2 = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("huabei_bucket")));
     qiniu_ng_str_t bucket_name_2 = qiniu_ng_bucket_get_name(bucket_2);
     TEST_ASSERT_EQUAL_STRING_MESSAGE(
-        qiniu_ng_str_get_cstr(bucket_name_2), QINIU_NG_CHARS("z1-bucket"),
-        "qiniu_ng_str_get_cstr(bucket_name_2) != \"z1-bucket\"");
+        qiniu_ng_str_get_cstr(bucket_name_2), GETENV(QINIU_NG_CHARS("huabei_bucket")),
+        "qiniu_ng_str_get_cstr(bucket_name_2) != huabei_bucket");
     qiniu_ng_str_free(&bucket_name_2);
     qiniu_ng_bucket_free(&bucket_2);
 
@@ -27,9 +26,8 @@ void test_qiniu_ng_bucket_get_name(void) {
 }
 
 void test_qiniu_ng_bucket_get_region(void) {
-    env_load("..", false);
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
-    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z0-bucket"));
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("dual_regions_bucket_huadong")));
 
     qiniu_ng_region_t region;
     const qiniu_ng_char_t *io_url;
@@ -56,7 +54,6 @@ void test_qiniu_ng_bucket_get_region(void) {
 }
 
 void test_qiniu_ng_bucket_get_unexisted_region(void) {
-    env_load("..", false);
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
     qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("not-existed-bucket"));
 
@@ -98,9 +95,8 @@ void test_qiniu_ng_bucket_get_unexisted_region(void) {
 }
 
 void test_qiniu_ng_bucket_get_regions(void) {
-    env_load("..", false);
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
-    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z0-bucket"));
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("dual_regions_bucket_huadong")));
 
     qiniu_ng_regions_t regions;
     qiniu_ng_region_t region;
@@ -154,7 +150,6 @@ void test_qiniu_ng_bucket_get_regions(void) {
 }
 
 void test_qiniu_ng_bucket_builder(void) {
-    env_load("..", false);
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
 
     qiniu_ng_region_builder_t region_builder = qiniu_ng_region_builder_new();
@@ -168,7 +163,7 @@ void test_qiniu_ng_bucket_builder(void) {
     qiniu_ng_region_t region_3 = qiniu_ng_region_build(region_builder);
     qiniu_ng_region_builder_free(&region_builder);
 
-    qiniu_ng_bucket_builder_t bucket_builder = qiniu_ng_bucket_builder_new(client, QINIU_NG_CHARS("z2-bucket"));
+    qiniu_ng_bucket_builder_t bucket_builder = qiniu_ng_bucket_builder_new(client, GETENV(QINIU_NG_CHARS("huanan_bucket")));
     qiniu_ng_bucket_builder_set_region(bucket_builder, region_1);
     qiniu_ng_bucket_builder_set_region(bucket_builder, region_2);
     qiniu_ng_bucket_builder_set_region(bucket_builder, region_3);
@@ -254,10 +249,8 @@ void test_qiniu_ng_bucket_builder(void) {
 }
 
 void test_qiniu_ng_bucket_get_regions_and_domains(void) {
-    env_load("..", false);
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
-
-    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z0-bucket"));
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("dual_regions_bucket_huadong")));
 
     qiniu_ng_regions_t regions;
     TEST_ASSERT_TRUE_MESSAGE(
@@ -291,8 +284,6 @@ void test_qiniu_ng_bucket_get_regions_and_domains(void) {
 }
 
 void test_qiniu_ng_bucket_upload_files(void) {
-    env_load("..", false);
-
     const qiniu_ng_char_t *file_path = create_temp_file(1024);
     char etag[ETAG_SIZE + 1];
     memset(&etag, 0, (ETAG_SIZE + 1) * sizeof(char));
@@ -301,7 +292,7 @@ void test_qiniu_ng_bucket_upload_files(void) {
         "qiniu_ng_etag_from_file_path() failed");
 
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
-    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z0-bucket"));
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("upload_bucket")));
     qiniu_ng_upload_response_t upload_response;
     qiniu_ng_err_t err;
     if (!qiniu_ng_bucket_upload_file_path(bucket, file_path, NULL, &upload_response, &err)) {

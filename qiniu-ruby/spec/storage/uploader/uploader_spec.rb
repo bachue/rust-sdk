@@ -9,7 +9,7 @@ RSpec.describe QiniuNg::Storage::Uploader do
       uploader = QiniuNg::Storage::Uploader.create
       credential = QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key'])
       client = QiniuNg::Client.create(credential: credential)
-      bucket = client.bucket(upload_bucket_name)
+      bucket = client.bucket(ENV['upload_bucket'])
       Tempfile.create('测试', encoding: 'ascii-8bit') do |file|
         4.times { file.write(SecureRandom.random_bytes(rand(1 << 25))) }
         file.rewind
@@ -36,7 +36,7 @@ RSpec.describe QiniuNg::Storage::Uploader do
 
         GC.start
         response = uploader.upload_file(file, credential: credential,
-                                              bucket_name: upload_bucket_name,
+                                              bucket_name: ENV['upload_bucket'],
                                               key: key,
                                               on_uploading_progress: on_uploading_progress)
         GC.start
@@ -59,8 +59,8 @@ RSpec.describe QiniuNg::Storage::Uploader do
 
     it 'should upload customized io' do
       client = QiniuNg::Client.create(access_key: ENV['access_key'], secret_key: ENV['secret_key'])
-      bucket = client.bucket(upload_bucket_name)
-      upload_token = QiniuNg::Storage::Uploader::UploadPolicy::Builder.new_for_bucket(upload_bucket_name)
+      bucket = client.bucket(ENV['upload_bucket'])
+      upload_token = QiniuNg::Storage::Uploader::UploadPolicy::Builder.new_for_bucket(ENV['upload_bucket'])
                                                                       .return_body(%[{"key":"$(key)","hash":"$(etag)","fsize":$(fsize),"bucket":"$(bucket)","name":"$(x:name)"}])
                                                                       .build_token(access_key: ENV['access_key'], secret_key: ENV['secret_key'])
       uploader = QiniuNg::Storage::Uploader.create
@@ -94,13 +94,13 @@ RSpec.describe QiniuNg::Storage::Uploader do
       expect(response.hash).to eq(etag)
       expect(response.key).to eq(key)
       expect(response.fsize).to eq(1 << 24)
-      expect(response.bucket).to eq(upload_bucket_name)
+      expect(response.bucket).to eq(ENV['upload_bucket'])
       expect(response.name).to eq(key)
       j = JSON.load response.as_json
       expect(j['hash']).to eq(etag)
       expect(j['key']).to eq(key)
       expect(j['fsize']).to eq(1 << 24)
-      expect(j['bucket']).to eq(upload_bucket_name)
+      expect(j['bucket']).to eq(ENV['upload_bucket'])
       expect(j['name']).to eq(key)
       expect(err.get).to be_nil
       expect(last_uploaded).to eq io_size
@@ -119,7 +119,7 @@ RSpec.describe QiniuNg::Storage::Uploader do
       uploader = QiniuNg::Storage::Uploader.create
       credential = QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key'])
       client = QiniuNg::Client.create credential: credential
-      bucket = client.bucket(upload_bucket_name)
+      bucket = client.bucket(ENV['upload_bucket'])
       Tempfile.create('测试', encoding: 'ascii-8bit') do |file|
         4.times { file.write(SecureRandom.random_bytes(rand(1 << 25))) }
         file.rewind
@@ -141,7 +141,7 @@ RSpec.describe QiniuNg::Storage::Uploader do
                                   end
                                 end
 
-        response = uploader.upload_file_path(file.path, bucket_name: upload_bucket_name,
+        response = uploader.upload_file_path(file.path, bucket_name: ENV['upload_bucket'],
                                                         credential: credential,
                                                         key: key,
                                                         on_uploading_progress: on_uploading_progress)

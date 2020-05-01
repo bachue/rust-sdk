@@ -7,27 +7,27 @@ RSpec.describe QiniuNg::Storage::Bucket do
   context '#new' do
     it 'could query regions from bucket' do
       client = QiniuNg::Client.create access_key: ENV['access_key'], secret_key: ENV['secret_key']
-      bucket = client.bucket 'z0-bucket'
+      bucket = client.bucket ENV['dual_regions_bucket_huadong']
       expect(bucket.regions.size).to eq 2
       expect(bucket.regions[0].io_urls).to contain_exactly('https://iovip.qbox.me')
     end
 
     it 'could set regions for bucket' do
       client = QiniuNg::Client.create access_key: ENV['access_key'], secret_key: ENV['secret_key']
-      bucket = client.bucket 'z0-bucket', region: QiniuNg::Storage::Region.by_id(:as0)
+      bucket = client.bucket ENV['dual_regions_bucket_huadong'], region: QiniuNg::Storage::Region.by_id(:as0)
       expect(bucket.regions.size).to eq 1
       expect(bucket.regions[0].id).to eq :as0
     end
 
     it 'could query domains from bucket' do
       client = QiniuNg::Client.create access_key: ENV['access_key'], secret_key: ENV['secret_key']
-      bucket = client.bucket 'z0-bucket'
+      bucket = client.bucket ENV['dual_regions_bucket_huadong']
       expect(bucket.domains.size).to eq 2
     end
 
     it 'could set domains for bucket' do
       client = QiniuNg::Client.create access_key: ENV['access_key'], secret_key: ENV['secret_key']
-      bucket = client.bucket 'z0-bucket', domains: (0...2).map { |i| "https://domain#{i}.com" }
+      bucket = client.bucket ENV['dual_regions_bucket_huadong'], domains: (0...2).map { |i| "https://domain#{i}.com" }
       expect(bucket.domains).to contain_exactly(*(0...2).map { |i| "https://domain#{i}.com" })
     end
   end
@@ -35,7 +35,7 @@ RSpec.describe QiniuNg::Storage::Bucket do
   context '#upload_file' do
     it 'could upload file directly' do
       client = QiniuNg::Client.create access_key: ENV['access_key'], secret_key: ENV['secret_key']
-      bucket = client.bucket 'z0-bucket'
+      bucket = client.bucket ENV['upload_bucket']
       Tempfile.create('测试', encoding: 'ascii-8bit') do |file|
         4.times { file.write(SecureRandom.random_bytes(rand(1 << 25))) }
         file.rewind
@@ -85,7 +85,7 @@ RSpec.describe QiniuNg::Storage::Bucket do
   context '#upload_file_path' do
     it 'could upload file directly' do
       client = QiniuNg::Client.create access_key: ENV['access_key'], secret_key: ENV['secret_key']
-      bucket = client.bucket 'z0-bucket'
+      bucket = client.bucket ENV['upload_bucket']
       Tempfile.create('测试', encoding: 'ascii-8bit') do |file|
         4.times { file.write(SecureRandom.random_bytes(rand(1 << 25))) }
         file.rewind

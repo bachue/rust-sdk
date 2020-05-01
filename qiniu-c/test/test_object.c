@@ -13,7 +13,6 @@ static void generate_file_key(const qiniu_ng_char_t *file_key, int max_size, int
 }
 
 void test_qiniu_ng_object_upload_files(void) {
-    env_load("..", false);
     const qiniu_ng_char_t file_key[256];
     generate_file_key(file_key, 256, 0, 1);
 
@@ -25,7 +24,7 @@ void test_qiniu_ng_object_upload_files(void) {
         "qiniu_ng_etag_from_file_path() failed");
 
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
-    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z0-bucket"));
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("upload_bucket")));
     qiniu_ng_object_t object = qiniu_ng_object_new(bucket, file_key);
     qiniu_ng_upload_response_t upload_response;
     qiniu_ng_err_t err;
@@ -111,7 +110,6 @@ static long curl_get_url(const qiniu_ng_char_t *url) {
 }
 
 void test_qiniu_ng_object_get_urls(void) {
-    env_load("..", false);
     const qiniu_ng_char_t file_key[256];
     generate_file_key(file_key, 256, 0, 1);
 
@@ -123,7 +121,7 @@ void test_qiniu_ng_object_get_urls(void) {
         "qiniu_ng_etag_from_file_path() failed");
 
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
-    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, QINIU_NG_CHARS("z0-bucket"));
+    qiniu_ng_bucket_t bucket = qiniu_ng_bucket_new(client, GETENV(QINIU_NG_CHARS("upload_bucket")));
     qiniu_ng_object_t object = qiniu_ng_object_new(bucket, file_key);
     qiniu_ng_err_t err;
     if (!qiniu_ng_object_upload_file_path(object, file_path, NULL, NULL, &err)) {
@@ -133,7 +131,7 @@ void test_qiniu_ng_object_get_urls(void) {
 
     qiniu_ng_bucket_t bucket_got = qiniu_ng_object_get_bucket(object);
     qiniu_ng_str_t bucket_name = qiniu_ng_bucket_get_name(bucket_got);
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(qiniu_ng_str_get_cstr(bucket_name), QINIU_NG_CHARS("z0-bucket"), "bucket_name != 'z0-bucket'");
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(qiniu_ng_str_get_cstr(bucket_name), GETENV(QINIU_NG_CHARS("upload_bucket")), "bucket_name != upload_bucket");
     qiniu_ng_str_free(&bucket_name);
     qiniu_ng_bucket_free(&bucket_got);
 

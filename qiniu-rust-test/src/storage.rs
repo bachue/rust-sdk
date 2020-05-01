@@ -8,11 +8,12 @@ mod tests {
     #[test]
     fn test_storage_list_buckets() -> Result<(), Box<dyn Error>> {
         let bucket_names = get_client(Config::default()).storage().bucket_names()?;
-        assert!(bucket_names.contains(&"z0-bucket".into()));
-        assert!(bucket_names.contains(&"z1-bucket".into()));
-        assert!(bucket_names.contains(&"z2-bucket".into()));
-        assert!(bucket_names.contains(&"na-bucket".into()));
-        assert!(bucket_names.contains(&"as-bucket".into()));
+        assert!(bucket_names.contains(&env::get().public_bucket().into()));
+        assert!(bucket_names.contains(&env::get().private_bucket().into()));
+        assert!(bucket_names.contains(&env::get().huadong_bucket().into()));
+        assert!(bucket_names.contains(&env::get().huabei_bucket().into()));
+        assert!(bucket_names.contains(&env::get().huanan_bucket().into()));
+        assert!(bucket_names.contains(&env::get().upload_bucket().into()));
         Ok(())
     }
 
@@ -31,7 +32,10 @@ mod tests {
     #[test]
     fn test_storage_get_bucket() -> Result<(), Box<dyn Error>> {
         let client = get_client(Config::default());
-        let bucket = client.storage().bucket("z0-bucket").build();
+        let bucket = client
+            .storage()
+            .bucket(env::get().dual_regions_bucket_huadong().to_owned())
+            .build();
         assert_eq!(bucket.regions()?.count(), 2);
         let domains = bucket.domains()?;
         assert_eq!(domains.len(), 2);

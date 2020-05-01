@@ -17,9 +17,6 @@ ifeq ($(OS),Windows_NT)
 	INC_DIRS := /I . /I $(UNITY_HOME)
 	SYMBOLS := /D TEST /D UNITY_USE_FLUSH_STDOUT
 	CFLAGS := /MD /W4 /utf-8
-	ifeq ($(USE_NA_BUCKET),1)
-		SYMBOLS += /D USE_NA_BUCKET
-	endif
 else
 	CC := gcc
 	TARGET := build/test.out
@@ -33,9 +30,6 @@ else
 
 	ifeq ($(shell uname -s),Darwin)
 		LDFLAGS += -framework Security -framework Foundation
-	endif
-	ifeq ($(USE_NA_BUCKET),1)
-		SYMBOLS += -DUSE_NA_BUCKET
 	endif
 endif
 

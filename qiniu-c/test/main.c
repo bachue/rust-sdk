@@ -7,7 +7,7 @@
 #endif
 
 void setUp(void) {
-
+    env_load("..", false);
 }
 
 void tearDown(void) {

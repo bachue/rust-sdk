@@ -7,39 +7,35 @@ require 'open-uri'
 RSpec.describe QiniuNg::Storage::Object do
   before do
     @client = QiniuNg::Client.create access_key: ENV['access_key'], secret_key: ENV['secret_key']
-    @bucket = @client.bucket 'z0-bucket'
   end
 
   context 'Get Object Info' do
     it 'can generate url of the object' do
-      object = @bucket.object('file')
+      object = @client.bucket(ENV['public_bucket']).object('file')
       url = object.url lifetime: QiniuNg::Utils::Duration.new(hour: 1)
       expect(url).to be_end_with('/file')
 
-      bucket_private = @client.bucket 'z1-bucket'
-      object = bucket_private.object('file')
+      object = @client.bucket(ENV['private_bucket']).object('file')
       url = object.url deadline: Time.now
       expect(url).to include('/file?e=')
     end
 
     it 'can generate public url of the object' do
-      object = @bucket.object('file')
+      object = @client.bucket(ENV['public_bucket']).object('file')
       url = object.public_url
       expect(url).to be_end_with('/file')
 
-      bucket_private = @client.bucket 'z1-bucket'
-      object = bucket_private.object('file')
+      object = @client.bucket(ENV['private_bucket']).object('file')
       url = object.public_url
       expect(url).to be_end_with('/file')
     end
 
     it 'can generate private url of the object' do
-      object = @bucket.object('file')
+      object = @client.bucket(ENV['public_bucket']).object('file')
       url = object.private_url lifetime: QiniuNg::Utils::Duration.new(hour: 1)
       expect(url).to include('/file?e=')
 
-      bucket_private = @client.bucket 'z1-bucket'
-      object = bucket_private.object('file')
+      object = @client.bucket(ENV['private_bucket']).object('file')
       url = object.private_url deadline: Time.now
       expect(url).to include('/file?e=')
     end
@@ -51,7 +47,7 @@ RSpec.describe QiniuNg::Storage::Object do
         file.rewind
 
         key = "测试-#{Time.now.to_i}-#{rand(2**64 - 1)}"
-        object = @bucket.object(key)
+        object = @client.bucket(ENV['upload_bucket']).object(key)
 
         response = object.upload_file(file)
         etag = response.hash
@@ -76,7 +72,7 @@ RSpec.describe QiniuNg::Storage::Object do
         file.rewind
 
         key = "测试-#{Time.now.to_i}-#{rand(2**64 - 1)}"
-        object = @bucket.object(key)
+        object = @client.bucket(ENV['upload_bucket']).object(key)
 
         err = Concurrent::AtomicReference.new
         last_uploaded, mutex, file_size = -1, Mutex.new, file.size
@@ -124,7 +120,7 @@ RSpec.describe QiniuNg::Storage::Object do
         etag = QiniuNg::Utils::Etag.from_io(file)
         file.rewind
         key = "测试-#{Time.now.to_i}-#{rand(2**64 - 1)}"
-        object = @bucket.object(key)
+        object = @client.bucket(ENV['upload_bucket']).object(key)
 
         err = Concurrent::AtomicReference.new
         last_uploaded, mutex, file_size = -1, Mutex.new, file.size

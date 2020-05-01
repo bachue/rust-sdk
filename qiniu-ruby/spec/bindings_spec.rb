@@ -162,7 +162,7 @@ RSpec.describe QiniuNg::Bindings do
 
       it 'should query regions by access_key and bucket name' do
         regions = QiniuNg::Error.wrap_ffi_function do
-                    QiniuNg::Bindings::Region.query('z0-bucket', ENV['access_key'], QiniuNg::Bindings::Config.new_default)
+                    QiniuNg::Bindings::Region.query(ENV['dual_regions_bucket_huadong'], ENV['access_key'], QiniuNg::Bindings::Config.new_default)
                   end
         expect(regions.len).to eq 2
         region = regions.get(0)

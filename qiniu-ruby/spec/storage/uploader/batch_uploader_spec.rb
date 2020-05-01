@@ -8,7 +8,7 @@ RSpec.describe QiniuNg::Storage::Uploader::BatchUploader do
     context '#upload_file' do
       it 'should upload files by io' do
         credential = QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key'])
-        batch_uploader = QiniuNg::Storage::Uploader.create.batch_uploader(bucket_name: 'z0-bucket', credential: credential)
+        batch_uploader = QiniuNg::Storage::Uploader.create.batch_uploader(bucket_name: ENV['upload_bucket'], credential: credential)
         batch_uploader.thread_pool_size = 8
         completed = Concurrent::AtomicFixnum.new
         errref = Concurrent::AtomicReference.new
@@ -42,7 +42,7 @@ RSpec.describe QiniuNg::Storage::Uploader::BatchUploader do
         expect(completed.value).to eq 8
 
         client = QiniuNg::Client.create(credential: credential)
-        bucket = client.bucket('z0-bucket')
+        bucket = client.bucket(ENV['upload_bucket'])
 
         infos.each do |info|
           object = bucket.object(info[:key])
@@ -57,7 +57,7 @@ RSpec.describe QiniuNg::Storage::Uploader::BatchUploader do
 
       it 'should upload files by path' do
         credential = QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key'])
-        batch_uploader = QiniuNg::Storage::Uploader.create.batch_uploader(bucket_name: 'z0-bucket', credential: credential)
+        batch_uploader = QiniuNg::Storage::Uploader.create.batch_uploader(bucket_name: ENV['upload_bucket'], credential: credential)
         batch_uploader.thread_pool_size = 8
         completed = Concurrent::AtomicFixnum.new
         errref = Concurrent::AtomicReference.new
@@ -94,7 +94,7 @@ RSpec.describe QiniuNg::Storage::Uploader::BatchUploader do
         expect(completed.value).to eq 8
 
         client = QiniuNg::Client.create(credential: credential)
-        bucket = client.bucket('z0-bucket')
+        bucket = client.bucket(ENV['upload_bucket'])
 
         infos.each do |info|
           object = bucket.object(info[:key])

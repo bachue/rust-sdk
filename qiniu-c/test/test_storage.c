@@ -4,7 +4,6 @@
 #include "test.h"
 
 void test_qiniu_ng_storage_bucket_names(void) {
-    env_load("..", false);
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
 
     qiniu_ng_str_list_t bucket_names;
@@ -27,7 +26,6 @@ void test_qiniu_ng_storage_bucket_names(void) {
 }
 
 void test_qiniu_ng_storage_bucket_create_and_drop(void) {
-    env_load("..", false);
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
 
     const qiniu_ng_char_t new_bucket_name[40];
@@ -76,7 +74,6 @@ void test_qiniu_ng_storage_bucket_create_and_drop(void) {
 }
 
 void test_qiniu_ng_storage_bucket_create_duplicated(void) {
-    env_load("..", false);
     qiniu_ng_client_t client = qiniu_ng_client_new_default(GETENV(QINIU_NG_CHARS("access_key")), GETENV(QINIU_NG_CHARS("secret_key")));
 
     qiniu_ng_err_t err;
@@ -84,7 +81,7 @@ void test_qiniu_ng_storage_bucket_create_duplicated(void) {
     qiniu_ng_str_t error_message;
 
     TEST_ASSERT_FALSE_MESSAGE(
-        qiniu_ng_storage_create_bucket(client, QINIU_NG_CHARS("z0-bucket"), qiniu_ng_region_z1, &err),
+        qiniu_ng_storage_create_bucket(client, GETENV(QINIU_NG_CHARS("public_bucket")), qiniu_ng_region_z1, &err),
         "qiniu_ng_storage_create_bucket() returns unexpected value");
     TEST_ASSERT_FALSE_MESSAGE(
         qiniu_ng_err_os_error_extract(&err, NULL),

@@ -30,7 +30,7 @@ mod tests {
         let config = Config::default();
         let temp_path = create_temp_file(1 << 19)?.into_temp_path();
         let key = format!("test-512k-{}", Utc::now().timestamp_nanos());
-        let policy = UploadPolicyBuilder::new_policy_for_object(bucket_name(), &key, &config)
+        let policy = UploadPolicyBuilder::new_policy_for_object(env::get().upload_bucket(), &key, &config)
             .return_url("http://www.qiniu.com")
             .build();
         let err = get_client(config)
@@ -53,7 +53,7 @@ mod tests {
         let config = Config::default();
         let temp_path = create_temp_file(1 << 19)?.into_temp_path();
         let key = format!("test-512k-{}", Utc::now().timestamp_nanos());
-        let policy = UploadPolicyBuilder::new_policy_for_object(bucket_name(), &key, &config)
+        let policy = UploadPolicyBuilder::new_policy_for_object(env::get().upload_bucket(), &key, &config)
             .return_body("$(fname)/$(key)")
             .build();
         let client = get_client(config);
@@ -68,7 +68,11 @@ mod tests {
         assert!(!result.is_json_value());
         assert_eq!(String::from_utf8(result.into_bytes())?, format!("\"512k\"/\"{}\"", key));
 
-        let object = client.storage().bucket(bucket_name()).build().object(key);
+        let object = client
+            .storage()
+            .bucket(env::get().upload_bucket().to_owned())
+            .build()
+            .object(key);
 
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
@@ -84,7 +88,7 @@ mod tests {
         let temp_path = create_temp_file(1 << 19)?.into_temp_path();
         let etag = etag::from_file(&temp_path)?;
         let key = format!("test-512k-{}", Utc::now().timestamp_nanos());
-        let policy = UploadPolicyBuilder::new_policy_for_object(bucket_name(), &key, &config)
+        let policy = UploadPolicyBuilder::new_policy_for_object(env::get().upload_bucket(), &key, &config)
             .return_body("{\"hash\":$(etag),\"key\":$(key),\"fname\":$(fname),\"var_key1\":$(x:var_key1),\"var_key2\":$(x:var_key2)}")
             .build();
         let last_uploaded = AtomicU64::new(0);
@@ -109,7 +113,11 @@ mod tests {
         assert_eq!(result.get("var_key1"), Some(&json!("var_value1")));
         assert_eq!(result.get("var_key2"), Some(&json!("var_value2")));
 
-        let object = client.storage().bucket(bucket_name()).build().object(key);
+        let object = client
+            .storage()
+            .bucket(env::get().upload_bucket().to_owned())
+            .build()
+            .object(key);
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
         assert_eq!(object_info.size(), 1 << 19);
@@ -136,7 +144,7 @@ mod tests {
         let temp_path = create_temp_file(1 << 19)?.into_temp_path();
         let etag = etag::from_file(&temp_path)?;
         let key = format!("test-512k-{}", Utc::now().timestamp_nanos());
-        let policy = UploadPolicyBuilder::new_policy_for_object(bucket_name(), &key, &Config::default())
+        let policy = UploadPolicyBuilder::new_policy_for_object(env::get().upload_bucket(), &key, &Config::default())
             .return_body("{\"hash\":$(etag),\"key\":$(key),\"fname\":$(fname),\"var_key1\":$(x:var_key1),\"var_key2\":$(x:var_key2)}")
             .build();
         let last_uploaded = AtomicU64::new(0);
@@ -162,7 +170,11 @@ mod tests {
         assert_eq!(result.get("var_key1"), Some(&json!("var_value1")));
         assert_eq!(result.get("var_key2"), Some(&json!("var_value2")));
 
-        let object = client.storage().bucket(bucket_name()).build().object(key);
+        let object = client
+            .storage()
+            .bucket(env::get().upload_bucket().to_owned())
+            .build()
+            .object(key);
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
         assert_eq!(object_info.size(), 1 << 19);
@@ -190,7 +202,7 @@ mod tests {
         let temp_path = create_temp_file(FILE_SIZE.try_into().unwrap())?.into_temp_path();
         let etag = etag::from_file(&temp_path)?;
         let key = format!("test-9m-{}", Utc::now().timestamp_nanos());
-        let policy = UploadPolicyBuilder::new_policy_for_object(bucket_name(), &key, &config)
+        let policy = UploadPolicyBuilder::new_policy_for_object(env::get().upload_bucket(), &key, &config)
             .return_body("{\"hash\":$(etag),\"key\":$(key),\"fsize\":$(fsize)}")
             .build();
         let last_uploaded = AtomicU64::new(0);
@@ -214,7 +226,11 @@ mod tests {
         assert_eq!(result.hash(), Some(etag.as_str()));
         assert_eq!(result.get("fsize"), Some(&json!(FILE_SIZE)));
 
-        let object = client.storage().bucket(bucket_name()).build().object(key);
+        let object = client
+            .storage()
+            .bucket(env::get().upload_bucket().to_owned())
+            .build()
+            .object(key);
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
         assert_eq!(object_info.size(), FILE_SIZE);
@@ -242,7 +258,7 @@ mod tests {
         let temp_path = create_temp_file(FILE_SIZE.try_into().unwrap())?.into_temp_path();
         let etag = etag::from_file(&temp_path)?;
         let key = format!("test-5m-{}", Utc::now().timestamp_nanos());
-        let policy = UploadPolicyBuilder::new_policy_for_object(bucket_name(), &key, &config)
+        let policy = UploadPolicyBuilder::new_policy_for_object(env::get().upload_bucket(), &key, &config)
             .return_body("{\"hash\":$(etag),\"key\":$(key),\"fsize\":$(fsize)}")
             .build();
         let last_uploaded = AtomicU64::new(0);
@@ -274,7 +290,11 @@ mod tests {
         assert_eq!(result.hash(), Some(etag.as_str()));
         assert_eq!(result.get("fsize"), Some(&json!(FILE_SIZE)));
 
-        let object = client.storage().bucket(bucket_name()).build().object(key);
+        let object = client
+            .storage()
+            .bucket(env::get().upload_bucket().to_owned())
+            .build()
+            .object(key);
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
         assert_eq!(object_info.size(), FILE_SIZE);
@@ -301,7 +321,7 @@ mod tests {
         let file_size: u64 = thread_rng().gen_range(1 << 10, 1 << 22);
         let temp_path = create_temp_file(file_size as usize)?.into_temp_path();
         let etag = etag::from_file(&temp_path)?;
-        let policy = UploadPolicyBuilder::new_policy_for_bucket(bucket_name(), &config)
+        let policy = UploadPolicyBuilder::new_policy_for_bucket(env::get().upload_bucket(), &config)
             .return_body("{\"hash\":$(etag),\"key\":$(key),\"fname\":$(fname),\"var_key1\":$(x:var_key1)}")
             .build();
         let last_uploaded = AtomicU64::new(0);
@@ -325,7 +345,7 @@ mod tests {
 
         let object = client
             .storage()
-            .bucket(bucket_name())
+            .bucket(env::get().upload_bucket().to_owned())
             .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
@@ -343,7 +363,7 @@ mod tests {
 
         object.delete()?;
 
-        let policy = UploadPolicyBuilder::new_policy_for_bucket(bucket_name(), &config)
+        let policy = UploadPolicyBuilder::new_policy_for_bucket(env::get().upload_bucket(), &config)
             .return_body("{\"hash\":$(etag),\"key\":$(key),\"fname\":$(fname),\"var_key1\":$(x:var_key1)}")
             .build();
         let last_uploaded = AtomicU64::new(0);
@@ -390,7 +410,7 @@ mod tests {
         file.seek(SeekFrom::Start(0))?;
 
         let etag = etag::from_file(&temp_path)?;
-        let policy = UploadPolicyBuilder::new_policy_for_bucket(bucket_name(), &config)
+        let policy = UploadPolicyBuilder::new_policy_for_bucket(env::get().upload_bucket(), &config)
             .return_body("{\"hash\":$(etag),\"key\":$(key),\"fname\":$(fname),\"var_key1\":$(x:var_key1)}")
             .build();
         let last_uploaded = AtomicU64::new(0);
@@ -416,7 +436,7 @@ mod tests {
 
         let object = client
             .storage()
-            .bucket(bucket_name())
+            .bucket(env::get().upload_bucket().to_owned())
             .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
@@ -447,7 +467,7 @@ mod tests {
         let client = get_client(Default::default());
         let result = client
             .upload()
-            .upload_for_bucket(bucket_name(), get_credential())
+            .upload_for_bucket(env::get().upload_bucket().to_owned(), get_credential())
             .var("var_key1", "var_value1")
             .metadata("metadata_key1", "metadata_value1")
             .on_progress_ref(&|uploaded, total| {
@@ -464,7 +484,7 @@ mod tests {
 
         let object = client
             .storage()
-            .bucket(bucket_name())
+            .bucket(env::get().upload_bucket().to_owned())
             .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
@@ -494,7 +514,7 @@ mod tests {
         let client = get_client(Default::default());
         let result = client
             .upload()
-            .upload_for_bucket(bucket_name(), get_credential())
+            .upload_for_bucket(env::get().upload_bucket().to_owned(), get_credential())
             .var("var_key1", "var_value1")
             .metadata("metadata_key1", "metadata_value1")
             .on_progress_ref(&|uploaded, total| {
@@ -511,7 +531,7 @@ mod tests {
 
         let object = client
             .storage()
-            .bucket(bucket_name())
+            .bucket(env::get().upload_bucket().to_owned())
             .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
@@ -541,7 +561,7 @@ mod tests {
         let key = format!("测试-stream-{}", Utc::now().timestamp_nanos());
         let object = get_client(Default::default())
             .storage()
-            .bucket(bucket_name())
+            .bucket(env::get().upload_bucket().to_owned())
             .build()
             .object(key.to_owned());
         let result = object
@@ -588,7 +608,7 @@ mod tests {
         let client = get_client(Default::default());
         let result = client
             .upload()
-            .upload_for_bucket(bucket_name(), get_credential())
+            .upload_for_bucket(env::get().upload_bucket().to_owned(), get_credential())
             .var("var_key1", "var_value1")
             .metadata("metadata_key1", "metadata_value1")
             .on_progress_ref(&|uploaded, total| {
@@ -605,7 +625,7 @@ mod tests {
 
         let object = client
             .storage()
-            .bucket(bucket_name())
+            .bucket(env::get().upload_bucket().to_owned())
             .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
@@ -652,7 +672,7 @@ mod tests {
                 .map(etag::from_file)
                 .collect::<Result<Vec<_>, IOError>>()?,
         );
-        let policy = UploadPolicyBuilder::new_policy_for_bucket(bucket_name(), &config)
+        let policy = UploadPolicyBuilder::new_policy_for_bucket(env::get().upload_bucket(), &config)
             .return_body("{\"hash\":$(etag),\"key\":$(key),\"fname\":$(fname),\"var_key1\":$(x:var_key1)}")
             .build();
         let client = get_client(config);
@@ -706,7 +726,7 @@ mod tests {
         batch_uploader.start();
         assert_eq!(completed.load(Relaxed), FILE_SIZES.len());
 
-        let bucket = client.storage().bucket(bucket_name()).build();
+        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned()).build();
         for (idx, key) in keys.into_iter().enumerate() {
             let object = bucket.object(key);
             let object_info = object.get_info()?;
@@ -748,7 +768,7 @@ mod tests {
         let client = get_client(Default::default());
         let mut batch_uploader = client
             .upload()
-            .batch_uploader_for_bucket(bucket_name(), get_credential());
+            .batch_uploader_for_bucket(env::get().upload_bucket().to_owned(), get_credential());
         batch_uploader.expected_jobs_count(FILE_SIZES.len()).thread_pool_size(1);
         let thread_ids = Arc::new(RwLock::new(Vec::with_capacity(12)));
         let completed = Arc::new(AtomicUsize::new(0));
@@ -787,7 +807,7 @@ mod tests {
         batch_uploader.start();
         assert_eq!(completed.load(Relaxed), FILE_SIZES.len());
 
-        let bucket = client.storage().bucket(bucket_name()).build();
+        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned()).build();
         for (idx, key) in keys.into_iter().enumerate() {
             let object = bucket.object(key);
             let object_info = object.get_info()?;
@@ -830,7 +850,7 @@ mod tests {
         let client = get_client(Default::default());
         let mut batch_uploader = client
             .upload()
-            .batch_uploader_for_bucket(bucket_name(), get_credential());
+            .batch_uploader_for_bucket(env::get().upload_bucket().to_owned(), get_credential());
         batch_uploader.expected_jobs_count(FILE_SIZES.len()).thread_pool_size(3);
         let thread_ids = Arc::new(RwLock::new(Vec::with_capacity(12)));
         let completed = Arc::new(AtomicUsize::new(0));
@@ -869,7 +889,7 @@ mod tests {
         batch_uploader.start();
         assert_eq!(completed.load(Relaxed), FILE_SIZES.len());
 
-        let bucket = client.storage().bucket(bucket_name()).build();
+        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned()).build();
         for (idx, key) in keys.into_iter().enumerate() {
             let object = bucket.object(key);
             let object_info = object.get_info()?;
@@ -910,7 +930,7 @@ mod tests {
                 .map(|part| etag::from_file(&part.1))
                 .collect::<Result<Vec<_>, IOError>>()?,
         );
-        let policy = UploadPolicyBuilder::new_policy_for_bucket(bucket_name(), &config)
+        let policy = UploadPolicyBuilder::new_policy_for_bucket(env::get().upload_bucket(), &config)
             .return_body("{\"hash\":$(etag),\"key\":$(key),\"fname\":$(fname),\"var_key1\":$(x:var_key1)}")
             .build();
         let client = get_client(config);
@@ -965,7 +985,7 @@ mod tests {
         batch_uploader.start();
         assert_eq!(completed.load(Relaxed), FILE_SIZES.len());
 
-        let bucket = client.storage().bucket(bucket_name()).build();
+        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned()).build();
         for (idx, key) in keys.into_iter().enumerate() {
             let object = bucket.object(key);
             let object_info = object.get_info()?;
@@ -977,14 +997,6 @@ mod tests {
             object.delete()?;
         }
         Ok(())
-    }
-
-    fn bucket_name() -> &'static str {
-        if option_env!("USE_NA_BUCKET").is_some() {
-            "na-bucket"
-        } else {
-            "z0-bucket"
-        }
     }
 
     fn get_client(config: Config) -> Client {

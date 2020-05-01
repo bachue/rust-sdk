@@ -13,7 +13,9 @@ RSpec.describe QiniuNg::Client do
     it 'should list all bucket_names' do
       client = QiniuNg::Client.create access_key: ENV['access_key'],
                                       secret_key: ENV['secret_key']
-      expect(client.bucket_names).to include('z0-bucket', 'z1-bucket', 'z0-bucket-bind')
+      expect(client.bucket_names).to include(ENV['huadong_bucket'])
+      expect(client.bucket_names).to include(ENV['huabei_bucket'])
+      expect(client.bucket_names).to include(ENV['huanan_bucket'])
     end
   end
 

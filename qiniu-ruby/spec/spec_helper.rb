@@ -1,5 +1,4 @@
 require_relative File.join('..', 'lib', 'qiniu_ng')
-require_relative File.join('helpers', 'upload_helper')
 require 'dotenv'
 
 Dotenv.load('.env', '../.env')
@@ -20,8 +19,6 @@ Dotenv.load('.env', '../.env')
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  config.include Helpers::UploadHelper
-
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

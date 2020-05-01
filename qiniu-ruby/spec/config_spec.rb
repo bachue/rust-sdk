@@ -199,7 +199,7 @@ RSpec.describe QiniuNg::Config do
         config = builder.build!
         GC.start
         QiniuNg::Storage::Uploader.create(config).upload_io StringIO.new(SecureRandom.random_bytes(1)),
-                                                            bucket_name: 'z0-bucket',
+                                                            bucket_name: ENV['huadong_bucket'],
                                                             credential: QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key']),
                                                             key: "测试-#{Time.now.to_i}-#{rand(2**64-1)}"
         expect(handler_called).to be_true
@@ -231,7 +231,7 @@ RSpec.describe QiniuNg::Config do
         config = builder.build!
         GC.start
         QiniuNg::Storage::Uploader.create(config).upload_io StringIO.new(SecureRandom.random_bytes(1)),
-                                                            bucket_name: 'z0-bucket',
+                                                            bucket_name: ENV['huadong_bucket'],
                                                             credential: QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key']),
                                                             key: "测试-#{Time.now.to_i}-#{rand(2**64-1)}"
         # TODO: Clean uploaded file
@@ -247,7 +247,7 @@ RSpec.describe QiniuNg::Config do
         GC.start
         expect do
           QiniuNg::Storage::Uploader.create(config).upload_io StringIO.new(SecureRandom.random_bytes(1)),
-                                                              bucket_name: 'z0-bucket',
+                                                              bucket_name: ENV['huadong_bucket'],
                                                               credential: QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key']),
                                                               key: "测试-#{Time.now.to_i}-#{rand(2**64-1)}"
         end.to raise_error(QiniuNg::Error::IOError, 'test error')
@@ -262,7 +262,7 @@ RSpec.describe QiniuNg::Config do
         GC.start
         begin
           QiniuNg::Storage::Uploader.create(config).upload_io StringIO.new(SecureRandom.random_bytes(1)),
-                                                              bucket_name: 'z0-bucket',
+                                                              bucket_name: ENV['huadong_bucket'],
                                                               credential: QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key']),
                                                               key: "测试-#{Time.now.to_i}-#{rand(2**64-1)}"
           fail 'expect to raise error here'
@@ -280,7 +280,7 @@ RSpec.describe QiniuNg::Config do
         GC.start
         begin
           QiniuNg::Storage::Uploader.create(config).upload_io StringIO.new(SecureRandom.random_bytes(1)),
-                                                              bucket_name: 'z0-bucket',
+                                                              bucket_name: ENV['huadong_bucket'],
                                                               credential: QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key']),
                                                               key: "测试-#{Time.now.to_i}-#{rand(2**64-1)}"
           fail 'expect to raise error here'
@@ -303,7 +303,7 @@ RSpec.describe QiniuNg::Config do
         io = StringIO.new(SecureRandom.random_bytes((1<<22)+1))
         begin
           QiniuNg::Storage::Uploader.create(config).upload_io io,
-                                                              bucket_name: 'z0-bucket',
+                                                              bucket_name: ENV['huadong_bucket'],
                                                               credential: QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key']),
                                                               key: "测试-#{Time.now.to_i}-#{rand(2**64-1)}"
           fail 'expect to raise error here'
@@ -324,7 +324,7 @@ RSpec.describe QiniuNg::Config do
         io = StringIO.new(SecureRandom.random_bytes(1))
         begin
           QiniuNg::Storage::Uploader.create(config).upload_io io,
-                                                              bucket_name: 'z0-bucket',
+                                                              bucket_name: ENV['huadong_bucket'],
                                                               credential: QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key']),
                                                               key: "测试-#{Time.now.to_i}-#{rand(2**64-1)}"
         rescue QiniuNg::Error::ResponseStatusCodeError => e
@@ -349,7 +349,7 @@ RSpec.describe QiniuNg::Config do
         GC.start
         io = StringIO.new(SecureRandom.random_bytes(1))
         response = QiniuNg::Storage::Uploader.create(config).upload_io io,
-                                                                       bucket_name: 'z0-bucket',
+                                                                       bucket_name: ENV['huadong_bucket'],
                                                                        credential: QiniuNg::Credential.create(ENV['access_key'], ENV['secret_key']),
                                                                        key: "测试-#{Time.now.to_i}-#{rand(2**64-1)}"
         expect(response.key).to be_nil

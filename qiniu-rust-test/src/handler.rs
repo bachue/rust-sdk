@@ -38,7 +38,10 @@ mod tests {
             .build();
         let temp_path = create_temp_file(1)?.into_temp_path();
         let key = format!("test-1b-{}", Utc::now().timestamp_nanos());
-        let bucket = get_client(config).storage().bucket("z0-bucket").build();
+        let bucket = get_client(config)
+            .storage()
+            .bucket(env::get().huadong_bucket().to_owned())
+            .build();
         bucket.uploader().key(&key).upload_file(&temp_path, "1b", None)?;
         bucket.object(key).delete()?;
 
@@ -71,7 +74,7 @@ mod tests {
             .build();
         let temp_path = create_temp_file(1)?.into_temp_path();
         let key = format!("test-1b-{}", Utc::now().timestamp_nanos());
-        let policy = UploadPolicyBuilder::new_policy_for_object("z0-bucket", &key, &config).build();
+        let policy = UploadPolicyBuilder::new_policy_for_object(env::get().huadong_bucket(), &key, &config).build();
         let response = get_client(config)
             .upload()
             .upload_for_upload_policy(policy, get_credential())?
