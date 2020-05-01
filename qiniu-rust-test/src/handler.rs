@@ -40,8 +40,7 @@ mod tests {
         let key = format!("test-1b-{}", Utc::now().timestamp_nanos());
         let bucket = get_client(config)
             .storage()
-            .bucket(env::get().huadong_bucket().to_owned())
-            .build();
+            .bucket(env::get().huadong_bucket().to_owned());
         bucket.uploader().key(&key).upload_file(&temp_path, "1b", None)?;
         bucket.object(key).delete()?;
 

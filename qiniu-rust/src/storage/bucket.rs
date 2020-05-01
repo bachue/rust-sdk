@@ -53,7 +53,7 @@ struct BucketInner {
 ///
 /// # fn main() -> Result<(), Box<dyn Error>> {
 /// let client = Client::new("[Access Key]", "[Secret Key]", Config::default());
-/// let bucket = client.storage().bucket("[Bucket name]").build();
+/// let bucket = client.storage().bucket("[Bucket name]");
 /// # Ok(())
 /// # }
 /// ```
@@ -106,7 +106,7 @@ impl BucketBuilder {
     /// let client = Client::new("[Access Key]", "[Secret Key]", Config::default());
     /// # let (region1, region2, region3) = (Region::z0(),Region::z1(),Region::z2());
     /// // 这里 bucket 将优先使用 `region1` 作为主要区域，而 `region2` 和 `region3` 则作为备用区域
-    /// let bucket = client.storage().bucket("[Bucket name]")
+    /// let bucket = client.storage().bucket_builder("[Bucket name]")
     ///                              .region(region1)
     ///                              .region(region2)
     ///                              .region(region3)
@@ -165,7 +165,7 @@ impl BucketBuilder {
     /// let client = Client::new("[Access Key]", "[Secret Key]", Config::default());
     ///
     /// // 这里 bucket 将优先使用 `cdn2.example.com` 作为下载域名，其次是 `cdn1.example.com`，最终才轮到七牛配置的下载域名
-    /// let bucket = client.storage().bucket("[Bucket name]")
+    /// let bucket = client.storage().bucket_builder("[Bucket name]")
     ///                              .auto_detect_domains()?
     ///                              .prepend_domain("cdn1.example.com")?
     ///                              .prepend_domain("cdn2.example.com")?

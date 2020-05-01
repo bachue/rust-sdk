@@ -71,7 +71,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(key);
 
         let object_info = object.get_info()?;
@@ -116,7 +115,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(key);
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
@@ -173,7 +171,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(key);
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
@@ -229,7 +226,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(key);
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
@@ -293,7 +289,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(key);
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
@@ -346,7 +341,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::IMAGE_PNG);
@@ -437,7 +431,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::APPLICATION_OCTET_STREAM);
@@ -485,7 +478,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::APPLICATION_OCTET_STREAM);
@@ -532,7 +524,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::APPLICATION_OCTET_STREAM);
@@ -562,7 +553,6 @@ mod tests {
         let object = get_client(Default::default())
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(key.to_owned());
         let result = object
             .uploader()
@@ -626,7 +616,6 @@ mod tests {
         let object = client
             .storage()
             .bucket(env::get().upload_bucket().to_owned())
-            .build()
             .object(result.key().unwrap().to_owned());
         let object_info = object.get_info()?;
         assert_eq!(object_info.mime_type(), mime::APPLICATION_OCTET_STREAM);
@@ -726,7 +715,7 @@ mod tests {
         batch_uploader.start();
         assert_eq!(completed.load(Relaxed), FILE_SIZES.len());
 
-        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned()).build();
+        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned());
         for (idx, key) in keys.into_iter().enumerate() {
             let object = bucket.object(key);
             let object_info = object.get_info()?;
@@ -807,7 +796,7 @@ mod tests {
         batch_uploader.start();
         assert_eq!(completed.load(Relaxed), FILE_SIZES.len());
 
-        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned()).build();
+        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned());
         for (idx, key) in keys.into_iter().enumerate() {
             let object = bucket.object(key);
             let object_info = object.get_info()?;
@@ -889,7 +878,7 @@ mod tests {
         batch_uploader.start();
         assert_eq!(completed.load(Relaxed), FILE_SIZES.len());
 
-        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned()).build();
+        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned());
         for (idx, key) in keys.into_iter().enumerate() {
             let object = bucket.object(key);
             let object_info = object.get_info()?;
@@ -985,7 +974,7 @@ mod tests {
         batch_uploader.start();
         assert_eq!(completed.load(Relaxed), FILE_SIZES.len());
 
-        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned()).build();
+        let bucket = client.storage().bucket(env::get().upload_bucket().to_owned());
         for (idx, key) in keys.into_iter().enumerate() {
             let object = bucket.object(key);
             let object_info = object.get_info()?;

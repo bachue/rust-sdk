@@ -34,8 +34,7 @@ mod tests {
         let client = get_client(Config::default());
         let bucket = client
             .storage()
-            .bucket(env::get().dual_regions_bucket_huadong().to_owned())
-            .build();
+            .bucket(env::get().dual_regions_bucket_huadong().to_owned());
         assert_eq!(bucket.regions()?.count(), 2);
         let domains = bucket.domains()?;
         assert_eq!(domains.len(), 2);

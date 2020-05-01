@@ -2,7 +2,10 @@
 //!
 //! 封装存储相关管理功能
 
-use super::{bucket::BucketBuilder, uploader::UploadManager};
+use super::{
+    bucket::{Bucket, BucketBuilder},
+    uploader::UploadManager,
+};
 use crate::{
     config::Config,
     credential::Credential,
@@ -117,7 +120,12 @@ impl StorageManager {
     }
 
     /// 获取存储空间实例生成器
-    pub fn bucket(&self, bucket: impl Into<Cow<'static, str>>) -> BucketBuilder {
+    pub fn bucket(&self, bucket: impl Into<Cow<'static, str>>) -> Bucket {
+        self.bucket_builder(bucket).build()
+    }
+
+    /// 获取存储空间实例生成器
+    pub fn bucket_builder(&self, bucket: impl Into<Cow<'static, str>>) -> BucketBuilder {
         BucketBuilder::new(bucket.into(), self.credential.to_owned(), self.upload_manager())
     }
 
