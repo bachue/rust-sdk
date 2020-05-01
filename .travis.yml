@@ -15,6 +15,7 @@ matrix:
       script:
         - |
             if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
+              set -e
               make -C qiniu-rust build doc
               make -C qiniu-rust-http build doc
               make -C qiniu-c build doc
@@ -48,12 +49,14 @@ matrix:
             if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
               eval "$(rbenv init -)"
               (
+                set -e
                 rbenv install 2.4.0
                 rbenv shell 2.4.0
                 gem install bundler
                 make -C qiniu-ruby build doc test
               )
               (
+                set -e
                 rbenv install jruby-9.2.0.0
                 rbenv shell jruby-9.2.0.0
                 gem install bundler
@@ -73,6 +76,7 @@ matrix:
       script:
         - |
             if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
+              set -e
               make -C qiniu-rust build doc
               make -C qiniu-rust-http build doc
               make -C qiniu-c build doc
@@ -98,6 +102,7 @@ matrix:
             rbenv install 2.4.0
             rbenv shell 2.4.0
             gem install bundler
+            set -e
             make -C qiniu-ruby build doc test
     - os: windows
       rust:
