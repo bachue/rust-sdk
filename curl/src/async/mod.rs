@@ -496,7 +496,6 @@ mod tests {
                 &CurlHTTPCaller::default(),
                 &Request::builder()
                     .url(format!("http://{}/get/useragent", addr))
-                    .request_timeout(Duration::from_secs(3))
                     .appended_user_agent("/user-agent-test")
                     .build(),
             )
