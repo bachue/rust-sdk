@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["qiniu_http"] = [{"text":"impl StructuralEq for RetryKind","synthetic":false,"types":[]},{"text":"impl&lt;'n&gt; StructuralEq for HeaderName&lt;'n&gt;","synthetic":false,"types":[]},{"text":"impl StructuralEq for HeaderNameOwned","synthetic":false,"types":[]},{"text":"impl StructuralEq for Method","synthetic":false,"types":[]}];
+implementors["qiniu_ng"] = [{"text":"impl StructuralEq for Credential","synthetic":false,"types":[]},{"text":"impl StructuralEq for RegionId","synthetic":false,"types":[]},{"text":"impl StructuralEq for UploadPolicy","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

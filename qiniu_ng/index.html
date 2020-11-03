@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `qiniu_ng` crate."><meta name="keywords" content="rust, rustlang, rust-lang, qiniu_ng"><title>qiniu_ng - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="https://developer.qiniu.com/favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../qiniu_ng/index.html'><div class='logo-container'><img src='https://dn-mars-assets.qbox.me/qiniulogo/img-slogon-horizontal-blue-cn.jpg' alt='logo'></div></a><p class='location'>Crate qiniu_ng</p><div class='block version'><p>Version 0.0.3</p></div><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all qiniu_ng's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'qiniu_ng', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/qiniu_ng/lib.rs.html#1-622' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>qiniu_ng</a></span></h1><div class='docblock'><p>七牛云新一代 Rust SDK</p>
+<p>此 Rust SDK 适用于 Rust 1.38 及其以上版本。基于 <a href="http://developer.qiniu.com/">七牛云官方 API</a> 构建。
+使用此 SDK 构建您的网络应用程序，能让您以非常便捷地方式将数据安全地存储到七牛云上。
+无论您的网络应用是一个网站程序，还是包括从云端（服务端程序）到终端（手持设备应用）的架构的服务或应用，通过七牛云及其 SDK，都能让您应用程序的终端用户高速上传和下载，同时也让您的服务端更加轻盈。</p>
+<p>Rust SDK 属于七牛服务端 SDK 之一，主要有如下功能：</p>
+<ol>
+<li>提供生成客户端上传所需的上传凭证的功能</li>
+<li>提供文件从服务端直接上传七牛的功能</li>
+<li>提供文件从七牛直接下载到本地的功能 【开发中】</li>
+<li>提供对七牛空间中文件进行管理的功能 【开发中】</li>
+<li>提供对七牛空间中文件进行处理的功能 【开发中】</li>
+<li>提供七牛 CDN 相关的刷新，预取，日志功能 【开发中】</li>
+</ol>
+<h1 id="鉴权" class="section-header"><a href="#鉴权">鉴权</a></h1>
+<p>七牛 Rust SDK 的所有的功能，都需要合法的授权。授权凭证的签算需要七牛账号下的一对有效的 <code>Access Key</code> 和 <code>Secret Key</code> ，这对密钥可以通过如下步骤获得：</p>
+<ol>
+<li>点击<a href="https://portal.qiniu.com/signup">注册</a>开通七牛开发者帐号</li>
+<li>如果已有账号，直接登录七牛开发者后台，点击<a href="https://portal.qiniu.com/user/key">这里</a>查看 Access Key 和 Secret Key</li>
+</ol>
+<h1 id="存储空间" class="section-header"><a href="#存储空间">存储空间</a></h1>
+<p>七牛对象存储的文件需要存储在存储空间中，存储空间即可以通过<a href="https://portal.qiniu.com/kodo/bucket">七牛开发者后台</a>进行管理，也可以调用 Rust SDK 提供的 API 进行管理。</p>
+<h2 id="创建存储空间" class="section-header"><a href="#创建存储空间">创建存储空间</a></h2>
+<p>在创建存储空间时，需要注意存储空间的名称必须遵守以下规则：</p>
+<ul>
+<li>存储空间名称不允许重复，遇到冲突请更换名称。</li>
+<li>名称由 3 ~ 63 个字符组成 ，可包含小写字母、数字和短划线，且必须以小写字母或者数字开头和结尾。</li>
+</ul>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">qiniu_ng</span>::{<span class="ident">Config</span>, <span class="ident">Client</span>, <span class="ident">storage</span>::<span class="ident">region</span>::<span class="ident">RegionId</span>};
+
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">new_bucket_name</span> <span class="op">=</span> <span class="string">&quot;[New Bucket Name, Must be Unique]&quot;</span>;
+<span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>, <span class="ident">Config</span>::<span class="ident">default</span>());
+<span class="ident">client</span>.<span class="ident">storage</span>().<span class="ident">create_bucket</span>(<span class="ident">new_bucket_name</span>, <span class="ident">RegionId</span>::<span class="ident">Z0</span>)<span class="question-mark">?</span>;</pre></div>
+<h2 id="删除存储空间" class="section-header"><a href="#删除存储空间">删除存储空间</a></h2>
+<p>删除存储空间前务必保证存储空间里已经没有任何文件，否则删除将会失败。</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">qiniu_ng</span>::{<span class="ident">Config</span>, <span class="ident">Client</span>};
+
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">bucket_name_to_drop</span> <span class="op">=</span> <span class="string">&quot;[Bucket Name]&quot;</span>;
+<span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>, <span class="ident">Config</span>::<span class="ident">default</span>());
+<span class="ident">client</span>.<span class="ident">storage</span>().<span class="ident">drop_bucket</span>(<span class="ident">bucket_name_to_drop</span>)<span class="question-mark">?</span>;</pre></div>
+<h2 id="列出存储空间" class="section-header"><a href="#列出存储空间">列出存储空间</a></h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">qiniu_ng</span>::{<span class="ident">Config</span>, <span class="ident">Client</span>};
+
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>, <span class="ident">Config</span>::<span class="ident">default</span>());
+<span class="kw">let</span> <span class="ident">bucket_names</span> <span class="op">=</span> <span class="ident">client</span>.<span class="ident">storage</span>().<span class="ident">bucket_names</span>()<span class="question-mark">?</span>;</pre></div>
+<h1 id="上传" class="section-header"><a href="#上传">上传</a></h1><h2 id="上传流程" class="section-header"><a href="#上传流程">上传流程</a></h2>
+<p>七牛文件上传分为客户端上传（主要是指网页端和移动端等面向终端用户的场景）和服务端上传两种场景，具体可以参考文档<a href="https://developer.qiniu.com/kodo/manual/programming-model">七牛业务流程</a>。</p>
+<p>服务端 SDK 在上传方面主要提供两种功能，一种是生成客户端上传所需要的上传凭证，另外一种是直接上传文件到云端。</p>
+<h2 id="客户端上传凭证" class="section-header"><a href="#客户端上传凭证">客户端上传凭证</a></h2>
+<p>客户端（移动端或者 Web 端）上传文件的时候，需要从客户自己的业务服务器获取上传凭证，而这些上传凭证是通过服务端的 SDK 来生成的，然后通过客户自己的业务 API 分发给客户端使用。根据上传的业务需求不同，七牛云 Rust SDK 支持丰富的上传凭证生成方式。</p>
+<h3 id="简单上传凭证" class="section-header"><a href="#简单上传凭证">简单上传凭证</a></h3>
+<p>最简单的上传凭证只需要 <code>AccessKey</code>，<code>SecretKey</code> 和 <code>Bucket</code> 就可以。</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">qiniu_ng</span>::{<span class="ident">Credential</span>, <span class="ident">Config</span>};
+<span class="kw">use</span> <span class="ident">qiniu_ng</span>::<span class="ident">storage</span>::<span class="ident">uploader</span>::{<span class="ident">UploadPolicyBuilder</span>, <span class="ident">UploadPolicy</span>, <span class="ident">UploadToken</span>};
+
+<span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">Config</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="ident">upload_policy</span> <span class="op">=</span> <span class="ident">UploadPolicyBuilder</span>::<span class="ident">new_policy_for_bucket</span>(<span class="string">&quot;[Bucket Name]&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">config</span>)
+                                        .<span class="ident">build</span>();
+
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">credential</span> <span class="op">=</span> <span class="ident">Credential</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>);
+<span class="kw">let</span> <span class="ident">upload_token</span> <span class="op">=</span> <span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>);</pre></div>
+<p>默认情况下，在不指定上传凭证的有效时间情况下，默认有效期为 1 个小时。也可以自行指定上传凭证的有效期，例如：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">bucket</span> <span class="op">=</span> <span class="string">&quot;[Bucket Name]&quot;</span>;
+
+<span class="kw">let</span> <span class="ident">credential</span> <span class="op">=</span> <span class="ident">Credential</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>);
+<span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">ConfigBuilder</span>::<span class="ident">default</span>()
+                           .<span class="ident">upload_token_lifetime</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">7200</span>))
+                           .<span class="ident">build</span>();
+<span class="kw">let</span> <span class="ident">upload_policy</span> <span class="op">=</span> <span class="ident">UploadPolicyBuilder</span>::<span class="ident">new_policy_for_bucket</span>(<span class="ident">bucket</span>, <span class="kw-2">&amp;</span><span class="ident">config</span>)
+                                        .<span class="ident">build</span>();
+
+<span class="kw">let</span> <span class="ident">upload_token</span> <span class="op">=</span> <span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>);</pre></div>
+<h3 id="覆盖上传凭证" class="section-header"><a href="#覆盖上传凭证">覆盖上传凭证</a></h3>
+<p>覆盖上传除了需要 <code>简单上传</code> 所需要的信息之外，还需要想进行覆盖的文件名称，这个文件名称同时可是客户端上传代码中指定的文件名，两者必须一致。</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">bucket</span> <span class="op">=</span> <span class="string">&quot;[Bucket Name]&quot;</span>;
+<span class="kw">let</span> <span class="ident">key_to_overwrite</span> <span class="op">=</span> <span class="string">&quot;qiniu.mp4&quot;</span>;
+
+<span class="kw">let</span> <span class="ident">credential</span> <span class="op">=</span> <span class="ident">Credential</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>);
+<span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">Config</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="ident">upload_policy</span> <span class="op">=</span> <span class="ident">UploadPolicyBuilder</span>::<span class="ident">new_policy_for_object</span>(<span class="ident">bucket</span>, <span class="ident">key_to_overwrite</span>, <span class="kw-2">&amp;</span><span class="ident">config</span>)
+                                        .<span class="ident">build</span>();
+
+<span class="kw">let</span> <span class="ident">upload_token</span> <span class="op">=</span> <span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>);</pre></div>
+<h3 id="自定义上传回复凭证" class="section-header"><a href="#自定义上传回复凭证">自定义上传回复凭证</a></h3>
+<p>默认情况下，文件上传到七牛之后，在没有设置 <code>return_body</code> 或者回调相关的参数情况下，七牛返回给上传端的回复格式为 <code>hash</code>和 <code>key</code>，例如：</p>
+<pre><code class="language-json">{&quot;hash&quot;:&quot;Ftgm-CkWePC9fzMBTRNmPMhGBcSV&quot;,&quot;key&quot;:&quot;qiniu.jpg&quot;}
+</code></pre>
+<p>有时候我们希望能自定义这个返回的 JSON 格式的内容，可以通过设置 <code>return_body</code> 参数来实现，在 <code>return_body</code> 中，我们可以使用七牛支持的<a href="https://developer.qiniu.com/kodo/manual/vars#magicvar">魔法变量</a>和<a href="https://developer.qiniu.com/kodo/manual/vars#xvar">自定义变量</a>。</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">bucket</span> <span class="op">=</span> <span class="string">&quot;[Bucket Name]&quot;</span>;
+<span class="kw">let</span> <span class="ident">key_to_overwrite</span> <span class="op">=</span> <span class="string">&quot;qiniu.mp4&quot;</span>;
+
+<span class="kw">let</span> <span class="ident">credential</span> <span class="op">=</span> <span class="ident">Credential</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>);
+<span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">Config</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="ident">upload_policy</span> <span class="op">=</span> <span class="ident">UploadPolicyBuilder</span>::<span class="ident">new_policy_for_object</span>(<span class="ident">bucket</span>, <span class="ident">key_to_overwrite</span>, <span class="kw-2">&amp;</span><span class="ident">config</span>)
+                                        .<span class="ident">return_body</span>(<span class="string">&quot;{\&quot;key\&quot;:\&quot;$(key)\&quot;,\&quot;hash\&quot;:\&quot;$(etag)\&quot;,\&quot;fsize\&quot;:$(fsize),\&quot;bucket\&quot;:\&quot;$(bucket)\&quot;,\&quot;name\&quot;:\&quot;$(x:name)\&quot;}&quot;</span>)
+                                        .<span class="ident">build</span>();
+
+<span class="kw">let</span> <span class="ident">upload_token</span> <span class="op">=</span> <span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>);</pre></div>
+<p>则文件上传到七牛之后，收到的回复内容格式如下：</p>
+<pre><code class="language-json">{&quot;key&quot;:&quot;github-x.png&quot;,&quot;hash&quot;:&quot;FqKXVdTvIx_mPjOYdjDyUSy_H1jr&quot;,&quot;fsize&quot;:6091,&quot;bucket&quot;:&quot;if-pbl&quot;,&quot;name&quot;:&quot;github logo&quot;}
+</code></pre>
+<p>对于上面的自定义返回值，我们可以调用 <code>upload_response</code> 的方法解析这个结果，例如下面提供了一个解析结果的方法：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">local_file_path</span> <span class="op">=</span> <span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;local file path&quot;</span>);
+<span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">UploadManager</span>::<span class="ident">new</span>(<span class="ident">config</span>);
+<span class="kw">let</span> <span class="ident">upload_response</span> <span class="op">=</span> <span class="ident">upload_manager</span>.<span class="ident">upload_for_upload_token</span>(<span class="ident">upload_token</span>)<span class="question-mark">?</span>
+                                    .<span class="ident">key</span>(<span class="ident">key_to_overwrite</span>)
+                                    .<span class="ident">var</span>(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;七牛云视频&quot;</span>)
+                                    .<span class="ident">upload_file</span>(<span class="ident">local_file_path</span>, <span class="string">&quot;local file name&quot;</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>(<span class="ident">bucket</span>), <span class="ident">upload_response</span>.<span class="ident">get</span>(<span class="string">&quot;bucket&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">as_str</span>()));
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;七牛云视频&quot;</span>), <span class="ident">upload_response</span>.<span class="ident">get</span>(<span class="string">&quot;name&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">as_str</span>()));</pre></div>
+<h3 id="带回调业务服务器的凭证" class="section-header"><a href="#带回调业务服务器的凭证">带回调业务服务器的凭证</a></h3>
+<p>上面生成的 <code>自定义上传回复</code> 的上传凭证适用于上传端（无论是客户端还是服务端）和七牛服务器之间进行直接交互的情况下。在客户端上传的场景之下，有时候客户端需要在文件上传到七牛之后，从业务服务器获取相关的信息，这个时候就要用到七牛的上传回调及相关回调参数的设置。</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">bucket</span> <span class="op">=</span> <span class="string">&quot;[Bucket Name]&quot;</span>;
+<span class="kw">let</span> <span class="ident">key_to_overwrite</span> <span class="op">=</span> <span class="string">&quot;qiniu.mp4&quot;</span>;
+
+<span class="kw">let</span> <span class="ident">credential</span> <span class="op">=</span> <span class="ident">Credential</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>);
+<span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">Config</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="ident">upload_policy</span> <span class="op">=</span> <span class="ident">UploadPolicyBuilder</span>::<span class="ident">new_policy_for_object</span>(<span class="ident">bucket</span>, <span class="ident">key_to_overwrite</span>, <span class="kw-2">&amp;</span><span class="ident">config</span>)
+                                        .<span class="ident">callback</span>(
+                                            [<span class="string">&quot;http://api.example.com/qiniu/upload/callback&quot;</span>], <span class="string">&quot;&quot;</span>,
+                                            <span class="string">&quot;{\&quot;key\&quot;:\&quot;$(key)\&quot;,\&quot;hash\&quot;:\&quot;$(etag)\&quot;,\&quot;fsize\&quot;:$(fsize),\&quot;bucket\&quot;:\&quot;$(bucket)\&quot;,\&quot;name\&quot;:\&quot;$(x:name)\&quot;}&quot;</span>,
+                                            <span class="string">&quot;application/json&quot;</span>,
+                                        )
+                                        .<span class="ident">build</span>();
+
+<span class="kw">let</span> <span class="ident">upload_token</span> <span class="op">=</span> <span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>);</pre></div>
+<p>在使用了上传回调的情况下，客户端收到的回复就是业务服务器响应七牛的 JSON 格式内容，业务服务器收到回调之后必须响应 JSON 格式的回复給七牛，这个回复会被七牛传递给客户端。</p>
+<p>例如上面的 <code>callback</code> 的设置会在文件上传到七牛之后，触发七牛回调如下内容給业务服务器：</p>
+<pre><code class="language-json">{&quot;key&quot;:&quot;github-x.png&quot;,&quot;hash&quot;:&quot;FqKXVdTvIx_mPjOYdjDyUSy_H1jr&quot;,&quot;fsize&quot;:6091,&quot;bucket&quot;:&quot;if-pbl&quot;,&quot;name&quot;:&quot;github logo&quot;}
+</code></pre>
+<p>通常情况下，我们建议使用 <code>application/json</code> 格式来设置 <code>callback</code> ，保持数据格式的统一性。实际情况下， <code>callback</code> 也支持 <code>application/x-www-form-urlencoded</code> 格式来组织内容，这个主要看业务服务器在接收到 <code>callback</code> 的内容时如何解析。例如：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">bucket</span> <span class="op">=</span> <span class="string">&quot;[Bucket Name]&quot;</span>;
+<span class="kw">let</span> <span class="ident">key_to_overwrite</span> <span class="op">=</span> <span class="string">&quot;qiniu.mp4&quot;</span>;
+
+<span class="kw">let</span> <span class="ident">credential</span> <span class="op">=</span> <span class="ident">Credential</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>);
+<span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">Config</span>::<span class="ident">default</span>();
+<span class="kw">let</span> <span class="ident">upload_policy</span> <span class="op">=</span> <span class="ident">UploadPolicyBuilder</span>::<span class="ident">new_policy_for_object</span>(<span class="ident">bucket</span>, <span class="ident">key_to_overwrite</span>, <span class="kw-2">&amp;</span><span class="ident">config</span>)
+                                        .<span class="ident">callback</span>(
+                                            [<span class="string">&quot;http://api.example.com/qiniu/upload/callback&quot;</span>], <span class="string">&quot;&quot;</span>,
+                                            <span class="string">&quot;key=$(key)&amp;hash=$(etag)&amp;bucket=$(bucket)&amp;fsize=$(fsize)&amp;name=$(x:name)&quot;</span>,
+                                            <span class="string">&quot;application/x-www-form-urlencoded&quot;</span>,
+                                        )
+                                        .<span class="ident">build</span>();
+
+<span class="kw">let</span> <span class="ident">upload_token</span> <span class="op">=</span> <span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>);</pre></div>
+<h3 id="带自定义参数的凭证" class="section-header"><a href="#带自定义参数的凭证">带自定义参数的凭证</a></h3>
+<p>七牛支持客户端上传文件的时候定义一些自定义参数，这些参数可以在 <code>return_body</code> 和 <code>callback</code> 里面和七牛内置支持的魔法变量（即系统变量）通过相同的方式来引用。这些自定义的参数名称必须以 <code>x:</code> 开头。例如客户端上传的时候指定了自定义的参数 <code>x:name</code> 和 <code>x:age</code> 分别是 string 和 int 类型。那么可以通过下面的方式引用：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">upload_policy</span> <span class="op">=</span> <span class="ident">UploadPolicyBuilder</span>::<span class="ident">new_policy_for_object</span>(<span class="ident">bucket</span>, <span class="ident">key_to_overwrite</span>, <span class="kw-2">&amp;</span><span class="ident">config</span>)
+                                        .<span class="ident">return_body</span>(<span class="string">&quot;{\&quot;key\&quot;:\&quot;$(key)\&quot;,\&quot;hash\&quot;:\&quot;$(etag)\&quot;,\&quot;fsize\&quot;:$(fsize),\&quot;bucket\&quot;:\&quot;$(bucket)\&quot;,\&quot;name\&quot;:\&quot;$(x:name)\&quot;,\&quot;age\&quot;:$(x:age)}&quot;</span>)
+                                        .<span class="ident">build</span>();
+
+<span class="kw">let</span> <span class="ident">upload_token</span> <span class="op">=</span> <span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>);</pre></div>
+<p>或者</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">upload_policy</span> <span class="op">=</span> <span class="ident">UploadPolicyBuilder</span>::<span class="ident">new_policy_for_object</span>(<span class="ident">bucket</span>, <span class="ident">key_to_overwrite</span>, <span class="kw-2">&amp;</span><span class="ident">config</span>)
+                                        .<span class="ident">callback</span>(
+                                            [<span class="string">&quot;http://api.example.com/qiniu/upload/callback&quot;</span>], <span class="string">&quot;&quot;</span>,
+                                            <span class="string">&quot;{\&quot;key\&quot;:\&quot;$(key)\&quot;,\&quot;hash\&quot;:\&quot;$(etag)\&quot;,\&quot;fsize\&quot;:$(fsize),\&quot;bucket\&quot;:\&quot;$(bucket)\&quot;,\&quot;name\&quot;:\&quot;$(x:name)\&quot;,\&quot;age\&quot;:$(x:age)}&quot;</span>,
+                                            <span class="string">&quot;application/json&quot;</span>,
+                                        )
+                                        .<span class="ident">build</span>();
+
+<span class="kw">let</span> <span class="ident">upload_token</span> <span class="op">=</span> <span class="ident">UploadToken</span>::<span class="ident">new</span>(<span class="ident">upload_policy</span>, <span class="ident">credential</span>);</pre></div>
+<h3 id="综合上传凭证" class="section-header"><a href="#综合上传凭证">综合上传凭证</a></h3>
+<p>上面的生成上传凭证的方法，都是通过设置<a href="https://developer.qiniu.com/kodo/manual/put-policy">上传策略</a>相关的参数来支持的，这些参数可以通过不同的组合方式来满足不同的业务需求，可以灵活地组织你所需要的上传凭证。</p>
+<h2 id="服务器直传" class="section-header"><a href="#服务器直传">服务器直传</a></h2>
+<p>服务端直传是指客户利用七牛服务端 SDK 从服务端直接上传文件到七牛云，交互的双方一般都在机房里面，所以服务端可以自己生成上传凭证，然后利用 SDK 中的上传逻辑进行上传，最后从七牛云获取上传的结果，这个过程中由于双方都是业务服务器，所以很少利用到上传回调的功能，而是直接自定义 <code>return_body</code> 来获取自定义的回复内容。</p>
+<h3 id="文件上传" class="section-header"><a href="#文件上传">文件上传</a></h3>
+<p>最简单的就是上传本地文件，直接指定文件的完整路径即可上传。</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">qiniu_ng</span>::{
+    <span class="ident">Credential</span>, <span class="ident">Client</span>, <span class="ident">Config</span>,
+    <span class="ident">storage</span>::<span class="ident">uploader</span>::{<span class="ident">UploadPolicyBuilder</span>, <span class="ident">UploadToken</span>, <span class="ident">UploadManager</span>},
+};
+
+<span class="kw">let</span> <span class="ident">local_file_path</span> <span class="op">=</span> <span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;local file path&quot;</span>);
+<span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">UploadManager</span>::<span class="ident">new</span>(<span class="ident">config</span>);
+<span class="kw">let</span> <span class="ident">upload_response</span> <span class="op">=</span> <span class="ident">upload_manager</span>.<span class="ident">upload_for_upload_token</span>(<span class="ident">upload_token</span>)<span class="question-mark">?</span>
+                                    .<span class="ident">upload_file</span>(<span class="ident">local_file_path</span>, <span class="string">&quot;local file name&quot;</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;</pre></div>
+<h3 id="数据流上传" class="section-header"><a href="#数据流上传">数据流上传</a></h3>
+<p>如果要上传的数据存在于内存中或输入流中，可以使用基于 <code>std::io::Read</code> 的特性上传数据。这里给出一个将内存中的字节数组上传的例子：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">stream</span> <span class="op">=</span> <span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>);
+<span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">UploadManager</span>::<span class="ident">new</span>(<span class="ident">config</span>);
+<span class="kw">let</span> <span class="ident">upload_response</span> <span class="op">=</span> <span class="ident">upload_manager</span>.<span class="ident">upload_for_upload_token</span>(<span class="ident">upload_token</span>)<span class="question-mark">?</span>
+                                    .<span class="ident">upload_stream</span>(<span class="ident">stream</span>, <span class="ident">bytes</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u64</span>, <span class="string">&quot;file name&quot;</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;</pre></div>
+<p>再给出一个将 STDIN 输入的数据上传的例子：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">UploadManager</span>::<span class="ident">new</span>(<span class="ident">config</span>);
+<span class="kw">let</span> <span class="ident">upload_response</span> <span class="op">=</span> <span class="ident">upload_manager</span>.<span class="ident">upload_for_upload_token</span>(<span class="ident">upload_token</span>)<span class="question-mark">?</span>
+                                    .<span class="ident">upload_stream</span>(<span class="ident">stdin</span>(), <span class="number">0</span>, <span class="string">&quot;file name&quot;</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>;</pre></div>
+<h3 id="批量上传" class="section-header"><a href="#批量上传">批量上传</a></h3>
+<p>SDK 支持将多个文件批量上传，将会尽可能使用线程池并发上传加速上传效率，因此效率将优于串行的上传方法。</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">qiniu_ng</span>::{
+    <span class="ident">Credential</span>, <span class="ident">Client</span>, <span class="ident">Config</span>,
+    <span class="ident">storage</span>::<span class="ident">uploader</span>::{<span class="ident">BatchUploadJobBuilder</span>, <span class="ident">UploadPolicyBuilder</span>, <span class="ident">UploadPolicy</span>, <span class="ident">UploadToken</span>, <span class="ident">UploadManager</span>},
+};
+
+<span class="kw">let</span> <span class="ident">upload_manager</span> <span class="op">=</span> <span class="ident">UploadManager</span>::<span class="ident">new</span>(<span class="ident">config</span>);
+<span class="ident">upload_manager</span>.<span class="ident">batch_uploader_for_upload_token</span>(<span class="ident">upload_token</span>)<span class="question-mark">?</span>
+              .<span class="ident">push_job</span>(<span class="ident">BatchUploadJobBuilder</span>::<span class="ident">default</span>()
+                                              .<span class="ident">upload_file</span>(<span class="ident">local_file_path</span>, <span class="string">&quot;local file name&quot;</span>, <span class="prelude-val">None</span>)<span class="question-mark">?</span>)
+              .<span class="ident">push_job</span>(<span class="ident">BatchUploadJobBuilder</span>::<span class="ident">default</span>()
+                                              .<span class="ident">upload_stream</span>(<span class="ident">stream</span>, <span class="ident">stream_len</span>, <span class="string">&quot;file name&quot;</span>, <span class="prelude-val">None</span>))
+              .<span class="ident">start</span>();</pre></div>
+<h3 id="文件上传策略" class="section-header"><a href="#文件上传策略">文件上传策略</a></h3>
+<p>默认情况下，对于尺寸大于 4 MB 的文件，SDK 默认自动使用分片上传的方式来上传，分片上传通过将一个文件切割为标准的块（默认的固定大小为 4 MB，可以通过修改配置增加尺寸，但必须是 4 MB 的倍数），然后通过上传块的方式来进行文件的上传。一个块中的片和另外一个块中的片是可以并发的。分片上传不等于断点续传，但是分片上传可以支持断点续传。</p>
+<p>断点续传是将每个块上传完毕的返回的 <code>context</code> 保存到本地的文件中持久化，如果本次上传被中断，下次可以从这个进度文件中读取每个块上传的状态，然后继续上传完毕没有完成的块，最后完成文件的拼接。</p>
+<p>这里需要注意，只有在块上传完毕之后，才向本地的进度文件写入 <code>context</code> 内容。</p>
+<p>另外需要注意，每个 <code>context</code> 的有效期最长默认是 <code>7</code> 天，过期的 <code>context</code> 会触发 <code>701</code> 的错误，默认情况下，如果 <code>context</code> 超过 7 天，SDK 会自动重新上传 <code>context</code> 对应的分块。</p>
+<p>上述策略中不少参数可以在 <code>Config</code> 中配置，这里给出一个修改配置参数的例子：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">ConfigBuilder</span>::<span class="ident">default</span>()
+                           .<span class="ident">upload_threshold</span>(<span class="number">16</span> <span class="op">*</span> <span class="number">1024</span> <span class="op">*</span> <span class="number">1024</span>) <span class="comment">// 修改成尺寸大于 16 MB 的文件才使用分片上传</span>
+                           .<span class="ident">upload_block_size</span>(<span class="number">8</span> <span class="op">*</span> <span class="number">1024</span> <span class="op">*</span> <span class="number">1024</span>) <span class="comment">// 每个分块尺寸修改为 8 MB</span>
+                           .<span class="ident">upload_recorder</span>(
+                              <span class="ident">UploadRecorderBuilder</span>::<span class="ident">default</span>()
+                                .<span class="ident">recorder</span>(<span class="ident">FileSystemRecorder</span>::<span class="ident">from</span>(<span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;/recorder/data&quot;</span>))) <span class="comment">// 修改上传进度记录文件的存储目录</span>
+                                .<span class="ident">upload_block_lifetime</span>(<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="number">5</span> <span class="op">*</span> <span class="number">24</span> <span class="op">*</span> <span class="number">60</span> <span class="op">*</span> <span class="number">60</span>)) <span class="comment">// 每个分块的有效期减少为 5 天</span>
+                                .<span class="ident">build</span>()
+                           )
+                           .<span class="ident">build</span>();</pre></div>
+<h3 id="业务服务器验证七牛回调" class="section-header"><a href="#业务服务器验证七牛回调">业务服务器验证七牛回调</a></h3>
+<p>在上传策略里面设置了上传回调相关参数的时候，七牛在文件上传到服务器之后，会主动地向 <code>callback_url</code> 发送 <code>POST</code> 请求的回调，回调的内容为 <code>callback_body</code> 模版所定义的内容，如果这个模版里面引用了魔法变量或者自定义变量，那么这些变量会被自动填充对应的值，然后在发送给业务服务器。</p>
+<p>业务服务器在收到来自七牛的回调请求的时候，可以根据请求头部的 <code>Authorization</code> 字段来进行验证，查看该请求是否是来自七牛的未经篡改的请求。</p>
+<p>Rust SDK 提供了一个方法 <code>Credential::is_valid_request()</code> 用于验证回调的请求：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">qiniu_http</span>::{<span class="ident">Method</span>, <span class="ident">RequestBuilder</span>};
+<span class="kw">use</span> <span class="ident">qiniu_ng</span>::<span class="ident">Credential</span>;
+
+<span class="kw">let</span> <span class="ident">access_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Access Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">secret_key</span> <span class="op">=</span> <span class="string">&quot;[Qiniu Secret Key]&quot;</span>;
+<span class="kw">let</span> <span class="ident">credential</span> <span class="op">=</span> <span class="ident">Credential</span>::<span class="ident">new</span>(<span class="ident">access_key</span>, <span class="ident">secret_key</span>);
+
+<span class="kw">let</span> <span class="ident">is_valid</span> <span class="op">=</span> <span class="ident">credential</span>.<span class="ident">is_valid_request</span>(<span class="kw-2">&amp;</span><span class="ident">RequestBuilder</span>::<span class="ident">default</span>()
+                                                           .<span class="ident">method</span>(<span class="ident">request_method</span>)
+                                                           .<span class="ident">url</span>(<span class="ident">request_url</span>)
+                                                           .<span class="ident">header</span>(<span class="ident">request_header_name</span>, <span class="ident">request_header_value</span>)
+                                                           .<span class="ident">body</span>(<span class="ident">request_body</span>)
+                                                           .<span class="ident">build</span>());</pre></div>
+<h2 id="http-回调函数" class="section-header"><a href="#http-回调函数">HTTP 回调函数</a></h2>
+<p>SDK 支持在发送 HTTP 请求前和收到响应后调用回调函数对 HTTP 请求和响应进行处理，这里给出一个打印 HTTP 请求和响应相关信息的回调函数实现：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">qiniu_http</span>::{<span class="ident">Request</span> <span class="kw">as</span> <span class="ident">HTTPRequest</span>, <span class="ident">Response</span> <span class="kw">as</span> <span class="ident">HTTPResponse</span>, <span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">HTTPResult</span>};
+<span class="kw">use</span> <span class="ident">qiniu_ng</span>::<span class="ident">http</span>::{<span class="ident">HTTPAfterAction</span>, <span class="ident">HTTPBeforeAction</span>};
+
+<span class="kw">struct</span> <span class="ident">HTTPLogger</span> {}
+
+<span class="kw">impl</span> <span class="ident">HTTPBeforeAction</span> <span class="kw">for</span> <span class="ident">HTTPLogger</span> {
+    <span class="kw">fn</span> <span class="ident">before_call</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">request</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">HTTPRequest</span>) <span class="op">-&gt;</span> <span class="ident">HTTPResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">request_id</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">thread_rng</span>().<span class="ident">gen</span>();
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;[{}] {} {}&quot;</span>, <span class="ident">request_id</span>, <span class="ident">request</span>.<span class="ident">method</span>().<span class="ident">as_str</span>(), <span class="ident">request</span>.<span class="ident">url</span>());
+        <span class="kw">for</span> (<span class="ident">header_name</span>, <span class="ident">header_value</span>) <span class="kw">in</span> <span class="ident">request</span>.<span class="ident">headers</span>().<span class="ident">iter</span>() {
+            <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;[{}]   {}: {}&quot;</span>, <span class="ident">request_id</span>, <span class="ident">header_name</span>, <span class="ident">header_value</span>);
+        }
+        <span class="kw-2">*</span><span class="ident">request</span>.<span class="ident">custom_data_mut</span>() <span class="op">=</span> <span class="ident">request_id</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
+        <span class="prelude-val">Ok</span>(())
+    }
+}
+<span class="kw">impl</span> <span class="ident">HTTPAfterAction</span> <span class="kw">for</span> <span class="ident">HTTPLogger</span> {
+    <span class="kw">fn</span> <span class="ident">after_call</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">request</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">HTTPRequest</span>, <span class="ident">response</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">HTTPResponse</span>) <span class="op">-&gt;</span> <span class="ident">HTTPResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">request_id</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">transmute</span>(<span class="ident">request</span>.<span class="ident">custom_data</span>()) };
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;[{}] {}&quot;</span>, <span class="ident">request_id</span>, <span class="ident">response</span>.<span class="ident">status_code</span>());
+        <span class="kw">for</span> (<span class="ident">header_name</span>, <span class="ident">header_value</span>) <span class="kw">in</span> <span class="ident">response</span>.<span class="ident">headers</span>().<span class="ident">iter</span>() {
+            <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;[{}]   {}: {}&quot;</span>, <span class="ident">request_id</span>, <span class="ident">header_name</span>, <span class="ident">header_value</span>);
+        }
+        <span class="prelude-val">Ok</span>(())
+    }
+}
+
+<span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">ConfigBuilder</span>::<span class="ident">default</span>()
+    .<span class="ident">append_http_request_before_action_handler</span>(<span class="ident">HTTPLogger</span> {})
+    .<span class="ident">append_http_request_after_action_handler</span>(<span class="ident">HTTPLogger</span> {})
+    .<span class="ident">build</span>();</pre></div>
+<p>该实现使用 <code>request</code> 的 <code>custom_data</code> 字段，该字段是瘦指针类型，支持从请求前回调函数传输数据到响应后回调函数，由于传输的数据比较简单，可以直接填入 <code>custom_data</code> 字段。
+如果传输的数据比较复杂，则必须使用 <code>Box</code> 将数据封装为指针。</p>
+<h2 id="私有云配置" class="section-header"><a href="#私有云配置">私有云配置</a></h2>
+<p>默认情况下，Rust SDK 内置了七牛公有云存储的配置。如果需要使用七牛私有云，则需要对 <code>Config</code> 中的配置作出必要的调整，这里给出一个例子：</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="ident">ConfigBuilder</span>::<span class="ident">default</span>()
+                           .<span class="ident">use_https</span>(<span class="bool-val">true</span>) <span class="comment">// 设置为使用 HTTPS 协议</span>
+                           .<span class="ident">uc_host</span>(<span class="string">&quot;uc.example.com&quot;</span>) <span class="comment">// 设置 UC 服务器地址</span>
+                           .<span class="ident">rs_host</span>(<span class="string">&quot;rs.example.com&quot;</span>) <span class="comment">// 设置 RS 服务器地址</span>
+                           .<span class="ident">rsf_host</span>(<span class="string">&quot;rsf.example.com&quot;</span>) <span class="comment">// 设置 RSF 服务器地址</span>
+                           .<span class="ident">api_host</span>(<span class="string">&quot;api.example.com&quot;</span>) <span class="comment">// 设置 API 服务器地址</span>
+                           .<span class="ident">build</span>();</pre></div>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
+<table><tr><td><code>pub use config::<a class="struct" href="../qiniu_ng/config/struct.Config.html" title="struct qiniu_ng::config::Config">Config</a>;</code></td></tr><tr><td><code>pub use config::<a class="struct" href="../qiniu_ng/config/struct.ConfigBuilder.html" title="struct qiniu_ng::config::ConfigBuilder">ConfigBuilder</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr class='module-item'><td><a class="mod" href="config/index.html" title='qiniu_ng::config mod'>config</a></td><td class='docblock-short'><p>七牛客户端配置模块</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="http/index.html" title='qiniu_ng::http mod'>http</a></td><td class='docblock-short'><p>HTTP 模块</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="storage/index.html" title='qiniu_ng::storage mod'>storage</a></td><td class='docblock-short'><p>存储模块</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="utils/index.html" title='qiniu_ng::utils mod'>utils</a></td><td class='docblock-short'><p>实用模块</p>
+</td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.Client.html" title='qiniu_ng::Client struct'>Client</a></td><td class='docblock-short'><p>七牛 SDK 客户端</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Credential.html" title='qiniu_ng::Credential struct'>Credential</a></td><td class='docblock-short'><p>认证信息</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "qiniu_ng";</script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

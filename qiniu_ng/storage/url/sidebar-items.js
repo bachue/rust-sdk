@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["HeaderInfo","访问下载 URL 时获得的 Header 信息"],["URL","URL"]]});

@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["qiniu_http"] = [{"text":"impl Error for Error","synthetic":false,"types":[]},{"text":"impl Error for HTTPCallerError","synthetic":false,"types":[]}];
+implementors["qiniu_ng"] = [{"text":"impl Error for URLParseError","synthetic":false,"types":[]},{"text":"impl Error for ResolveError","synthetic":false,"types":[]},{"text":"impl Error for PersistentError","synthetic":false,"types":[]},{"text":"impl Error for DomainsError","synthetic":false,"types":[]},{"text":"impl Error for DropBucketError","synthetic":false,"types":[]},{"text":"impl Error for UploadError","synthetic":false,"types":[]},{"text":"impl Error for CreateUploaderError","synthetic":false,"types":[]},{"text":"impl Error for UploadTokenParseError","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

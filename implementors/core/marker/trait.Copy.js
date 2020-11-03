@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["qiniu_http"] = [{"text":"impl Copy for RetryKind","synthetic":false,"types":[]},{"text":"impl Copy for HTTPCallerErrorKind","synthetic":false,"types":[]},{"text":"impl Copy for Method","synthetic":false,"types":[]},{"text":"impl&lt;'b&gt; Copy for ProgressCallback&lt;'b&gt;","synthetic":false,"types":[]}];
+implementors["qiniu_ng"] = [{"text":"impl Copy for RegionId","synthetic":false,"types":[]},{"text":"impl Copy for LockPolicy","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
