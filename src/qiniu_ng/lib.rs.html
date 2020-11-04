@@ -620,7 +620,6 @@
 <span id="619">619</span>
 <span id="620">620</span>
 <span id="621">621</span>
-<span id="622">622</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_favicon_url</span> <span class="op">=</span> <span class="string">&quot;https://developer.qiniu.com/favicon.ico&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://dn-mars-assets.qbox.me/qiniulogo/img-slogon-horizontal-blue-cn.jpg&quot;</span>)]</span>
@@ -1222,10 +1221,9 @@
 <span class="doccomment">//! # use std::{time::Duration, path::Path};</span>
 <span class="doccomment">//! let config = ConfigBuilder::default()</span>
 <span class="doccomment">//!                            .use_https(true) // 设置为使用 HTTPS 协议</span>
-<span class="doccomment">//!                            .uc_host(&quot;uc.example.com&quot;) // 设置 UC 服务器地址</span>
-<span class="doccomment">//!                            .rs_host(&quot;rs.example.com&quot;) // 设置 RS 服务器地址</span>
-<span class="doccomment">//!                            .rsf_host(&quot;rsf.example.com&quot;) // 设置 RSF 服务器地址</span>
-<span class="doccomment">//!                            .api_host(&quot;api.example.com&quot;) // 设置 API 服务器地址</span>
+<span class="doccomment">//!                            .uc_hosts([&quot;uc.example.com&quot;.into()]) // 设置 UC 服务器地址</span>
+<span class="doccomment">//!                            .rs_hosts([&quot;rs.example.com&quot;.into()]) // 设置 RS 服务器地址</span>
+<span class="doccomment">//!                            .api_hosts([&quot;api.example.com&quot;.into()]) // 设置 API 服务器地址</span>
 <span class="doccomment">//!                            .build();</span>
 <span class="doccomment">//! ```</span>
 

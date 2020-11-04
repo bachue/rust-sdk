@@ -692,6 +692,7 @@
 <span id="691">691</span>
 <span id="692">692</span>
 <span id="693">693</span>
+<span id="694">694</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! 七牛客户端配置模块</span>
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -743,49 +744,37 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// 默认将会使用七牛公有云的 UC 服务器地址，仅在使用私有云时才需要配置</span>
     <span class="attribute">#[<span class="ident">get</span> <span class="op">=</span> <span class="string">&quot;pub&quot;</span>]</span>
-    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;default::uc_host()&quot;</span>, <span class="ident">setter</span>(<span class="ident">into</span>))]</span>
-    <span class="ident">uc_host</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;default::uc_hosts()&quot;</span>, <span class="ident">setter</span>(<span class="ident">into</span>))]</span>
+    <span class="ident">uc_hosts</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span>,
 
     <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">uc_http_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">uc_http_urls</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>]<span class="op">&gt;&gt;</span>,
     <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">uc_https_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">uc_https_urls</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>]<span class="op">&gt;&gt;</span>,
 
     <span class="doccomment">/// RS 服务器地址（仅需要指定主机地址和端口，无需包含协议）</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 默认将会使用七牛公有云的 RS 服务器地址，仅在使用私有云时才需要配置</span>
     <span class="attribute">#[<span class="ident">get</span> <span class="op">=</span> <span class="string">&quot;pub&quot;</span>]</span>
-    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;default::rs_host()&quot;</span>, <span class="ident">setter</span>(<span class="ident">into</span>))]</span>
-    <span class="ident">rs_host</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;default::rs_hosts()&quot;</span>, <span class="ident">setter</span>(<span class="ident">into</span>))]</span>
+    <span class="ident">rs_hosts</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span>,
 
     <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">rs_http_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">rs_http_urls</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>]<span class="op">&gt;&gt;</span>,
     <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">rs_https_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-
-    <span class="doccomment">/// RSF 服务器地址（仅需要指定主机地址和端口，无需包含协议）</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// 默认将会使用七牛公有云的 RSF 服务器地址，仅在使用私有云时才需要配置</span>
-    <span class="attribute">#[<span class="ident">get</span> <span class="op">=</span> <span class="string">&quot;pub&quot;</span>]</span>
-    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;default::rsf_host()&quot;</span>, <span class="ident">setter</span>(<span class="ident">into</span>))]</span>
-    <span class="ident">rsf_host</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>,
-
-    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">rsf_http_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">rsf_https_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">rs_https_urls</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>]<span class="op">&gt;&gt;</span>,
 
     <span class="doccomment">/// API 服务器地址（仅需要指定主机地址和端口，无需包含协议）</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 默认将会使用七牛公有云的 API 服务器地址，仅在使用私有云时才需要配置</span>
     <span class="attribute">#[<span class="ident">get</span> <span class="op">=</span> <span class="string">&quot;pub&quot;</span>]</span>
-    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;default::api_host()&quot;</span>, <span class="ident">setter</span>(<span class="ident">into</span>))]</span>
-    <span class="ident">api_host</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">default</span> <span class="op">=</span> <span class="string">&quot;default::api_hosts()&quot;</span>, <span class="ident">setter</span>(<span class="ident">into</span>))]</span>
+    <span class="ident">api_hosts</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span>,
 
     <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">api_http_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">api_http_urls</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>]<span class="op">&gt;&gt;</span>,
     <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">api_https_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">api_https_urls</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>]<span class="op">&gt;&gt;</span>,
 
     <span class="doccomment">/// UpLog 服务器地址（仅需要指定主机地址和端口，无需包含协议）</span>
     <span class="doccomment">///</span>
@@ -795,9 +784,9 @@
     <span class="ident">uplog_host</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span>,
 
     <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">uplog_http_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">uplog_http_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span>,
     <span class="attribute">#[<span class="ident">builder</span>(<span class="ident">setter</span>(<span class="ident">skip</span>))]</span>
-    <span class="ident">uplog_https_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">uplog_https_url</span>: <span class="ident">OnceCell</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span>,
 
     <span class="doccomment">/// 上传凭证有效期</span>
     <span class="doccomment">///</span>
@@ -990,23 +979,18 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">uc_host</span>() <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="string">&quot;uc.qbox.me&quot;</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uc_hosts</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span> {
+        <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;uc.qbox.me&quot;</span>.<span class="ident">into</span>()]
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">rs_host</span>() <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="string">&quot;rs.qbox.me&quot;</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rs_hosts</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span> {
+        <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;rs.qbox.me&quot;</span>.<span class="ident">into</span>()]
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">rsf_host</span>() <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="string">&quot;rsf.qbox.me&quot;</span>)
-    }
-
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">api_host</span>() <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(<span class="string">&quot;api.qiniu.com&quot;</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">api_hosts</span>() <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;&gt;</span> {
+        <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;api.qiniu.com&quot;</span>.<span class="ident">into</span>()]
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
@@ -1097,10 +1081,9 @@
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Config&quot;</span>)
             .<span class="ident">field</span>(<span class="string">&quot;use_https&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">use_https</span>)
-            .<span class="ident">field</span>(<span class="string">&quot;uc_host&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">uc_host</span>)
-            .<span class="ident">field</span>(<span class="string">&quot;rs_host&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rs_host</span>)
-            .<span class="ident">field</span>(<span class="string">&quot;rsf_host&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rsf_host</span>)
-            .<span class="ident">field</span>(<span class="string">&quot;api_host&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">api_host</span>)
+            .<span class="ident">field</span>(<span class="string">&quot;uc_hosts&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">uc_hosts</span>)
+            .<span class="ident">field</span>(<span class="string">&quot;rs_hosts&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rs_hosts</span>)
+            .<span class="ident">field</span>(<span class="string">&quot;api_hosts&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">api_hosts</span>)
             .<span class="ident">field</span>(<span class="string">&quot;uplog_host&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">uplog_host</span>)
             .<span class="ident">field</span>(<span class="string">&quot;upload_token_lifetime&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">upload_token_lifetime</span>)
             .<span class="ident">field</span>(<span class="string">&quot;batch_max_operation_size&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">batch_max_operation_size</span>)
@@ -1124,46 +1107,65 @@
     }
 
     <span class="doccomment">/// UC 服务器 URL</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uc_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uc_urls</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>] {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">use_https</span> {
-            <span class="self">self</span>.<span class="ident">uc_https_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;https://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">uc_host</span>.<span class="ident">as_ref</span>())
+            <span class="self">self</span>.<span class="ident">uc_https_urls</span>.<span class="ident">get_or_init</span>(<span class="op">||</span> {
+                <span class="self">self</span>.<span class="ident">uc_hosts</span>
+                    .<span class="ident">iter</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">uc_host</span><span class="op">|</span> <span class="string">&quot;https://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="ident">uc_host</span>)
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">url</span><span class="op">|</span> <span class="ident">url</span>.<span class="ident">into_boxed_str</span>())
+                    .<span class="ident">collect</span>()
+            })
         } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="ident">uc_http_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;http://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">uc_host</span>.<span class="ident">as_ref</span>())
+            <span class="self">self</span>.<span class="ident">uc_http_urls</span>.<span class="ident">get_or_init</span>(<span class="op">||</span> {
+                <span class="self">self</span>.<span class="ident">uc_hosts</span>
+                    .<span class="ident">iter</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">uc_host</span><span class="op">|</span> <span class="string">&quot;http://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="ident">uc_host</span>)
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">url</span><span class="op">|</span> <span class="ident">url</span>.<span class="ident">into_boxed_str</span>())
+                    .<span class="ident">collect</span>()
+            })
         }
     }
 
     <span class="doccomment">/// RS 服务器 URL</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rs_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rs_urls</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>] {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">use_https</span> {
-            <span class="self">self</span>.<span class="ident">rs_https_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;https://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">rs_host</span>.<span class="ident">as_ref</span>())
+            <span class="self">self</span>.<span class="ident">rs_https_urls</span>.<span class="ident">get_or_init</span>(<span class="op">||</span> {
+                <span class="self">self</span>.<span class="ident">rs_hosts</span>
+                    .<span class="ident">iter</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">rs_host</span><span class="op">|</span> <span class="string">&quot;https://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="ident">rs_host</span>)
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">url</span><span class="op">|</span> <span class="ident">url</span>.<span class="ident">into_boxed_str</span>())
+                    .<span class="ident">collect</span>()
+            })
         } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="ident">rs_http_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;http://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">rs_host</span>.<span class="ident">as_ref</span>())
-        }
-    }
-
-    <span class="doccomment">/// RSF 服务器 URL</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rsf_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">use_https</span> {
-            <span class="self">self</span>.<span class="ident">rsf_https_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;https://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">rsf_host</span>.<span class="ident">as_ref</span>())
-        } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="ident">rsf_http_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;http://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">rsf_host</span>.<span class="ident">as_ref</span>())
+            <span class="self">self</span>.<span class="ident">rs_http_urls</span>.<span class="ident">get_or_init</span>(<span class="op">||</span> {
+                <span class="self">self</span>.<span class="ident">rs_hosts</span>
+                    .<span class="ident">iter</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">rs_host</span><span class="op">|</span> <span class="string">&quot;http://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="ident">rs_host</span>)
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">url</span><span class="op">|</span> <span class="ident">url</span>.<span class="ident">into_boxed_str</span>())
+                    .<span class="ident">collect</span>()
+            })
         }
     }
 
     <span class="doccomment">/// API 服务器 URL</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">api_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">api_urls</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>] {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">use_https</span> {
-            <span class="self">self</span>.<span class="ident">api_https_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;https://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">api_host</span>.<span class="ident">as_ref</span>())
+            <span class="self">self</span>.<span class="ident">api_https_urls</span>.<span class="ident">get_or_init</span>(<span class="op">||</span> {
+                <span class="self">self</span>.<span class="ident">api_hosts</span>
+                    .<span class="ident">iter</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">api_host</span><span class="op">|</span> <span class="string">&quot;https://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="ident">api_host</span>)
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">url</span><span class="op">|</span> <span class="ident">url</span>.<span class="ident">into_boxed_str</span>())
+                    .<span class="ident">collect</span>()
+            })
         } <span class="kw">else</span> {
-            <span class="self">self</span>.<span class="ident">api_http_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;http://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">api_host</span>.<span class="ident">as_ref</span>())
+            <span class="self">self</span>.<span class="ident">api_http_urls</span>.<span class="ident">get_or_init</span>(<span class="op">||</span> {
+                <span class="self">self</span>.<span class="ident">api_hosts</span>
+                    .<span class="ident">iter</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">api_host</span><span class="op">|</span> <span class="string">&quot;http://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="ident">api_host</span>)
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">url</span><span class="op">|</span> <span class="ident">url</span>.<span class="ident">into_boxed_str</span>())
+                    .<span class="ident">collect</span>()
+            })
         }
     }
 
@@ -1171,10 +1173,10 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uplog_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">use_https</span> {
             <span class="self">self</span>.<span class="ident">uplog_https_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;https://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">uplog_host</span>.<span class="ident">as_ref</span>())
+                .<span class="ident">get_or_init</span>(<span class="op">||</span> (<span class="string">&quot;https://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">uplog_host</span>.<span class="ident">as_ref</span>()).<span class="ident">into_boxed_str</span>())
         } <span class="kw">else</span> {
             <span class="self">self</span>.<span class="ident">uplog_http_url</span>
-                .<span class="ident">get_or_init</span>(<span class="op">||</span> <span class="string">&quot;http://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">uplog_host</span>.<span class="ident">as_ref</span>())
+                .<span class="ident">get_or_init</span>(<span class="op">||</span> (<span class="string">&quot;http://&quot;</span>.<span class="ident">to_owned</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">uplog_host</span>.<span class="ident">as_ref</span>()).<span class="ident">into_boxed_str</span>())
         }
     }
 }
